@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFT Grading Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>IFT Grading Tool for Epistaxis in HHT</h1>
+    
+    <form id="iftForm">
+        <!-- Intensity -->
+        <label for="intensity">1. Intensity of Epistaxis:</label>
+        <select id="intensity" name="intensity" required>
+            <option value="0">No bleeding</option>
+            <option value="1">Slight stains on a handkerchief</option>
+            <option value="2">Soaked handkerchief</option>
+            <option value="3">Soaked towel</option>
+            <option value="4">Filled a bowl (½ liter)</option>
+        </select>
+        <br><br>
+
+        <!-- Frequency -->
+        <label for="frequency">2. Frequency of Epistaxis (Last 4 weeks):</label>
+        <select id="frequency" name="frequency" required>
+            <option value="0">No bleeding</option>
+            <option value="1">1-5 times</option>
+            <option value="2">6-10 times</option>
+            <option value="3">11-27 times</option>
+            <option value="4">Daily or more</option>
+        </select>
+        <br><br>
+
+        <!-- Transfusion -->
+        <label for="transfusion">3. Need for Blood Transfusion (Last 4 weeks):</label>
+        <select id="transfusion" name="transfusion" required>
+            <option value="0">No transfusion</option>
+            <option value="1">One transfusion</option>
+            <option value="2">More than one transfusion</option>
+        </select>
+        <br><br>
+
+        <button type="submit">Calculate IFT Score</button>
+    </form>
+
+    <!-- Result Display -->
+    <div id="result" class="result"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
