@@ -1,4 +1,4 @@
-// JavaScript for limiting to only two intensity selections
+// JavaScript for limiting to only two unique intensity selections
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -7,8 +7,13 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     const intensity2 = parseInt(document.getElementById('intensity2').value); // Second most frequent intensity
     const transfusion = parseInt(document.getElementById('transfusion').value); // Transfusion score
 
-    // Check if both intensity1 and intensity2 are different
-    if (intensity1 === intensity2 && intensity1 !== 0 && intensity2 !== 0) {
+    // Check if both intensity1 and intensity2 are selected and are different
+    if (intensity1 === 0 || intensity2 === 0) {
+        alert("Please choose two different intensities. None cannot be selected as both options.");
+        return;
+    }
+
+    if (intensity1 === intensity2) {
         alert("Please choose two different intensities.");
         return;
     }
