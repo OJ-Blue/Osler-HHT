@@ -28,7 +28,7 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     // Determine the bleeding classification based on the score
     let classification = '';
     if (score === 0) {
-        classification = 'no bleeding';
+        classification = lang === 'en' ? 'no bleeding' : 'ingen blødning';
     } else if (score >= 1 && score <= 5) {
         classification = lang === 'en' ? 'mild bleeding' : 'mild blødning';
     } else if (score >= 6 && score <= 10) {
@@ -80,3 +80,4 @@ function switchLanguage(selectedLang) {
     document.getElementById('english').classList.toggle('active', lang === 'en');
     document.getElementById('norwegian').classList.toggle('active', lang === 'no');
 }
+
