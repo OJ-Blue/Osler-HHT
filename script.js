@@ -1,29 +1,35 @@
 // script.js
-document.getElementById('iftForm').addEventListener('submit', function(event) {
+
+// Add Event Listeners for Language Switcher
+document.getElementById('english').addEventListener('click', function() {
+    switchLanguage('en');
+});
+document.getElementById('norwegian').addEventListener('click', function() {
+    switchLanguage('no');
+});
+
+function switchLanguage(lang) {
+    const elements = document.querySelectorAll('[data-en]');
+    elements.forEach((element) => {
+        element.textContent = element.getAttribute(`data-${lang}`);
+    });
+    
+    document.getElementById('english').classList.toggle('active', lang === 'en');
+    document.getElementById('norwegian').classList.toggle('active', lang === 'no');
+}
+
+// Calculate Score Logic
+document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // Get the values
-    const intensity = parseInt(document.getElementById('intensity').value);
-    const frequency = parseInt(document.getElementById('frequency').value);
+    // Get values from the form
+    const intensity1 = parseInt(document.getElementById('intensity1').value);
+    const intensity2 = parseInt(document.getElementById('intensity2').value);
+    const intensity3 = parseInt(document.getElementById('intensity3').value);
+    const intensity4 = parseInt(document.getElementById('intensity4').value);
     const transfusion = parseInt(document.getElementById('transfusion').value);
 
-    // Calculate IFT Score
-    const score = (intensity * frequency) + transfusion;
+    // Calculate the total score
+    const score = intensity1 + intensity2 + intensity3 + intensity4 + transfusion;
 
-    // Determine severity level based on score
-    let severity = '';
-    if (score === 0) {
-        severity = 'No bleeding';
-    } else if (score >= 1 && score <= 5) {
-        severity = 'Mild bleeding';
-    } else if (score >= 6 && score <= 10) {
-        severity = 'Moderate bleeding';
-    } else if (score >= 11 && score <= 15) {
-        severity = 'Severe bleeding';
-    } else {
-        severity = 'Intractable bleeding';
-    }
-
-    // Display result
-    document.getElementById('result').textContent = `Your IFT Score is: ${score} (${severity})`;
-});
+    // Display the
