@@ -1,4 +1,4 @@
-// Corrected JavaScript Code for Maximum IFT Score of 30
+// Corrected JavaScript for Two Most Frequent Intensities with a Maximum Score of 30
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -27,3 +27,32 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     // Display the result
     document.getElementById('result').textContent = `Your total grading is: ${score} (${classification})`;
 });
+
+// Add Event Listeners for Language Switcher
+document.getElementById('english').addEventListener('click', function() {
+    switchLanguage('en');
+});
+document.getElementById('norwegian').addEventListener('click', function() {
+    switchLanguage('no');
+});
+
+function switchLanguage(lang) {
+    // Change text for each element
+    const elements = document.querySelectorAll('[data-en]');
+    elements.forEach(function (element) {
+        element.textContent = element.getAttribute(`data-${lang}`);
+    });
+
+    // Change the text for dropdown options
+    const options = document.querySelectorAll('select option');
+    options.forEach(function (option) {
+        option.textContent = option.getAttribute(`data-${lang}`);
+    });
+
+    // Update the page title based on selected language
+    document.getElementById('page-title').textContent = lang === 'en' ? "Epistaxis Grading (IFT)" : "Gradering av epistaxis (IFT)";
+
+    // Toggle button active state
+    document.getElementById('english').classList.toggle('active', lang === 'en');
+    document.getElementById('norwegian').classList.toggle('active', lang === 'no');
+}
