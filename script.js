@@ -39,8 +39,8 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     const intensity4 = parseInt(document.getElementById('intensity4').value);
     const transfusion = parseInt(document.getElementById('transfusion').value);
 
-    // Implement the IFT calculation based on provided formula
-    // Multiply intensity (I) by frequency (F) for each question and sum them
+    // Correct IFT calculation based on the provided method:
+    // Multiply intensity (I) by frequency (F) and sum the results, then add transfusion (T)
     const score = (intensity1 * 1) + (intensity2 * 2) + (intensity3 * 3) + (intensity4 * 4) + transfusion;
 
     // Determine the bleeding classification based on the score
