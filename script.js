@@ -1,4 +1,4 @@
-// JavaScript to limit the selection to only two intensities
+// JavaScript for language toggle and calculating grading
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -30,20 +30,23 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     if (score === 0) {
         classification = 'no bleeding';
     } else if (score >= 1 && score <= 5) {
-        classification = 'mild bleeding';
+        classification = lang === 'en' ? 'mild bleeding' : 'mild blødning';
     } else if (score >= 6 && score <= 10) {
-        classification = 'moderate bleeding';
+        classification = lang === 'en' ? 'moderate bleeding' : 'moderat blødning';
     } else if (score >= 11 && score <= 15) {
-        classification = 'severe bleeding';
+        classification = lang === 'en' ? 'severe bleeding' : 'alvorlig blødning';
     } else if (score >= 16 && score <= 30) {
-        classification = 'intractable bleeding';
+        classification = lang === 'en' ? 'intractable bleeding' : 'ukontrollerbar blødning';
     }
 
-    // Display the result
-    document.getElementById('result').textContent = `Your total grading is: ${score} (${classification})`;
+    // Display the result in the selected language
+    document.getElementById('result').textContent = lang === 'en'
+        ? `Your total grading is: ${score} (${classification})`
+        : `Din totale poengsum er: ${score} (${classification})`;
 });
 
 // Add Event Listeners for Language Switcher
+let lang = 'en'; // default language is English
 document.getElementById('english').addEventListener('click', function() {
     switchLanguage('en');
 });
@@ -51,7 +54,9 @@ document.getElementById('norwegian').addEventListener('click', function() {
     switchLanguage('no');
 });
 
-function switchLanguage(lang) {
+function switchLanguage(selectedLang) {
+    lang = selectedLang; // update the global language variable
+
     // Change text for each element
     const elements = document.querySelectorAll('[data-en]');
     elements.forEach(function (element) {
