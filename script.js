@@ -1,4 +1,4 @@
-// Corrected JavaScript for Language Toggle and Maximum Score of 30
+// JavaScript for limiting to only two intensity selections
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
@@ -6,6 +6,12 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     const intensity1 = parseInt(document.getElementById('intensity1').value); // First most frequent intensity
     const intensity2 = parseInt(document.getElementById('intensity2').value); // Second most frequent intensity
     const transfusion = parseInt(document.getElementById('transfusion').value); // Transfusion score
+
+    // Check if both intensity1 and intensity2 are different
+    if (intensity1 === intensity2 && intensity1 !== 0 && intensity2 !== 0) {
+        alert("Please choose two different intensities.");
+        return;
+    }
 
     // Calculate the total score using two intensity-frequency pairs
     const score = (intensity1 * 3) + (intensity2 * 4) + transfusion;
@@ -42,6 +48,10 @@ function switchLanguage(lang) {
     elements.forEach(function (element) {
         element.textContent = element.getAttribute(`data-${lang}`);
     });
+
+    // Change the subheading
+    const subheading = document.getElementById('subheading');
+    subheading.textContent = subheading.getAttribute(`data-${lang}`);
 
     // Change the text for dropdown options
     const options = document.querySelectorAll('select option');
