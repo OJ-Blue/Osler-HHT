@@ -14,6 +14,16 @@ function switchLanguage(lang) {
         element.textContent = element.getAttribute(`data-${lang}`);
     });
     
+    // Update dropdown options to match the selected language
+    const selects = document.querySelectorAll('select option');
+    selects.forEach((option) => {
+        option.textContent = option.getAttribute(`data-${lang}`);
+    });
+
+    // Update the page title
+    document.getElementById('page-title').textContent = lang === 'en' ? "Epistaxis Grading (IFT)" : "Gradering av epistaxis (IFT)";
+
+    // Toggle active button styling
     document.getElementById('english').classList.toggle('active', lang === 'en');
     document.getElementById('norwegian').classList.toggle('active', lang === 'no');
 }
@@ -29,9 +39,24 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     const intensity4 = parseInt(document.getElementById('intensity4').value);
     const transfusion = parseInt(document.getElementById('transfusion').value);
 
-    // Calculate the total score
-    const score = intensity1 + intensity2 + intensity3 + intensity4 + transfusion;
+    // Implement the IFT calculation based on provided formula
+    // Multiply intensity (I) by frequency (F) for each question and sum them
+    const score = (intensity1 * 1) + (intensity2 * 2) + (intensity3 * 3) + (intensity4 * 4) + transfusion;
 
-    // Display the result
-    document.getElementById('result').textContent = `Your total score is: ${score}`;
+    // Determine the bleeding classification based on the score
+    let classification = '';
+    if (score === 0) {
+        classification = 'no bleeding';
+    } else if (score >= 1 && score <= 5) {
+        classification = 'mild bleeding';
+    } else if (score >= 6 && score <= 10) {
+        classification = 'moderate bleeding';
+    } else if (score >= 11 && score <= 15) {
+        classification = 'severe bleeding';
+    } else if (score >= 16 && score <= 30) {
+        classification = 'intractable bleeding';
+    }
+
+    // Display the result with "grading" added to the score
+    document.getElementById('result').textContent = `Your total grading is: ${score} (${classification})`;
 });
