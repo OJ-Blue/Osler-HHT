@@ -13,7 +13,7 @@ function switchLanguage(lang) {
     elements.forEach((element) => {
         element.textContent = element.getAttribute(`data-${lang}`);
     });
-    
+
     // Update dropdown options to match the selected language
     const selects = document.querySelectorAll('select option');
     selects.forEach((option) => {
