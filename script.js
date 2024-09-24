@@ -1,5 +1,34 @@
 // script.js
 
+// Add Event Listeners for Language Switcher
+document.getElementById('english').addEventListener('click', function() {
+    switchLanguage('en');
+});
+document.getElementById('norwegian').addEventListener('click', function() {
+    switchLanguage('no');
+});
+
+function switchLanguage(lang) {
+    const elements = document.querySelectorAll('[data-en]');
+    elements.forEach((element) => {
+        element.textContent = element.getAttribute(`data-${lang}`);
+    });
+
+    // Update dropdown options to match the selected language
+    const selects = document.querySelectorAll('select option');
+    selects.forEach((option) => {
+        option.textContent = option.getAttribute(`data-${lang}`);
+    });
+
+    // Update the page title
+    document.getElementById('page-title').textContent = lang === 'en' ? "Epistaxis Grading (IFT)" : "Gradering av epistaxis (IFT)";
+
+    // Toggle active button styling
+    document.getElementById('english').classList.toggle('active', lang === 'en');
+    document.getElementById('norwegian').classList.toggle('active', lang === 'no');
+}
+
+// Calculate Score Logic
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
