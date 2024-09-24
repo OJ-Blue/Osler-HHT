@@ -1,4 +1,4 @@
-// Corrected JavaScript for Two Most Frequent Intensities with a Maximum Score of 30
+// Corrected JavaScript for Language Toggle and Maximum Score of 30
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
