@@ -1,6 +1,6 @@
 // script.js
 
-// Add Event Listeners for Language Switcher
+// Language Switcher Event Listeners
 document.getElementById('english').addEventListener('click', function() {
     switchLanguage('en');
 });
@@ -9,41 +9,41 @@ document.getElementById('norwegian').addEventListener('click', function() {
 });
 
 function switchLanguage(lang) {
+    // Change text for each element
     const elements = document.querySelectorAll('[data-en]');
-    elements.forEach((element) => {
+    elements.forEach(function (element) {
         element.textContent = element.getAttribute(`data-${lang}`);
     });
 
-    // Update dropdown options to match the selected language
-    const selects = document.querySelectorAll('select option');
-    selects.forEach((option) => {
+    // Change the text for dropdown options
+    const options = document.querySelectorAll('select option');
+    options.forEach(function (option) {
         option.textContent = option.getAttribute(`data-${lang}`);
     });
 
-    // Update the page title
+    // Update the page title based on selected language
     document.getElementById('page-title').textContent = lang === 'en' ? "Epistaxis Grading (IFT)" : "Gradering av epistaxis (IFT)";
 
-    // Toggle active button styling
+    // Toggle button active state
     document.getElementById('english').classList.toggle('active', lang === 'en');
     document.getElementById('norwegian').classList.toggle('active', lang === 'no');
 }
 
-// Calculate Score Logic
+// Calculate Score
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // Get values from the form
+    // Get the values from the form
     const intensity1 = parseInt(document.getElementById('intensity1').value);
     const intensity2 = parseInt(document.getElementById('intensity2').value);
     const intensity3 = parseInt(document.getElementById('intensity3').value);
     const intensity4 = parseInt(document.getElementById('intensity4').value);
     const transfusion = parseInt(document.getElementById('transfusion').value);
 
-    // Correct IFT calculation based on the article
-    // Each intensity (I) is multiplied by frequency (F) and summed, then add transfusion (T)
+    // Perform the correct IFT calculation based on the article
     const score = (intensity1 * 1) + (intensity2 * 2) + (intensity3 * 3) + (intensity4 * 4) + transfusion;
 
-    // Determine the bleeding classification based on the score
+    // Determine the grading classification based on the score
     let classification = '';
     if (score === 0) {
         classification = 'no bleeding';
@@ -57,6 +57,6 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
         classification = 'intractable bleeding';
     }
 
-    // Display the result with "grading" added to the score
+    // Display the result
     document.getElementById('result').textContent = `Your total grading is: ${score} (${classification})`;
 });
