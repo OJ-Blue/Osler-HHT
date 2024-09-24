@@ -1,25 +1,29 @@
-// JavaScript for limiting to only two unique intensity selections
+// JavaScript to limit the selection to only two intensities
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // Get values from the form for the two most frequent intensities and their respective frequencies
-    const intensity1 = parseInt(document.getElementById('intensity1').value); // First most frequent intensity
-    const intensity2 = parseInt(document.getElementById('intensity2').value); // Second most frequent intensity
-    const transfusion = parseInt(document.getElementById('transfusion').value); // Transfusion score
+    // Collect intensity selections
+    const intensity1 = parseInt(document.getElementById('intensity1').value);
+    const intensity2 = parseInt(document.getElementById('intensity2').value);
+    const intensity3 = parseInt(document.getElementById('intensity3').value);
+    const intensity4 = parseInt(document.getElementById('intensity4').value);
+    const transfusion = parseInt(document.getElementById('transfusion').value);
 
-    // Check if both intensity1 and intensity2 are selected and are different
-    if (intensity1 === 0 || intensity2 === 0) {
-        alert("Please choose two different intensities. None cannot be selected as both options.");
+    // Count how many intensities were selected (non-zero)
+    const selectedIntensities = [intensity1, intensity2, intensity3, intensity4].filter(value => value !== 0);
+
+    if (selectedIntensities.length > 2) {
+        alert("You can only select two intensities.");
         return;
     }
 
-    if (intensity1 === intensity2) {
-        alert("Please choose two different intensities.");
-        return;
-    }
+    // If the user selected two or fewer intensities, calculate the score based on two largest values
+    const maxIntensities = selectedIntensities.sort((a, b) => b - a); // Sort intensities to get the top 2
+    const firstIntensity = maxIntensities[0] || 0; // First most intense (default to 0 if none)
+    const secondIntensity = maxIntensities[1] || 0; // Second most intense (default to 0 if none)
 
-    // Calculate the total score using two intensity-frequency pairs
-    const score = (intensity1 * 3) + (intensity2 * 4) + transfusion;
+    // Calculate the total score using the two largest intensities
+    const score = (firstIntensity * 3) + (secondIntensity * 4) + transfusion;
 
     // Determine the bleeding classification based on the score
     let classification = '';
