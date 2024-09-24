@@ -67,6 +67,12 @@
             color: #333;
         }
 
+        h2 {
+            color: #333;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+
         /* Mobile Responsiveness */
         @media (max-width: 600px) {
             body {
@@ -82,6 +88,9 @@
 <body>
 
     <h1 id="page-title">Epistaxis Grading (IFT)</h1>
+
+    <!-- Subheading with instruction for patients -->
+    <h2>Please fill in your two most frequent bleeding intensities during the last 4 weeks</h2>
     
     <!-- Language Switch -->
     <div class="language-switch">
@@ -91,7 +100,7 @@
 
     <form id="epistaxisForm">
         <!-- Intensity Questions -->
-        <label id="q1" for="intensity1" data-en="1. During the last 4 weeks, how many times did you get spots of blood from the nose or dripped a few drops of blood?" data-no="1. Hvor mange ganger de siste 4 ukene fikk du blodflekker fra nesen eller dryppet noen få dråper blod?">1. During the last 4 weeks, how many times did you get spots of blood from the nose or dripped a few drops of blood?</label>
+        <label id="q1" for="intensity1" data-en="1. Select your first most frequent bleeding intensity" data-no="1. Velg din første mest hyppige blødningsintensitet">1. Select your first most frequent bleeding intensity</label>
         <select id="intensity1" name="intensity1" required>
             <option value="0" data-en="0) None" data-no="0) Ingen">0) None</option>
             <option value="1" data-en="1) 1-5 times" data-no="1) 1-5 ganger">1) 1-5 times</option>
@@ -100,7 +109,7 @@
             <option value="4" data-en="4) Daily or more" data-no="4) Daglig eller mer">4) Daily or more</option>
         </select>
 
-        <label id="q2" for="intensity2" data-en="2. During the last 4 weeks, how many times did you get a blood-soaked handkerchief?" data-no="2. Hvor mange ganger de siste 4 ukene fikk du et blodgjennomvåt lommetørkle?">2. During the last 4 weeks, how many times did you get a blood-soaked handkerchief?</label>
+        <label id="q2" for="intensity2" data-en="2. Select your second most frequent bleeding intensity" data-no="2. Velg din andre mest hyppige blødningsintensitet">2. Select your second most frequent bleeding intensity</label>
         <select id="intensity2" name="intensity2" required>
             <option value="0" data-en="0) None" data-no="0) Ingen">0) None</option>
             <option value="1" data-en="1) 1-5 times" data-no="1) 1-5 ganger">1) 1-5 times</option>
@@ -109,26 +118,8 @@
             <option value="4" data-en="4) Daily or more" data-no="4) Daglig eller mer">4) Daily or more</option>
         </select>
 
-        <label id="q3" for="intensity3" data-en="3. During the last 4 weeks, how many times did you get a blood-soaked towel?" data-no="3. Hvor mange ganger de siste 4 ukene fikk du et blodgjennomvåt håndkle?">3. During the last 4 weeks, how many times did you get a blood-soaked towel?</label>
-        <select id="intensity3" name="intensity3" required>
-            <option value="0" data-en="0) None" data-no="0) Ingen">0) None</option>
-            <option value="1" data-en="1) 1-5 times" data-no="1) 1-5 ganger">1) 1-5 times</option>
-            <option value="2" data-en="2) 6-10 times" data-no="2) 6-10 ganger">2) 6-10 times</option>
-            <option value="3" data-en="3) 11-27 times" data-no="3) 11-27 ganger">3) 11-27 times</option>
-            <option value="4" data-en="4) Daily or more" data-no="4) Daglig eller mer">4) Daily or more</option>
-        </select>
-
-        <label id="q4" for="intensity4" data-en="4. During the last 4 weeks, how many times did you get bleeding that filled as much as a bowl (1/2 liter) of blood?" data-no="4. Hvor mange ganger de siste 4 ukene fikk du blødning som fylte så mye som en bolle (1/2 liter) med blod?">4. During the last 4 weeks, how many times did you get bleeding that filled as much as a bowl (1/2 liter) of blood?</label>
-        <select id="intensity4" name="intensity4" required>
-            <option value="0" data-en="0) None" data-no="0) Ingen">0) None</option>
-            <option value="1" data-en="1) 1-5 times" data-no="1) 1-5 ganger">1) 1-5 times</option>
-            <option value="2" data-en="2) 6-10 times" data-no="2) 6-10 ganger">2) 6-10 times</option>
-            <option value="3" data-en="3) 11-27 times" data-no="3) 11-27 ganger">3) 11-27 times</option>
-            <option value="4" data-en="4) Daily or more" data-no="4) Daglig eller mer">4) Daily or more</option>
-        </select>
-
         <!-- Blood Transfusion -->
-        <label id="q5" for="transfusion" data-en="5. During the last 4 weeks, how many times did you receive a blood transfusion?" data-no="5. Hvor mange ganger de siste 4 ukene fikk du en blodoverføring?">5. During the last 4 weeks, how many times did you receive a blood transfusion?</label>
+        <label id="q5" for="transfusion" data-en="5. How many times did you receive a blood transfusion in the last 4 weeks?" data-no="5. Hvor mange ganger fikk du en blodoverføring i løpet av de siste 4 ukene?">5. How many times did you receive a blood transfusion in the last 4 weeks?</label>
         <select id="transfusion" name="transfusion" required>
             <option value="0" data-en="0) None" data-no="0) Ingen">0) None</option>
             <option value="1" data-en="1) Once" data-no="1) En gang">1) Once</option>
