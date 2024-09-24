@@ -32,4 +32,6 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     // Calculate the total score
     const score = intensity1 + intensity2 + intensity3 + intensity4 + transfusion;
 
-    // Display the
+    // Display the result
+    document.getElementById('result').textContent = `Your total score is: ${score}`;
+});
