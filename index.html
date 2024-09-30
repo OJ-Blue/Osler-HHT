@@ -16,17 +16,22 @@
        }
 
        h1 {
-           color: #2c3e50;
+           color: #e74c3c; /* Updated heading color to a red tone */
            text-align: center;
            font-size: 2.5em;
            margin-bottom: 10px;
        }
 
-       h2 {
+       .description {
            color: #34495e;
-           font-size: 1.3em;
+           font-size: 1.2em;
            margin-top: 10px;
            text-align: center;
+           line-height: 1.5;
+           padding: 10px;
+           background-color: #f0f0f0;
+           border-radius: 8px;
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
        }
 
        label {
@@ -100,6 +105,7 @@
        .scale-container {
            margin-top: 30px;
            text-align: center;
+           display: none; /* Initially hide the scale */
        }
 
        .score-scale {
@@ -112,12 +118,15 @@
            position: relative;
        }
 
+       /* The arrow marker */
        .score-marker {
            position: absolute;
-           top: -10px;
-           width: 2px;
-           height: 40px;
-           background-color: #34495e;
+           top: -30px;
+           width: 0;
+           height: 0;
+           border-left: 10px solid transparent;
+           border-right: 10px solid transparent;
+           border-bottom: 20px solid #34495e; /* Arrow color */
        }
 
        .score-label {
@@ -148,8 +157,10 @@
 
    <h1 id="page-title">Epistaxis Grading (IFT)</h1>
 
-   <!-- Subheading with instruction for patients -->
-   <h2 id="subheading" data-en="Please select only two bleeding intensities" data-no="Vennligst velg kun to blødningsintensiteter">Please select only two bleeding intensities</h2>
+   <!-- New Description instead of the subheading -->
+   <div class="description">
+       IFT is a tool to grade the severity of nosebleeds in patients with hereditary hemorrhagic telangiectasia (Mb. Osler) during the last four weeks. The severity of the nosebleed episodes helps in guiding your treatment and follow-up by your physician.
+   </div>
 
    <!-- Language Switch -->
    <div class="language-switch">
@@ -207,8 +218,8 @@
 
    <div id="result" class="result"></div>
 
-   <!-- Score Scale -->
-   <div class="scale-container">
+   <!-- Score Scale (Initially hidden) -->
+   <div id="scale-container" class="scale-container">
        <div class="score-scale">
            <span class="score-label">0</span>
            <span class="score-label">10</span>
