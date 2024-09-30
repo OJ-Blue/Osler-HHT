@@ -25,13 +25,13 @@
        .description {
            color: #34495e;
            font-size: 1.2em;
-           margin-top: 10px;
            text-align: center;
            line-height: 1.5;
-           padding: 10px;
+           padding: 15px;
            background-color: #f0f0f0;
            border-radius: 8px;
            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+           margin-bottom: 20px;
        }
 
        label {
@@ -184,7 +184,7 @@
    </div>
 
    <form id="epistaxisForm">
-       <!-- Question 1 -->
+       <!-- Intensity Questions -->
        <div class="option-group">
            <label id="q1" data-en="1. During the last 4 weeks, how many times did you get spots of blood or dripped a few drops?" data-no="1. I løpet av de siste 4 ukene, hvor mange ganger har du hatt blodflekker eller dryppet noen dråper?">1. During the last 4 weeks, how many times did you get spots of blood or dripped a few drops?</label>
            <input type="radio" name="intensity1" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -194,7 +194,8 @@
            <input type="radio" name="intensity1" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
 
-       <!-- Question 2 -->
+       <!-- Repeat similar structure for questions 2 to 5 -->
+
        <div class="option-group">
            <label id="q2" data-en="2. How often have you experienced moderate bleeding (streams of blood) in the last 4 weeks?" data-no="2. Hvor ofte har du opplevd moderat blødning (blodstrømmer) de siste 4 ukene?">2. How often have you experienced moderate bleeding (streams of blood) in the last 4 weeks?</label>
            <input type="radio" name="intensity2" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -204,7 +205,6 @@
            <input type="radio" name="intensity2" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
 
-       <!-- Question 3 -->
        <div class="option-group">
            <label id="q3" data-en="3. How often have you experienced severe bleeding (significant blood loss) in the last 4 weeks?" data-no="3. Hvor ofte har du opplevd alvorlig blødning (betydelig blodtap) de siste 4 ukene?">3. How often have you experienced severe bleeding (significant blood loss) in the last 4 weeks?</label>
            <input type="radio" name="intensity3" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -214,7 +214,6 @@
            <input type="radio" name="intensity3" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
 
-       <!-- Question 4 -->
        <div class="option-group">
            <label id="q4" data-en="4. How often have you experienced very severe bleeding (required medical attention) in the last 4 weeks?" data-no="4. Hvor ofte har du opplevd svært alvorlig blødning (krevd medisinsk behandling) de siste 4 ukene?">4. How often have you experienced very severe bleeding (required medical attention) in the last 4 weeks?</label>
            <input type="radio" name="intensity4" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -224,7 +223,6 @@
            <input type="radio" name="intensity4" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
 
-       <!-- Question 5 -->
        <div class="option-group">
            <label id="q5" data-en="5. Have you needed a blood transfusion due to nosebleeds in the last 4 weeks?" data-no="5. Har du trengt en blodoverføring på grunn av neseblødninger de siste 4 ukene?">5. Have you needed a blood transfusion due to nosebleeds in the last 4 weeks?</label>
            <input type="radio" name="transfusion" value="0"> <span data-en="No" data-no="Nei">No</span><br>
@@ -252,7 +250,7 @@
 
    <!-- Acknowledgment Section -->
    <div class="acknowledgment">
-       <p>The Intensity, Frequency and Need for Blood Transfusion score (IFT) was created by Sinan Dheyauldeen M.D., PhD and Gregor Bachmann-Harildstad M.D., PhD. The online version was created by Ole Jakob Jørgensen M.D.</p>
+       <p>The Intensity, Frequency, and Need for Blood Transfusion Score (IFT) was created by Sinan Dheyauldeen, M.D., PhD and Gregor Bachmann-Harildstad, M.D., PhD. The online version was created by Ole Jakob Jørgensen, M.D.</p>
    </div>
 
    <script src="script.js"></script>
