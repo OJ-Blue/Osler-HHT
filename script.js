@@ -34,12 +34,15 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
 
     // Display the result
     const resultElement = document.getElementById('result');
-    resultElement.innerHTML = `<div class="result-text">${classification}</div><div>Your score: ${score}/30</div>`;
+    resultElement.innerHTML = `<div class="result-text">${classification}</div><div>${lang === 'en' ? 'Your score' : 'Din poengsum'}: ${score}/30</div>`;
+
+    // Show the scale
+    document.getElementById('scale-container').style.display = 'block';
 
     // Update score marker on the scale
     const scoreMarker = document.getElementById('score-marker');
     const percentage = (score / 30) * 100;
-    scoreMarker.style.left = `${percentage}%`;
+    scoreMarker.style.left = `calc(${percentage}% - 10px)`; // Adjust for arrow width
 });
 
 // Language toggle functionality
@@ -58,16 +61,15 @@ langButtons.forEach(button => {
 });
 
 function updateLanguage(language) {
+    document.documentElement.lang = language;
     document.getElementById('page-title').textContent = language === 'en' ? 'Epistaxis Grading (IFT)' : 'Epistaxis Gradering (IFT)';
-    document.getElementById('subheading').textContent = document.getElementById('subheading').getAttribute(`data-${language}`);
 
-    const labels = document.querySelectorAll('label');
-    labels.forEach(label => {
-        label.textContent = label.getAttribute(`data-${language}`);
-    });
+    const description = document.getElementById('description');
+    description.textContent = description.getAttribute(`data-${language}`);
 
-    const spans = document.querySelectorAll('span');
-    spans.forEach(span => {
-        span.textContent = span.getAttribute(`data-${language}`);
+    // Update labels and spans
+    const elementsToUpdate = document.querySelectorAll('[data-en]');
+    elementsToUpdate.forEach(element => {
+        element.textContent = element.getAttribute(`data-${language}`);
     });
 }
