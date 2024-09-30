@@ -77,3 +77,4 @@ function updateLanguage(language) {
         element.textContent = element.getAttribute(`data-${language}`);
     });
 }
+
