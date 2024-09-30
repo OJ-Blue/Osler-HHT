@@ -117,7 +117,7 @@
    <h1 id="page-title">Epistaxis Grading (IFT)</h1>
 
    <!-- Subheading with instruction for patients -->
-   <h2 id="subheading" data-en="Please select only two bleeding intensities" data-no="Vennligst velg kun to blødningsintensiteter">Please select only two bleeding intensities</h2>
+   <h2 id="subheading" data-en="Please select the appropriate bleeding intensities and frequency" data-no="Vennligst velg de riktige blødningsintensitetene og frekvensen">Please select the appropriate bleeding intensities and frequency</h2>
 
    <!-- Language Switch -->
    <div class="language-switch">
@@ -126,47 +126,52 @@
    </div>
 
    <form id="epistaxisForm">
-       <!-- Intensity Questions with new Norwegian translations -->
+       <!-- Intensity 1 -->
        <div class="option-group">
-           <label id="q1" data-en="1. How often have you experienced mild bleeding (spots or drops of blood) in the last 4 weeks?" data-no="1. Hvor ofte har du opplevd mild blødning (blodflekker eller dråper) de siste 4 ukene?">1. How often have you experienced mild bleeding (spots or drops of blood) in the last 4 weeks?</label>
-           <input type="radio" name="intensity1" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity1" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity1" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity1" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity1" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
+           <label id="q1" data-en="1. During the last 4 weeks, how many times did you get spot(s) of blood from the nose or dripped a few drops?" data-no="1. I løpet av de siste 4 ukene, hvor mange ganger har du fått blodrypp fra nesen (inkl.blodflekk på lommetørkle)?">1. During the last 4 weeks, how many times did you get spot(s) of blood from the nose or dripped a few drops?</label>
+           <input type="radio" name="intensity1" value="0" data-en="None" data-no="Ingen"> <span data-en="None" data-no="Ingen">None</span><br>
+           <input type="radio" name="intensity1" value="1" data-en="1-5 times" data-no="1-5 ganger"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
+           <input type="radio" name="intensity1" value="2" data-en="6-10 times" data-no="6-10 ganger"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
+           <input type="radio" name="intensity1" value="3" data-en="11-27 times" data-no="11-27 ganger"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
+           <input type="radio" name="intensity1" value="4" data-en="Daily or more" data-no="Daglig eller mer"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
 
+       <!-- Intensity 2 -->
        <div class="option-group">
-           <label id="q2" data-en="2. How often have you experienced moderate bleeding (streams of blood) in the last 4 weeks?" data-no="2. Hvor ofte har du opplevd moderat blødning (blodstrømmer) de siste 4 ukene?">2. How often have you experienced moderate bleeding (streams of blood) in the last 4 weeks?</label>
-           <input type="radio" name="intensity2" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity2" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity2" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity2" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity2" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
+           <label id="q2" data-en="2. During the last 4 weeks, how many times did you get a blood-soaked handkerchief?" data-no="2. I løpet av de siste 4 ukene, hvor mange ganger har du fått blod-gjennomtrukket lommetørkle?">2. During the last 4 weeks, how many times did you get a blood-soaked handkerchief?</label>
+           <input type="radio" name="intensity2" value="0" data-en="None" data-no="Ingen"> <span data-en="None" data-no="Ingen">None</span><br>
+           <input type="radio" name="intensity2" value="1" data-en="1-5 times" data-no="1-5 ganger"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
+           <input type="radio" name="intensity2" value="2" data-en="6-10 times" data-no="6-10 ganger"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
+           <input type="radio" name="intensity2" value="3" data-en="11-27 times" data-no="11-27 ganger"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
+           <input type="radio" name="intensity2" value="4" data-en="Daily or more" data-no="Daglig eller mer"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
 
+       <!-- Intensity 3 -->
        <div class="option-group">
-           <label id="q3" data-en="3. How often have you experienced severe bleeding (significant blood loss) in the last 4 weeks?" data-no="3. Hvor ofte har du opplevd alvorlig blødning (betydelig blodtap) de siste 4 ukene?">3. How often have you experienced severe bleeding (significant blood loss) in the last 4 weeks?</label>
-           <input type="radio" name="intensity3" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity3" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity3" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity3" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity3" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
+           <label id="q3" data-en="3. During the last 4 weeks, how many times did you get a blood-soaked towel?" data-no="3. I løpet av de siste 4 ukene, hvor mange ganger har du fått blod-gjennomtrukket håndkle?">3. During the last 4 weeks, how many times did you get a blood-soaked towel?</label>
+           <input type="radio" name="intensity3" value="0" data-en="None" data-no="Ingen"> <span data-en="None" data-no="Ingen">None</span><br>
+           <input type="radio" name="intensity3" value="1" data-en="1-5 times" data-no="1-5 ganger"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
+           <input type="radio" name="intensity3" value="2" data-en="6-10 times" data-no="6-10 ganger"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
+           <input type="radio" name="intensity3" value="3" data-en="11-27 times" data-no="11-27 ganger"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
+           <input type="radio" name="intensity3" value="4" data-en="Daily or more" data-no="Daglig eller mer"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
 
+       <!-- Intensity 4 -->
        <div class="option-group">
-           <label id="q4" data-en="4. How often have you experienced very severe bleeding (required medical attention) in the last 4 weeks?" data-no="4. Hvor ofte har du opplevd svært alvorlig blødning (krevd medisinsk behandling) de siste 4 ukene?">4. How often have you experienced very severe bleeding (required medical attention) in the last 4 weeks?</label>
-           <input type="radio" name="intensity4" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity4" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity4" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity4" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity4" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
+           <label id="q4" data-en="4. During the last 4 weeks, how many times did you get bleeding that fills so much as a bowl (1/2 litre) of blood?" data-no="4. I løpet av de siste 4 ukene, hvor mange ganger har du blødd så mye at det kunne fylle en bolle (1/2 liter)?">4. During the last 4 weeks, how many times did you get bleeding that fills so much as a bowl (1/2 litre) of blood?</label>
+           <input type="radio" name="intensity4" value="0" data-en="None" data-no="Ingen"> <span data-en="None" data-no="Ingen">None</span><br>
+           <input type="radio" name="intensity4" value="1" data-en="1-5 times" data-no="1-5 ganger"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
+           <input type="radio" name="intensity4" value="2" data-en="6-10 times" data-no="6-10 ganger"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
+           <input type="radio" name="intensity4" value="3" data-en="11-27 times" data-no="11-27 ganger"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
+           <input type="radio" name="intensity4" value="4" data-en="Daily or more" data-no="Daglig eller mer"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
 
+       <!-- Blood Transfusion -->
        <div class="option-group">
-           <label id="q5" data-en="5. Have you needed a blood transfusion due to nosebleeds in the last 4 weeks?" data-no="5. Har du trengt en blodoverføring på grunn av neseblødning de siste 4 ukene?">5. Have you needed a blood transfusion due to nosebleeds in the last 4 weeks?</label>
-           <input type="radio" name="transfusion" value="0"> <span data-en="No" data-no="Nei">No</span><br>
-           <input type="radio" name="transfusion" value="5"> <span data-en="Yes" data-no="Ja">Yes</span>
+           <label id="q5" data-en="5. During the last 4 weeks, how many times did you get a blood transfusion?" data-no="5. I løpet av de siste 4 ukene, hvor mange ganger har du fått blodtransfusjon?">5. During the last 4 weeks, how many times did you get a blood transfusion?</label>
+           <input type="radio" name="transfusion" value="0" data-en="None" data-no="Ingen"> <span data-en="None" data-no="Ingen">None</span><br>
+           <input type="radio" name="transfusion" value="1" data-en="Once" data-no="En gang"> <span data-en="Once" data-no="En gang">Once</span><br>
+           <input type="radio" name="transfusion" value="2" data-en="More than once" data-no="Mer enn en gang"> <span data-en="More than once" data-no="Mer enn en gang">More than once</span>
        </div>
 
        <button type="submit">Calculate Score / Beregn Poeng</button>
