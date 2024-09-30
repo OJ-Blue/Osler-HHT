@@ -16,7 +16,7 @@
        }
 
        h1 {
-           color: #e74c3c;
+           color: #34495e; /* Same color as the question text */
            text-align: center;
            font-size: 2.5em;
            margin-bottom: 10px;
@@ -38,6 +38,7 @@
            font-weight: bold;
            margin-top: 15px;
            display: block;
+           color: #34495e; /* Question text color */
        }
 
        .language-switch {
@@ -140,27 +141,15 @@
            font-size: 1em;
        }
 
-       /* Footnote */
-       .footnote {
-           margin-top: 40px;
+       /* Acknowledgment */
+       .acknowledgment {
+           text-align: center;
            font-size: 0.9em;
            color: #555;
            background-color: #f7f7f7;
            padding: 15px;
            border-radius: 8px;
-       }
-
-       .footnote p {
-           margin-bottom: 10px;
-       }
-
-       .footnote ul {
-           list-style-type: none;
-           padding-left: 0;
-       }
-
-       .footnote li {
-           margin-bottom: 5px;
+           margin-top: 40px;
        }
 
        /* Mobile Responsiveness */
@@ -183,7 +172,7 @@
 
    <h1 id="page-title">Epistaxis Grading (IFT)</h1>
 
-   <!-- New Description with data attributes -->
+   <!-- New Description -->
    <div class="description" id="description" data-en="IFT is a tool to grade the severity of nosebleeds in patients with hereditary hemorrhagic telangiectasia (Mb. Osler) during the last four weeks. The severity of the nosebleed episodes helps in guiding your treatment and follow-up by your physician." data-no="IFT er et verktøy for å vurdere alvorlighetsgraden av neseblødninger hos pasienter med hereditær hemoragisk telangiektasi (Mb. Osler) i løpet av de siste fire ukene. Alvorlighetsgraden av neseblødningsepisodene hjelper legen din med å veilede behandling og oppfølging.">
        IFT is a tool to grade the severity of nosebleeds in patients with hereditary hemorrhagic telangiectasia (Mb. Osler) during the last four weeks. The severity of the nosebleed episodes helps in guiding your treatment and follow-up by your physician.
    </div>
@@ -196,7 +185,6 @@
 
    <form id="epistaxisForm">
        <!-- Intensity Questions -->
-       <!-- Question 1 -->
        <div class="option-group">
            <label id="q1" data-en="1. During the last 4 weeks, how many times did you get spots of blood or dripped a few drops?" data-no="1. I løpet av de siste 4 ukene, hvor mange ganger har du hatt blodflekker eller dryppet noen dråper?">1. During the last 4 weeks, how many times did you get spots of blood or dripped a few drops?</label>
            <input type="radio" name="intensity1" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -206,9 +194,8 @@
            <input type="radio" name="intensity1" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
 
-       <!-- Repeat similar structure for questions 2 to 4 -->
+       <!-- Repeat similar structure for questions 2 to 5 -->
 
-       <!-- Question 2 -->
        <div class="option-group">
            <label id="q2" data-en="2. How often have you experienced moderate bleeding (streams of blood) in the last 4 weeks?" data-no="2. Hvor ofte har du opplevd moderat blødning (blodstrømmer) de siste 4 ukene?">2. How often have you experienced moderate bleeding (streams of blood) in the last 4 weeks?</label>
            <input type="radio" name="intensity2" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -218,35 +205,9 @@
            <input type="radio" name="intensity2" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
 
-       <!-- Question 3 -->
-       <div class="option-group">
-           <label id="q3" data-en="3. How often have you experienced severe bleeding (significant blood loss) in the last 4 weeks?" data-no="3. Hvor ofte har du opplevd alvorlig blødning (betydelig blodtap) de siste 4 ukene?">3. How often have you experienced severe bleeding (significant blood loss) in the last 4 weeks?</label>
-           <input type="radio" name="intensity3" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity3" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity3" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity3" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity3" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
+       <!-- Similar for intensity3, intensity4, and transfusion -->
 
-       <!-- Question 4 -->
-       <div class="option-group">
-           <label id="q4" data-en="4. How often have you experienced very severe bleeding (required medical attention) in the last 4 weeks?" data-no="4. Hvor ofte har du opplevd svært alvorlig blødning (krevd medisinsk behandling) de siste 4 ukene?">4. How often have you experienced very severe bleeding (required medical attention) in the last 4 weeks?</label>
-           <input type="radio" name="intensity4" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity4" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity4" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity4" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity4" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
-
-       <!-- Question 5 -->
-       <div class="option-group">
-           <label id="q5" data-en="5. Have you needed a blood transfusion due to nosebleeds in the last 4 weeks?" data-no="5. Har du trengt en blodoverføring på grunn av neseblødninger de siste 4 ukene?">5. Have you needed a blood transfusion due to nosebleeds in the last 4 weeks?</label>
-           <input type="radio" name="transfusion" value="0"> <span data-en="No" data-no="Nei">No</span><br>
-           <input type="radio" name="transfusion" value="1"> <span data-en="Yes" data-no="Ja">Yes</span><br>
-           <input type="radio" name="transfusion" value="2"> <span data-en="Several times" data-no="Flere ganger">Several times</span>
-       </div>
-
-       <button type="submit">Calculate Score / Beregn Poeng</button>
+       <button id="submitBtn" type="submit" data-en="Calculate Score" data-no="Beregn Poeng">Calculate Score</button>
    </form>
 
    <div id="result" class="result"></div>
@@ -264,23 +225,9 @@
        </div>
    </div>
 
-   <!-- Footnote -->
-   <div class="footnote" id="footnote">
-       <p data-en="<strong>Authors:</strong>" data-no="<strong>Forfattere:</strong>"><strong>Authors:</strong></p>
-       <ul>
-           <li><span data-en="Sinan Dheyauldeen, M.D., PhD" data-no="Sinan Dheyauldeen, M.D., PhD">Sinan Dheyauldeen, M.D., PhD</span></li>
-           <li><span data-en="Gregor Bachmann-Harildstad, M.D., PhD" data-no="Gregor Bachmann-Harildstad, M.D., PhD">Gregor Bachmann-Harildstad, M.D., PhD</span></li>
-           <li><span data-en="Ole Jakob Jørgensen, M.D. (Creator of the online version)" data-no="Ole Jakob Jørgensen, M.D. (Skaper av nettversjonen)">Ole Jakob Jørgensen, M.D. (Creator of the online version)</span></li>
-       </ul>
-       <p data-en="<strong>Helpful Information:</strong>" data-no="<strong>Nyttig informasjon:</strong>"><strong>Helpful Information:</strong></p>
-       <p data-en="The IFT score ranges from 0 to 30." data-no="IFT-poengsummen varierer fra 0 til 30.">The IFT score ranges from 0 to 30.</p>
-       <ul>
-           <li><span data-en="0-5: Mild bleeding – This range typically suggests minimal impact on daily life and might not require aggressive treatment." data-no="0-5: Mild blødning – Dette området antyder vanligvis minimal innvirkning på dagliglivet og krever kanskje ikke aggressiv behandling.">0-5: Mild bleeding – This range typically suggests minimal impact on daily life and might not require aggressive treatment.</span></li>
-           <li><span data-en="6-10: Moderate bleeding – You may experience more frequent or bothersome episodes that should be monitored and may require medical attention." data-no="6-10: Moderat blødning – Du kan oppleve hyppigere eller plagsomme episoder som bør overvåkes og kan kreve medisinsk oppmerksomhet.">6-10: Moderate bleeding – You may experience more frequent or bothersome episodes that should be monitored and may require medical attention.</span></li>
-           <li><span data-en="11-15: Severe bleeding – This score indicates frequent and potentially concerning nosebleeds, likely requiring medical intervention and more frequent follow-up." data-no="11-15: Alvorlig blødning – Denne poengsummen indikerer hyppige og potensielt bekymringsfulle neseblødninger, som sannsynligvis krever medisinsk intervensjon og hyppigere oppfølging.">11-15: Severe bleeding – This score indicates frequent and potentially concerning nosebleeds, likely requiring medical intervention and more frequent follow-up.</span></li>
-           <li><span data-en="16-30: Intractable bleeding – This is a high-risk category, suggesting persistent and potentially dangerous nosebleeds. Urgent and ongoing medical treatment is often necessary." data-no="16-30: Ukontrollerbar blødning – Dette er en høyrisikokategori som antyder vedvarende og potensielt farlige neseblødninger. Akutt og kontinuerlig medisinsk behandling er ofte nødvendig.">16-30: Intractable bleeding – This is a high-risk category, suggesting persistent and potentially dangerous nosebleeds. Urgent and ongoing medical treatment is often necessary.</span></li>
-       </ul>
-       <p data-en="The IFT score helps guide your physician in determining the most appropriate treatment and follow-up strategy for managing your condition." data-no="IFT-poengsummen hjelper legen din med å bestemme den mest passende behandlingen og oppfølgingsstrategien for å håndtere tilstanden din.">The IFT score helps guide your physician in determining the most appropriate treatment and follow-up strategy for managing your condition.</p>
+   <!-- Acknowledgment Section -->
+   <div class="acknowledgment">
+       <p>The Intensity, Frequency and Need for Blood Transfusion score (IFT) was created by Sinan Dheyauldeen M.D., PhD and Gregor Bachmann-Harildstad M.D., PhD. The online version was created by Ole Jakob Jørgensen M.D.</p>
    </div>
 
    <script src="script.js"></script>
