@@ -67,6 +67,10 @@ function updateLanguage(language) {
     const description = document.getElementById('description');
     description.textContent = description.getAttribute(`data-${language}`);
 
+    // Update button text
+    const submitButton = document.getElementById('submitBtn');
+    submitButton.textContent = submitButton.getAttribute(`data-${language}`);
+
     // Update labels and spans
     const elementsToUpdate = document.querySelectorAll('[data-en]');
     elementsToUpdate.forEach(element => {
