@@ -38,41 +38,8 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
        resultClass = 'severe';
    }
 
-   // Display the result in the selected language and with the corresponding class
+   // Display the result in the selected language and with the appropriate classification
    const resultElement = document.getElementById('result');
    resultElement.textContent = classification;
-   resultElement.className = `result ${resultClass}`;
+   resultElement.className = 'result ' + resultClass;
 });
-
-// Language toggle functionality
-let lang = 'en';  // Default language
-
-document.getElementById('english').addEventListener('click', function() {
-   setLanguage('en');
-});
-
-document.getElementById('norwegian').addEventListener('click', function() {
-   setLanguage('no');
-});
-
-function setLanguage(language) {
-   lang = language;
-
-   // Toggle active class on buttons
-   document.getElementById('english').classList.toggle('active', language === 'en');
-   document.getElementById('norwegian').classList.toggle('active', language === 'no');
-
-   // Update text based on language selection
-   document.getElementById('page-title').textContent = language === 'en' ? 'Epistaxis Grading (IFT)' : 'Epistaxis Gradering (IFT)';
-   document.getElementById('subheading').textContent = document.getElementById('subheading').getAttribute(`data-${language}`);
-
-   const labels = document.querySelectorAll('label');
-   labels.forEach(label => {
-       label.textContent = label.getAttribute(`data-${language}`);
-   });
-
-   const spans = document.querySelectorAll('span');
-   spans.forEach(span => {
-       span.textContent = span.getAttribute(`data-${language}`);
-   });
-}
