@@ -20,28 +20,26 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
 
     // Determine the bleeding classification based on the score
     let classification = '';
-    let resultClass = '';
     if (score === 0) {
         classification = lang === 'en' ? 'No bleeding' : 'Ingen blødning';
-        resultClass = 'mild';
     } else if (score >= 1 && score <= 5) {
         classification = lang === 'en' ? 'Mild bleeding' : 'Mild blødning';
-        resultClass = 'mild';
     } else if (score >= 6 && score <= 10) {
         classification = lang === 'en' ? 'Moderate bleeding' : 'Moderat blødning';
-        resultClass = 'moderate';
     } else if (score >= 11 && score <= 15) {
         classification = lang === 'en' ? 'Severe bleeding' : 'Alvorlig blødning';
-        resultClass = 'severe';
     } else if (score >= 16) {
         classification = lang === 'en' ? 'Intractable bleeding' : 'Ukontrollerbar blødning';
-        resultClass = 'severe';
     }
 
     // Display the result
     const resultElement = document.getElementById('result');
-    resultElement.textContent = classification;
-    resultElement.className = `result ${resultClass}`;
+    resultElement.innerHTML = `<div class="result-text">${classification}</div><div>Your score: ${score}/30</div>`;
+
+    // Update score marker on the scale
+    const scoreMarker = document.getElementById('score-marker');
+    const percentage = (score / 30) * 100;
+    scoreMarker.style.left = `${percentage}%`;
 });
 
 // Language toggle functionality
