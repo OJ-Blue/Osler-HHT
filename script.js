@@ -1,48 +1,49 @@
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
     event.preventDefault();  // Prevent form submission
 
-    // Collect intensity selections
-    const intensities = [
-        parseInt(document.querySelector('input[name="intensity1"]:checked')?.value || 0),
-        parseInt(document.querySelector('input[name="intensity2"]:checked')?.value || 0),
-        parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0),
-        parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0)
-    ];
+    // Collect values from each intensity question (multiply intensity by frequency)
+    const intensity1 = 1 * parseInt(document.querySelector('input[name="intensity1"]:checked')?.value || 0);
+    const intensity2 = 2 * parseInt(document.querySelector('input[name="intensity2"]:checked')?.value || 0);
+    const intensity3 = 3 * parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0);
+    const intensity4 = 4 * parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0);
+    
+    // Collect the transfusion score (question 5)
     const transfusion = parseInt(document.querySelector('input[name="transfusion"]:checked')?.value || 0);
 
-    // Sort intensities and use the two highest values
-    const sortedIntensities = intensities.sort((a, b) => b - a);
-    const firstIntensity = sortedIntensities[0] || 0;
-    const secondIntensity = sortedIntensities[1] || 0;
+    // Put all intensity scores into an array
+    const intensityScores = [intensity1, intensity2, intensity3, intensity4];
 
-    // Calculate score
-    const score = (firstIntensity * 3) + (secondIntensity * 4) + transfusion;
+    // Sort the intensities by severity and select the two most severe (highest values)
+    const twoMostSevere = intensityScores.sort((a, b) => b - a).slice(0, 2);
 
-    // Determine the bleeding classification based on the score
+    // Calculate the total score by summing the two most severe intensities and the transfusion score
+    const totalScore = twoMostSevere.reduce((acc, val) => acc + val, 0) + transfusion;
+
+    // Determine the bleeding classification based on the total score
     let classification = '';
-    if (score === 0) {
+    if (totalScore === 0) {
         classification = lang === 'en' ? 'No bleeding' : 'Ingen blødning';
-    } else if (score >= 1 && score <= 5) {
+    } else if (totalScore >= 1 && totalScore <= 5) {
         classification = lang === 'en' ? 'Mild bleeding' : 'Mild blødning';
-    } else if (score >= 6 && score <= 10) {
+    } else if (totalScore >= 6 && totalScore <= 10) {
         classification = lang === 'en' ? 'Moderate bleeding' : 'Moderat blødning';
-    } else if (score >= 11 && score <= 15) {
+    } else if (totalScore >= 11 && totalScore <= 15) {
         classification = lang === 'en' ? 'Severe bleeding' : 'Alvorlig blødning';
-    } else if (score >= 16) {
+    } else if (totalScore >= 16) {
         classification = lang === 'en' ? 'Intractable bleeding' : 'Ukontrollerbar blødning';
     }
 
     // Display the result
     const resultElement = document.getElementById('result');
-    resultElement.innerHTML = `<div class="result-text">${classification}</div><div>${lang === 'en' ? 'Your score' : 'Din poengsum'}: ${score}/30</div>`;
+    resultElement.innerHTML = `<div class="result-text">${classification}</div><div>${lang === 'en' ? 'Your score' : 'Din poengsum'}: ${totalScore}/30</div>`;
 
     // Show the scale
     document.getElementById('scale-container').style.display = 'block';
 
-    // Update score marker on the scale
+    // Update the score marker on the scale
     const scoreMarker = document.getElementById('score-marker');
-    const percentage = (score / 30) * 100;
-    scoreMarker.style.left = `calc(${percentage}% - 10px)`; // Adjust for arrow width
+    const percentage = (totalScore / 30) * 100;
+    scoreMarker.style.left = `calc(${percentage}% - 10px)`;  // Adjust for arrow width
 });
 
 // Language toggle functionality
@@ -77,3 +78,4 @@ function updateLanguage(language) {
         element.textContent = element.getAttribute(`data-${language}`);
     });
 }
+
