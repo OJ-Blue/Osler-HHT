@@ -6,8 +6,8 @@
    <title>Epistaxis Grading (IFT)</title>
    <style>
        body {
-           font-family: 'Roboto', sans-serif;
-           background-color: #f0f4f8;
+           font-family: 'Arial', sans-serif;
+           background-color: #f9f9f9;
            color: #333;
            padding: 20px;
            max-width: 800px;
@@ -18,13 +18,14 @@
        h1 {
            color: #2c3e50;
            text-align: center;
-           font-size: 2em;
+           font-size: 2.5em;
+           margin-bottom: 10px;
        }
 
        h2 {
            color: #34495e;
            font-size: 1.3em;
-           margin-top: 20px;
+           margin-top: 10px;
            text-align: center;
        }
 
@@ -47,6 +48,7 @@
            cursor: pointer;
            margin: 5px;
            border-radius: 4px;
+           font-size: 1em;
        }
 
        .language-switch button.active {
@@ -58,6 +60,7 @@
            padding: 20px;
            border-radius: 8px;
            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+           margin-bottom: 30px;
        }
 
        .option-group {
@@ -69,7 +72,7 @@
        }
 
        button[type="submit"] {
-           background-color: #2c3e50;
+           background-color: #3498db;
            color: white;
            padding: 10px 20px;
            border: none;
@@ -78,26 +81,51 @@
            display: block;
            width: 100%;
            border-radius: 4px;
-           font-size: 1.1em;
+           font-size: 1.2em;
        }
 
        .result {
            text-align: center;
            margin-top: 20px;
-           font-size: 1.5em;
+           font-size: 1.8em;
            color: #333;
        }
 
-       .result.mild {
-           color: #27ae60; /* green */
+       .result-text {
+           margin-top: 10px;
+           font-size: 1.5em;
        }
 
-       .result.moderate {
-           color: #f39c12; /* yellow/orange */
+       /* Score scale */
+       .scale-container {
+           margin-top: 30px;
+           text-align: center;
        }
 
-       .result.severe {
-           color: #e74c3c; /* red */
+       .score-scale {
+           display: flex;
+           justify-content: space-between;
+           background: linear-gradient(to right, #27ae60, #f39c12, #e74c3c);
+           padding: 10px;
+           border-radius: 6px;
+           margin-bottom: 15px;
+           position: relative;
+       }
+
+       .score-marker {
+           position: absolute;
+           top: -10px;
+           width: 2px;
+           height: 40px;
+           background-color: #34495e;
+       }
+
+       .score-label {
+           font-weight: bold;
+           color: #333;
+           position: relative;
+           top: 5px;
+           font-size: 1em;
        }
 
        /* Mobile Responsiveness */
@@ -109,6 +137,10 @@
            form {
                padding: 15px;
            }
+
+           .score-label {
+               font-size: 0.8em;
+           }
        }
    </style>
 </head>
@@ -116,6 +148,7 @@
 
    <h1 id="page-title">Epistaxis Grading (IFT)</h1>
 
+   <!-- Subheading with instruction for patients -->
    <h2 id="subheading" data-en="Please select only two bleeding intensities" data-no="Vennligst velg kun to blødningsintensiteter">Please select only two bleeding intensities</h2>
 
    <!-- Language Switch -->
@@ -165,13 +198,25 @@
        <div class="option-group">
            <label id="q5" data-en="5. Have you needed a blood transfusion due to nosebleeds in the last 4 weeks?" data-no="5. Har du trengt en blodoverføring på grunn av neseblødning de siste 4 ukene?">5. Have you needed a blood transfusion due to nosebleeds in the last 4 weeks?</label>
            <input type="radio" name="transfusion" value="0"> <span data-en="No" data-no="Nei">No</span><br>
-           <input type="radio" name="transfusion" value="5"> <span data-en="Yes" data-no="Ja">Yes</span>
+           <input type="radio" name="transfusion" value="5"> <span data-en="Yes" data-no="Ja">Yes</span><br>
+           <input type="radio" name="transfusion" value="10"> <span data-en="Several times" data-no="Flere ganger">Several times</span>
        </div>
 
        <button type="submit">Calculate Score / Beregn Poeng</button>
    </form>
 
    <div id="result" class="result"></div>
+
+   <!-- Score Scale -->
+   <div class="scale-container">
+       <div class="score-scale">
+           <span class="score-label">0</span>
+           <span class="score-label">10</span>
+           <span class="score-label">20</span>
+           <span class="score-label">30</span>
+           <div id="score-marker" class="score-marker" style="left: 0;"></div>
+       </div>
+   </div>
 
    <script src="script.js"></script>
 </body>
