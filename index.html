@@ -41,7 +41,6 @@
            color: #34495e;
        }
 
-       /* Language switch buttons now in the upper-right corner */
        .language-switch {
            text-align: right;
            margin-bottom: 20px;
@@ -113,25 +112,25 @@
            font-size: 1.5em;
            border-radius: 8px;
            display: inline-block;
-           background-color: #ffffff; /* White background */
+           background-color: #ffffff;
            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
        }
 
        /* Specific colors for grading results */
        .result-text.mild {
-           color: #27ae60; /* Green for mild */
+           color: #27ae60;
        }
 
        .result-text.moderate {
-           color: #f39c12; /* Yellow/orange for moderate */
+           color: #f39c12;
        }
 
        .result-text.severe {
-           color: #e74c3c; /* Red for severe */
+           color: #e74c3c;
        }
 
        .result-text.intractable {
-           color: #c0392b; /* Darker red for intractable */
+           color: #c0392b;
        }
 
        /* Score scale */
@@ -149,6 +148,7 @@
            margin-bottom: 15px;
        }
 
+       /* Flipped arrowhead */
        .score-marker {
            position: absolute;
            top: -20px;
@@ -156,7 +156,7 @@
            height: 0;
            border-left: 10px solid transparent;
            border-right: 10px solid transparent;
-           border-bottom: 20px solid #34495e;
+           border-top: 20px solid #34495e;
        }
 
        .score-labels {
@@ -234,7 +234,7 @@
            <input type="radio" name="transfusion" value="2"> <span data-en="Several times" data-no="Flere ganger">Several times</span>
        </div>
 
-       <button id="submitBtn" type="submit" data-en="Calculate Score" data-no="Beregn poeng">Calculate Score</button>
+       <button id="submitBtn" type="submit" data-en="calculate score" data-no="beregn poeng">calculate score</button>
    </form>
 
    <div id="result" class="result"></div>
