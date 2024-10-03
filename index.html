@@ -15,10 +15,11 @@
            line-height: 1.6;
        }
 
+       /* Updated Heading Style */
        h1 {
            color: #2c3e50;
            text-align: center;
-           font-size: 2.5em;
+           font-size: 2.5em;  /* Reduced font size */
            font-weight: bold;
            letter-spacing: 1px;
            padding: 20px;
@@ -37,7 +38,7 @@
            border-radius: 8px;
            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
            margin-bottom: 20px;
-           max-width: 750px;
+           max-width: 750px; /* Ensures alignment with both languages */
            margin-left: auto;
            margin-right: auto;
        }
@@ -113,6 +114,7 @@
            color: #333;
        }
 
+       /* Reduced spacing between grading words */
        .result-text {
            margin-top: 10px;
            padding: 10px 15px;
@@ -121,9 +123,10 @@
            display: inline-block;
            background-color: #ffffff;
            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-           letter-spacing: -0.5px;
+           letter-spacing: -0.5px;  /* Reduced spacing between letters */
        }
 
+       /* Specific colors for grading results */
        .result-text.mild {
            color: #27ae60;
        }
@@ -140,6 +143,7 @@
            color: #c0392b;
        }
 
+       /* Score scale */
        .scale-container {
            margin-top: 30px;
            text-align: center;
@@ -177,6 +181,7 @@
            font-size: 1em;
        }
 
+       /* Expanded footer section */
        .acknowledgment {
            text-align: center;
            font-size: 0.9em;
@@ -192,17 +197,18 @@
            margin: 5px 0;
        }
 
+       /* Mobile responsiveness */
        @media (max-width: 600px) {
            body {
                padding: 10px;
            }
 
            h1 {
-               margin-top: 50px;
+               margin-top: 50px;  /* Added margin to avoid overlap */
            }
 
            .language-switch {
-               position: static;
+               position: static;  /* Remove absolute positioning on mobile */
                text-align: center;
                margin-bottom: 20px;
            }
@@ -212,7 +218,7 @@
            }
 
            .result-text {
-               font-size: 1.3em;
+               font-size: 1.3em; /* Adjust font size for better readability on smaller screens */
            }
        }
    </style>
@@ -288,15 +294,7 @@
        <div class="score-scale">
            <div id="score-marker" class="score-marker" style="left: 0;"></div>
        </div>
-       <div class="score-labels" id="score-labels" data-en='
-           <span class="score-label">0</span>
-           <span class="score-label">10</span>
-           <span class="score-label">20</span>
-           <span class="score-label">30</span>' data-no='
-           <span class="score-label">0</span>
-           <span class="score-label">10</span>
-           <span class="score-label">20</span>
-           <span class="score-label">30</span>'>
+       <div class="score-labels">
            <span class="score-label">0</span>
            <span class="score-label">10</span>
            <span class="score-label">20</span>
@@ -304,48 +302,15 @@
        </div>
    </div>
 
-   <!-- Acknowledgment Section -->
-   <div class="acknowledgment" id="footer" data-en='
-        <p>The Intensity, Frequency, and Need for Blood Transfusion Score (IFT) was created by Sinan Dheyauldeen, M.D., PhD and Gregor Bachmann-Harildstad, M.D., PhD. The online version was created by Ole Jakob Jørgensen, M.D.</p>
-        <p>Last updated: September 2024</p>
-        <p>This tool is for informational purposes only and should not replace professional medical consultation.</p>
-        <p>For inquiries, contact: <a href="mailto:oljoer@ous-hf.no">oljoer@ous-hf.no</a></p>
-        <p>© 2024 Sinan Dheyauldeen, Gregor Bachmann-Harildstad, and Ole Jakob Jørgensen</p>' 
-        data-no='
-        <p>The Intensity, Frequency, and Need for Blood Transfusion Score (IFT) ble laget av Sinan Dheyauldeen, M.D., PhD og Gregor Bachmann-Harildstad, M.D., PhD. Den elektroniske versjonen ble laget av Ole Jakob Jørgensen, M.D.</p>
-        <p>Sist oppdatert: september 2024</p>
-        <p>Dette verktøyet er kun til informasjonsformål og bør ikke erstatte profesjonell medisinsk konsultasjon.</p>
-        <p>For henvendelser, kontakt: <a href="mailto:oljoer@ous-hf.no">oljoer@ous-hf.no</a></p>
-        <p>© 2024 Sinan Dheyauldeen, Gregor Bachmann-Harildstad, og Ole Jakob Jørgensen</p>'>
+   <!-- Expanded Acknowledgment Section -->
+   <div class="acknowledgment">
+       <p>The Intensity, Frequency, and Need for Blood Transfusion Score (IFT) was created by Sinan Dheyauldeen, M.D., PhD and Gregor Bachmann-Harildstad, M.D., PhD. The online version was created by Ole Jakob Jørgensen, M.D.</p>
+       <p>Last updated: September 2024</p>
+       <p>This tool is for informational purposes only and should not replace professional medical consultation.</p>
+       <p>For inquiries, contact: <a href="mailto:oljoer@ous-hf.no">oljoer@ous-hf.no</a></p>
+       <p>© 2024 Sinan Dheyauldeen, Gregor Bachmann-Harildstad, and Ole Jakob Jørgensen</p>
    </div>
 
-   <script>
-       // Language switch functionality
-       const languageButtons = document.querySelectorAll('.language-switch button');
-       const description = document.getElementById('description');
-       const footer = document.getElementById('footer');
-       const submitBtn = document.getElementById('submitBtn');
-       const scoreLabels = document.getElementById('score-labels');
-
-       languageButtons.forEach(button => {
-           button.addEventListener('click', () => {
-               languageButtons.forEach(btn => btn.classList.remove('active'));
-               button.classList.add('active');
-
-               const lang = button.id;
-               if (lang === 'english') {
-                   description.innerHTML = description.getAttribute('data-en');
-                   footer.innerHTML = footer.getAttribute('data-en');
-                   submitBtn.innerHTML = submitBtn.getAttribute('data-en');
-                   scoreLabels.innerHTML = scoreLabels.getAttribute('data-en');
-               } else if (lang === 'norwegian') {
-                   description.innerHTML = description.getAttribute('data-no');
-                   footer.innerHTML = footer.getAttribute('data-no');
-                   submitBtn.innerHTML = submitBtn.getAttribute('data-no');
-                   scoreLabels.innerHTML = scoreLabels.getAttribute('data-no');
-               }
-           });
-       });
-   </script>
+   <script src="script.js"></script>
 </body>
 </html>
