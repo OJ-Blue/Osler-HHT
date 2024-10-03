@@ -288,7 +288,15 @@
        <div class="score-scale">
            <div id="score-marker" class="score-marker" style="left: 0;"></div>
        </div>
-       <div class="score-labels">
+       <div class="score-labels" id="score-labels" data-en='
+           <span class="score-label">0</span>
+           <span class="score-label">10</span>
+           <span class="score-label">20</span>
+           <span class="score-label">30</span>' data-no='
+           <span class="score-label">0</span>
+           <span class="score-label">10</span>
+           <span class="score-label">20</span>
+           <span class="score-label">30</span>'>
            <span class="score-label">0</span>
            <span class="score-label">10</span>
            <span class="score-label">20</span>
@@ -317,6 +325,7 @@
        const description = document.getElementById('description');
        const footer = document.getElementById('footer');
        const submitBtn = document.getElementById('submitBtn');
+       const scoreLabels = document.getElementById('score-labels');
 
        languageButtons.forEach(button => {
            button.addEventListener('click', () => {
@@ -328,10 +337,12 @@
                    description.innerHTML = description.getAttribute('data-en');
                    footer.innerHTML = footer.getAttribute('data-en');
                    submitBtn.innerHTML = submitBtn.getAttribute('data-en');
+                   scoreLabels.innerHTML = scoreLabels.getAttribute('data-en');
                } else if (lang === 'norwegian') {
                    description.innerHTML = description.getAttribute('data-no');
                    footer.innerHTML = footer.getAttribute('data-no');
                    submitBtn.innerHTML = submitBtn.getAttribute('data-no');
+                   scoreLabels.innerHTML = scoreLabels.getAttribute('data-no');
                }
            });
        });
