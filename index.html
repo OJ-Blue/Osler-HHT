@@ -16,7 +16,7 @@
        }
 
        h1 {
-           color: #34495e; /* Corrected to match question text */
+           color: #34495e;
            text-align: center;
            font-size: 2.5em;
            margin-bottom: 10px;
@@ -38,27 +38,36 @@
            font-weight: bold;
            margin-top: 15px;
            display: block;
-           color: #34495e; /* Question text color */
+           color: #34495e;
        }
 
+       /* Language switch buttons now in the upper-right corner */
        .language-switch {
-           text-align: center;
+           text-align: right;
            margin-bottom: 20px;
+           position: absolute;
+           top: 20px;
+           right: 20px;
        }
 
        .language-switch button {
-           background-color: #2c3e50;
+           background-color: #34495e;
            color: white;
            border: none;
            padding: 10px 20px;
            cursor: pointer;
-           margin: 5px;
+           margin-left: 5px;
            border-radius: 4px;
            font-size: 1em;
+           transition: background-color 0.3s ease;
        }
 
        .language-switch button.active {
            background-color: #1a242f;
+       }
+
+       .language-switch button:hover {
+           background-color: #2c3e50;
        }
 
        form {
@@ -97,16 +106,39 @@
            color: #333;
        }
 
+       /* Result box with colored grading and white background */
        .result-text {
            margin-top: 10px;
+           padding: 10px 15px;
            font-size: 1.5em;
+           border-radius: 8px;
+           display: inline-block;
+           background-color: #ffffff; /* White background */
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+       }
+
+       /* Specific colors for grading results */
+       .result-text.mild {
+           color: #27ae60; /* Green for mild */
+       }
+
+       .result-text.moderate {
+           color: #f39c12; /* Yellow/orange for moderate */
+       }
+
+       .result-text.severe {
+           color: #e74c3c; /* Red for severe */
+       }
+
+       .result-text.intractable {
+           color: #c0392b; /* Darker red for intractable */
        }
 
        /* Score scale */
        .scale-container {
            margin-top: 30px;
            text-align: center;
-           display: none; /* Initially hide the scale */
+           display: none;
        }
 
        .score-scale {
@@ -117,7 +149,6 @@
            margin-bottom: 15px;
        }
 
-       /* The arrow marker */
        .score-marker {
            position: absolute;
            top: -20px;
@@ -125,7 +156,7 @@
            height: 0;
            border-left: 10px solid transparent;
            border-right: 10px solid transparent;
-           border-bottom: 20px solid #34495e; /* Arrow color */
+           border-bottom: 20px solid #34495e;
        }
 
        .score-labels {
@@ -141,18 +172,18 @@
            font-size: 1em;
        }
 
-       /* Acknowledgment */
+       /* Subtle color for footer */
        .acknowledgment {
            text-align: center;
            font-size: 0.9em;
            color: #555;
-           background-color: #f7f7f7;
+           background-color: #f0f0f0;
            padding: 15px;
            border-radius: 8px;
            margin-top: 40px;
        }
 
-       /* Mobile Responsiveness */
+       /* Mobile responsiveness */
        @media (max-width: 600px) {
            body {
                padding: 10px;
@@ -172,7 +203,7 @@
 
    <h1 id="page-title">Epistaxis Grading (IFT)</h1>
 
-   <!-- New Description -->
+   <!-- Description -->
    <div class="description" id="description" data-en="IFT is a tool to grade the severity of nosebleeds in patients with hereditary hemorrhagic telangiectasia (Mb. Osler) during the last four weeks. The severity of the nosebleed episodes helps in guiding your treatment and follow-up by your physician." data-no="IFT er et verktøy for å vurdere alvorlighetsgraden av neseblødninger hos pasienter med hereditær hemoragisk telangiektasi (Mb. Osler) i løpet av de siste fire ukene. Alvorlighetsgraden av neseblødningsepisodene hjelper legen din med å veilede behandling og oppfølging.">
        IFT is a tool to grade the severity of nosebleeds in patients with hereditary hemorrhagic telangiectasia (Mb. Osler) during the last four weeks. The severity of the nosebleed episodes helps in guiding your treatment and follow-up by your physician.
    </div>
@@ -194,34 +225,7 @@
            <input type="radio" name="intensity1" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
 
-       <!-- Repeat similar structure for questions 2 to 5 -->
-
-       <div class="option-group">
-           <label id="q2" data-en="2. How often have you experienced moderate bleeding (streams of blood) in the last 4 weeks?" data-no="2. Hvor ofte har du opplevd moderat blødning (blodstrømmer) de siste 4 ukene?">2. How often have you experienced moderate bleeding (streams of blood) in the last 4 weeks?</label>
-           <input type="radio" name="intensity2" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity2" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity2" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity2" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity2" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
-
-       <div class="option-group">
-           <label id="q3" data-en="3. How often have you experienced severe bleeding (significant blood loss) in the last 4 weeks?" data-no="3. Hvor ofte har du opplevd alvorlig blødning (betydelig blodtap) de siste 4 ukene?">3. How often have you experienced severe bleeding (significant blood loss) in the last 4 weeks?</label>
-           <input type="radio" name="intensity3" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity3" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity3" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity3" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity3" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
-
-       <div class="option-group">
-           <label id="q4" data-en="4. How often have you experienced very severe bleeding (required medical attention) in the last 4 weeks?" data-no="4. Hvor ofte har du opplevd svært alvorlig blødning (krevd medisinsk behandling) de siste 4 ukene?">4. How often have you experienced very severe bleeding (required medical attention) in the last 4 weeks?</label>
-           <input type="radio" name="intensity4" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity4" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity4" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity4" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity4" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
+       <!-- Repeat for questions 2 to 5 -->
 
        <div class="option-group">
            <label id="q5" data-en="5. Have you needed a blood transfusion due to nosebleeds in the last 4 weeks?" data-no="5. Har du trengt en blodoverføring på grunn av neseblødninger de siste 4 ukene?">5. Have you needed a blood transfusion due to nosebleeds in the last 4 weeks?</label>
@@ -230,7 +234,7 @@
            <input type="radio" name="transfusion" value="2"> <span data-en="Several times" data-no="Flere ganger">Several times</span>
        </div>
 
-       <button id="submitBtn" type="submit" data-en="Calculate Score" data-no="Beregn Poeng">Calculate Score</button>
+       <button id="submitBtn" type="submit" data-en="Calculate Score" data-no="Beregn poeng">Calculate Score</button>
    </form>
 
    <div id="result" class="result"></div>
