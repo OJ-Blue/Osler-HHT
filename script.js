@@ -21,21 +21,27 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
 
     // Determine the bleeding classification based on the total score
     let classification = '';
+    let colorClass = '';  // Add a variable to store the color class
     if (totalScore === 0) {
         classification = lang === 'en' ? 'No bleeding' : 'Ingen blødning';
+        colorClass = 'mild';  // Green for no bleeding
     } else if (totalScore >= 1 && totalScore <= 5) {
         classification = lang === 'en' ? 'Mild bleeding' : 'Mild blødning';
+        colorClass = 'mild';  // Green for mild
     } else if (totalScore >= 6 && totalScore <= 10) {
         classification = lang === 'en' ? 'Moderate bleeding' : 'Moderat blødning';
+        colorClass = 'moderate';  // Yellow/Orange for moderate
     } else if (totalScore >= 11 && totalScore <= 15) {
         classification = lang === 'en' ? 'Severe bleeding' : 'Alvorlig blødning';
+        colorClass = 'severe';  // Red for severe
     } else if (totalScore >= 16) {
         classification = lang === 'en' ? 'Intractable bleeding' : 'Ukontrollerbar blødning';
+        colorClass = 'intractable';  // Dark red for intractable
     }
 
-    // Display the result with matching color
+    // Display the result with the appropriate color class
     const resultElement = document.getElementById('result');
-    resultElement.innerHTML = `<div class="result-text ${classification.replace(/\s+/g, '-').toLowerCase()}">${classification}</div><div>${lang === 'en' ? 'Your score' : 'Din poengsum'}: ${totalScore}/30</div>`;
+    resultElement.innerHTML = `<div class="result-text ${colorClass}">${classification}</div><div>${lang === 'en' ? 'Your score' : 'Din poengsum'}: ${totalScore}/30</div>`;
 
     // Show the scale
     document.getElementById('scale-container').style.display = 'block';
