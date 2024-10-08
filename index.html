@@ -26,13 +26,13 @@
             padding: 20px;
             margin-left: -20px;
             margin-right: -20px;
-            width: calc(100% + 40px); /* Ensures full page width */
+            width: calc(100% + 40px);
             text-align: center;
         }
 
         h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
+            font-size: 2.8em;
+            margin-bottom: 5px; /* Reduced space between heading and subheading */
         }
 
         .description {
@@ -115,7 +115,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            display: none;
+            display: none; /* Hidden by default */
         }
 
         .result-text.mild {
@@ -173,6 +173,17 @@
             font-weight: bold;
             color: #333;
             font-size: 1em;
+        }
+
+        .acknowledgment {
+            font-size: 0.9em;
+            color: #ffffff;
+            background-color: #2c3e50;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
         }
 
         .acknowledgment a {
@@ -242,42 +253,27 @@
                 mer">Daily or more</span>
         </div>
 
+        <!-- Remaining questions (q2 to q5) -->
         <div class="option-group">
-            <label id="q2"
-                data-en="2. In the past 4 weeks, how often have you had moderate bleeding (steady blood flow)?"
-                data-no="2. I løpet av de siste 4 ukene, hvor ofte har du hatt moderat blødning (jevn blodstrøm)?">2. In
-                the past 4 weeks, how often have you had moderate bleeding (steady blood flow)?</label>
+            <label id="q2" data-en="2. In the past 4 weeks, how often have you had moderate bleeding (steady blood flow)?" data-no="2. I løpet av de siste 4 ukene, hvor ofte har du hatt moderat blødning (jevn blodstrøm)?">2. In the past 4 weeks, how often have you had moderate bleeding (steady blood flow)?</label>
             <input type="radio" name="intensity2" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-            <input type="radio" name="intensity2" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5
-                times</span><br>
-            <input type="radio" name="intensity2" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10
-                times</span><br>
-            <input type="radio" name="intensity2" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27
-                times</span><br>
-            <input type="radio" name="intensity2" value="4"> <span data-en="Daily or more" data-no="Daglig eller
-                mer">Daily or more</span>
+            <input type="radio" name="intensity2" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
+            <input type="radio" name="intensity2" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
+            <input type="radio" name="intensity2" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
+            <input type="radio" name="intensity2" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
         </div>
 
         <div class="option-group">
-            <label id="q3"
-                data-en="3. In the past 4 weeks, how often have you had severe bleeding (significant blood loss)?"
-                data-no="3. I løpet av de siste 4 ukene, hvor ofte har du hatt alvorlig blødning (betydelig blodtap)?">3.
-                In the past 4 weeks, how often have you had severe bleeding (significant blood loss)?</label>
+            <label id="q3" data-en="3. In the past 4 weeks, how often have you had severe bleeding (significant blood loss)?" data-no="3. I løpet av de siste 4 ukene, hvor ofte har du hatt alvorlig blødning (betydelig blodtap)?">3. In the past 4 weeks, how often have you had severe bleeding (significant blood loss)?</label>
             <input type="radio" name="intensity3" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-            <input type="radio" name="intensity3" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5
-                times</span><br>
-            <input type="radio" name="intensity3" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10
-                times</span><br>
-            <input type="radio" name="intensity3" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27
-                times</span><br>
-            <input type="radio" name="intensity3" value="4"> <span data-en="Daily or more" data-no="Daglig eller
-                mer">Daily or more</span>
+            <input type="radio" name="intensity3" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
+            <input type="radio" name="intensity3" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
+            <input type="radio" name="intensity3" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
+            <input type="radio" name="intensity3" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
         </div>
 
         <div class="option-group">
-            <label id="q4"
-                data-en="4. In the past 4 weeks, how often have you had very severe bleeding (requiring medical attention)?"
-                data-no="4. I løpet av de siste 4 ukene, hvor ofte har du hatt svært alvorlig blødning (som krevde medisinsk behandling)?">4. In the past 4 weeks, how often have you had very severe bleeding (requiring medical attention)?</label>
+            <label id="q4" data-en="4. In the past 4 weeks, how often have you had very severe bleeding (requiring medical attention)?" data-no="4. I løpet av de siste 4 ukene, hvor ofte har du hatt svært alvorlig blødning (som krevde medisinsk behandling)?">4. In the past 4 weeks, how often have you had very severe bleeding (requiring medical attention)?</label>
             <input type="radio" name="intensity4" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
             <input type="radio" name="intensity4" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
             <input type="radio" name="intensity4" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
@@ -286,10 +282,7 @@
         </div>
 
         <div class="option-group">
-            <label id="q5"
-                data-en="5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?"
-                data-no="5. I løpet av de siste 4 ukene, har du trengt en blodoverføring på grunn av neseblødninger?">5.
-                In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?</label>
+            <label id="q5" data-en="5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?" data-no="5. I løpet av de siste 4 ukene, har du trengt en blodoverføring på grunn av neseblødninger?">5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?</label>
             <input type="radio" name="transfusion" value="0"> <span data-en="No" data-no="Nei">No</span><br>
             <input type="radio" name="transfusion" value="1"> <span data-en="Yes" data-no="Ja">Yes</span><br>
             <input type="radio" name="transfusion" value="2"> <span data-en="Several times" data-no="Flere ganger">Several times</span>
