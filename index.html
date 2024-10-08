@@ -1,315 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Epistaxis Grading (IFT)</title>
-   <link rel="icon" href="favicon.ico" type="image/x-icon">
-   <style>
-       body {
-           font-family: 'Arial', sans-serif;
-           background-color: #f9f9f9;
-           color: #333;
-           padding: 20px;
-           max-width: 800px;
-           margin: auto;
-           line-height: 1.6;
-       }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epistaxis Grading (IFT)</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #2c3e50;
+            color: #333;
+            padding: 20px;
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.6;
+        }
 
-       /* Heading and Subheading stretch across full width */
-       h1 {
-           color: #ffffff;
-           text-align: center;
-           font-size: 2.5em;
-           font-weight: bold;
-           letter-spacing: 1px;
-           padding: 20px;
-           background-color: #2c3e50;
-           border-radius: 0;
-           box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-           margin-left: -20px;
-           margin-right: -20px;
-           margin-top: -20px;
-           width: calc(100% + 40px);
-       }
+        /* Full-width blue shaded areas */
+        h1, .description, .acknowledgment {
+            color: #ffffff;
+            background-color: #2c3e50;
+            padding: 20px;
+            margin-left: -20px;
+            margin-right: -20px;
+            width: calc(100% + 40px); /* Ensures full page width */
+            text-align: center;
+        }
 
-       .description {
-           color: #ffffff;
-           font-size: 1.2em;
-           text-align: center;
-           line-height: 1.5;
-           padding: 15px;
-           background-color: #34495e;
-           box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-           margin-bottom: 20px;
-           margin-left: -20px;
-           margin-right: -20px;
-           width: calc(100% + 40px);
-       }
+        .description {
+            font-size: 1.2em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
 
-       label {
-           font-weight: bold;
-           margin-top: 15px;
-           display: block;
-           color: #34495e;
-       }
+        label {
+            font-weight: bold;
+            margin-top: 15px;
+            display: block;
+            color: #34495e;
+        }
 
-       .language-switch {
-           text-align: right;
-           margin-bottom: 20px;
-           position: absolute;
-           top: 20px;
-           right: 20px;
-       }
+        .language-switch {
+            text-align: right;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
 
-       .language-switch button {
-           background-color: #34495e;
-           color: white;
-           border: none;
-           padding: 10px 20px;
-           cursor: pointer;
-           margin-left: 5px;
-           border-radius: 4px;
-           font-size: 1em;
-           transition: background-color 0.3s ease;
-       }
+        .language-switch button {
+            background-color: #34495e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-left: 5px;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
 
-       .language-switch button.active {
-           background-color: #1a242f;
-       }
+        .language-switch button.active {
+            background-color: #1a242f;
+        }
 
-       .language-switch button:hover {
-           background-color: #2c3e50;
-       }
+        .language-switch button:hover {
+            background-color: #2c3e50;
+        }
 
-       form {
-           background-color: #ffffff;
-           padding: 20px;
-           border-radius: 8px;
-           box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-           margin-bottom: 30px;
-       }
+        /* The form box */
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
 
-       .option-group {
-           margin-bottom: 15px;
-       }
+        .option-group {
+            margin-bottom: 15px;
+        }
 
-       .option-group input {
-           margin-right: 10px;
-       }
+        .option-group input {
+            margin-right: 10px;
+        }
 
-       button[type="submit"] {
-           background-color: #3498db;
-           color: white;
-           padding: 10px 20px;
-           border: none;
-           cursor: pointer;
-           margin-top: 20px;
-           display: block;
-           width: 100%;
-           border-radius: 4px;
-           font-size: 1.2em;
-       }
+        button[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 1.2em;
+        }
 
-       .result {
-           text-align: center;
-           margin-top: 20px;
-           font-size: 1.8em;
-           color: #333;
-       }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.8em;
+            color: #333;
+        }
 
-       .result-text {
-           margin-top: 10px;
-           padding: 10px 15px;
-           font-size: 1.5em;
-           border-radius: 8px;
-           display: inline-block;
-           background-color: #ffffff;
-           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-           letter-spacing: -0.5px;
-       }
+        /* Full-width score scale */
+        .score-scale {
+            position: relative;
+            height: 30px;
+            background: linear-gradient(to right, #27ae60, #f39c12, #e74c3c);
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
 
-       .result-text.mild {
-           color: #27ae60;
-       }
+        .score-marker {
+            position: absolute;
+            top: -20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 20px solid #34495e;
+        }
 
-       .result-text.moderate {
-           color: #f39c12;
-       }
+        .score-labels {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            top: -10px;
+        }
 
-       .result-text.severe {
-           color: #e74c3c;
-       }
+        .score-label {
+            font-weight: bold;
+            color: #333;
+            font-size: 1em;
+        }
 
-       .result-text.intractable {
-           color: #c0392b;
-       }
+        .acknowledgment a {
+            color: #ffffff;
+            text-decoration: underline;
+        }
 
-       .scale-container {
-           margin-top: 30px;
-           text-align: center;
-           display: none;
-       }
+        /* Mobile Responsiveness */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
 
-       .score-scale {
-           position: relative;
-           height: 30px;
-           background: linear-gradient(to right, #27ae60, #f39c12, #e74c3c);
-           border-radius: 6px;
-           margin-bottom: 15px;
-       }
+            h1 {
+                margin-top: 50px;
+            }
 
-       .score-marker {
-           position: absolute;
-           top: -20px;
-           width: 0;
-           height: 0;
-           border-left: 10px solid transparent;
-           border-right: 10px solid transparent;
-           border-top: 20px solid #34495e;
-       }
+            .language-switch {
+                position: static;
+                text-align: center;
+                margin-bottom: 20px;
+            }
 
-       .score-labels {
-           display: flex;
-           justify-content: space-between;
-           position: relative;
-           top: -10px;
-       }
+            .score-label {
+                font-size: 0.8em;
+            }
 
-       .score-label {
-           font-weight: bold;
-           color: #333;
-           font-size: 1em;
-       }
-
-       .acknowledgment {
-           text-align: center;
-           font-size: 0.9em;
-           color: #ffffff;
-           background-color: #34495e;
-           padding: 15px;
-           margin-left: -20px;
-           margin-right: -20px;
-           width: calc(100% + 40px);
-           margin-top: 40px;
-           box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-       }
-
-       .acknowledgment p {
-           margin: 5px 0;
-       }
-
-       /* Email link style */
-       .acknowledgment a {
-           color: #ffffff;
-           text-decoration: underline;
-       }
-
-       @media (max-width: 600px) {
-           body {
-               padding: 10px;
-           }
-           h1 {
-               margin-top: 50px;
-           }
-           .language-switch {
-               position: static;
-               text-align: center;
-               margin-bottom: 20px;
-           }
-           .score-label {
-               font-size: 0.8em;
-           }
-           .result-text {
-               font-size: 1.3em;
-           }
-       }
-   </style>
+            .result-text {
+                font-size: 1.3em;
+            }
+        }
+    </style>
 </head>
+
 <body>
-   <h1 id="page-title">Epistaxis Grading (IFT)</h1>
-   <!-- Updated Subheading -->
-   <div class="description" id="description" data-en="IFT measures the severity of nosebleeds in patients with hereditary hemorrhagic telangiectasia (Mb. Osler) over the past four weeks. The results help guide your physician's treatment and follow-up." data-no="IFT måler alvorlighetsgraden av neseblødninger hos pasienter med Mb. Osler (Hereditær hemoragisk telangiektasi - HHT) de siste fire ukene. Resultatene hjelper legen med å veilede behandling og oppfølging.">
-       IFT måler alvorlighetsgraden av neseblødninger hos pasienter med Mb. Osler (Hereditær hemoragisk telangiektasi - HHT) de siste fire ukene. Resultatene hjelper legen med å veilede behandling og oppfølging.
-   </div>
 
-   <!-- Language Switch -->
-   <div class="language-switch">
-       <button id="english" class="active">English</button>
-       <button id="norwegian">Norsk</button>
-   </div>
+    <h1 id="page-title">Epistaxis Grading (IFT)</h1>
 
-   <form id="epistaxisForm">
-       <!-- Intensity Questions -->
-       <div class="option-group">
-           <label id="q1" data-en="1. In the past 4 weeks, how often have you noticed spots of blood or small drips?" data-no="1. I løpet av de siste 4 ukene, hvor ofte har du merket blodflekker eller små dråper?">1. In the past 4 weeks, how often have you noticed spots of blood or small drips?</label>
-           <input type="radio" name="intensity1" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity1" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity1" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity1" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity1" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
+    <div class="description" id="description"
+        data-en="IFT measures the severity of nosebleeds in patients with hereditary hemorrhagic telangiectasia (Mb. Osler) over the past four weeks. The results help guide your physician's treatment and follow-up."
+        data-no="IFT måler alvorlighetsgraden av neseblødninger hos pasienter med Mb. Osler (Hereditær hemoragisk telangiektasi - HHT) de siste fire ukene. Resultatene hjelper legen med å veilede behandling og oppfølging.">
+        IFT måler alvorlighetsgraden av neseblødninger hos pasienter med Mb. Osler (Hereditær hemoragisk telangiektasi -
+        HHT) de siste fire ukene. Resultatene hjelper legen med å veilede behandling og oppfølging.
+    </div>
 
-       <div class="option-group">
-           <label id="q2" data-en="2. In the past 4 weeks, how often have you had moderate bleeding (steady blood flow)?" data-no="2. I løpet av de siste 4 ukene, hvor ofte har du hatt moderat blødning (jevn blodstrøm)?">2. In the past 4 weeks, how often have you had moderate bleeding (steady blood flow)?</label>
-           <input type="radio" name="intensity2" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity2" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity2" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity2" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity2" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
+    <!-- Language Switch -->
+    <div class="language-switch">
+        <button id="english" class="active">English</button>
+        <button id="norwegian">Norsk</button>
+    </div>
 
-       <div class="option-group">
-           <label id="q3" data-en="3. In the past 4 weeks, how often have you had severe bleeding (significant blood loss)?" data-no="3. I løpet av de siste 4 ukene, hvor ofte har du hatt alvorlig blødning (betydelig blodtap)?">3. In the past 4 weeks, how often have you had severe bleeding (significant blood loss)?</label>
-           <input type="radio" name="intensity3" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity3" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity3" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity3" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity3" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
+    <form id="epistaxisForm">
+        <!-- Intensity Questions -->
+        <div class="option-group">
+            <label id="q1"
+                data-en="1. In the past 4 weeks, how often have you noticed spots of blood or small drips?"
+                data-no="1. I løpet av de siste 4 ukene, hvor ofte har du merket blodflekker eller små dråper?">1. In the
+                past 4 weeks, how often have you noticed spots of blood or small drips?</label>
+            <input type="radio" name="intensity1" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
+            <input type="radio" name="intensity1" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5
+                times</span><br>
+            <input type="radio" name="intensity1" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10
+                times</span><br>
+            <input type="radio" name="intensity1" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27
+                times</span><br>
+            <input type="radio" name="intensity1" value="4"> <span data-en="Daily or more" data-no="Daglig eller
+                mer">Daily or more</span>
+        </div>
 
-       <div class="option-group">
-           <label id="q4" data-en="4. In the past 4 weeks, how often have you had very severe bleeding (requiring medical attention)?" data-no="4. I løpet av de siste 4 ukene, hvor ofte har du hatt svært alvorlig blødning (som krevde medisinsk behandling)?">4. In the past 4 weeks, how often have you had very severe bleeding (requiring medical attention)?</label>
-           <input type="radio" name="intensity4" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity4" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity4" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity4" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity4" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
+        <div class="option-group">
+            <label id="q2"
+                data-en="2. In the past 4 weeks, how often have you had moderate bleeding (steady blood flow)?"
+                data-no="2. I løpet av de siste 4 ukene, hvor ofte har du hatt moderat blødning (jevn blodstrøm)?">2. In
+                the past 4 weeks, how often have you had moderate bleeding (steady blood flow)?</label>
+            <input type="radio" name="intensity2" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
+            <input type="radio" name="intensity2" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5
+                times</span><br>
+            <input type="radio" name="intensity2" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10
+                times</span><br>
+            <input type="radio" name="intensity2" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27
+                times</span><br>
+            <input type="radio" name="intensity2" value="4"> <span data-en="Daily or more" data-no="Daglig eller
+                mer">Daily or more</span>
+        </div>
 
-       <div class="option-group">
-           <label id="q5" data-en="5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?" data-no="5. I løpet av de siste 4 ukene, har du trengt en blodoverføring på grunn av neseblødninger?">5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?</label>
-           <input type="radio" name="transfusion" value="0"> <span data-en="No" data-no="Nei">No</span><br>
-           <input type="radio" name="transfusion" value="1"> <span data-en="Once" data-no="En gang">Once</span><br>
-           <input type="radio" name="transfusion" value="2"> <span data-en="More than once" data-no="Mer enn en gang">More than once</span>
-       </div>
+        <div class="option-group">
+            <label id="q3"
+                data-en="3. In the past 4 weeks, how often have you had severe bleeding (significant blood loss)?"
+                data-no="3. I løpet av de siste 4 ukene, hvor ofte har du hatt alvorlig blødning (betydelig blodtap)?">3.
+                In the past 4 weeks, how often have you had severe bleeding (significant blood loss)?</label>
+            <input type="radio" name="intensity3" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
+            <input type="radio" name="intensity3" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5
+                times</span><br>
+            <input type="radio" name="intensity3" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10
+                times</span><br>
+            <input type="radio" name="intensity3" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27
+                times</span><br>
+            <input type="radio" name="intensity3" value="4"> <span data-en="Daily or more" data-no="Daglig eller
+                mer">Daily or more</span>
+        </div>
 
-       <!-- Updated button text -->
-       <button id="submitBtn" type="submit" data-en="Calculate score" data-no="Beregn poengsum">Calculate score</button>
-   </form>
+        <div class="option-group">
+            <label id="q4"
+                data-en="4. In the past 4 weeks, how often have you had very severe bleeding (requiring medical attention)?"
+                data-no="4. I løpet av de siste 4 ukene, hvor ofte har du hatt svært alvorlig blødning (som krevde medisinsk behandling)?">4. In the past 4 weeks, how often have you had very severe bleeding (requiring medical attention)?</label>
+            <input type="radio" name="intensity4" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
+            <input type="radio" name="intensity4" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
+            <input type="radio" name="intensity4" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
+            <input type="radio" name="intensity4" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
+            <input type="radio" name="intensity4" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
+        </div>
 
-   <div id="result" class="result"></div>
+        <div class="option-group">
+            <label id="q5"
+                data-en="5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?"
+                data-no="5. I løpet av de siste 4 ukene, har du trengt en blodoverføring på grunn av neseblødninger?">5.
+                In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?</label>
+            <input type="radio" name="transfusion" value="0"> <span data-en="No" data-no="Nei">No</span><br>
+            <input type="radio" name="transfusion" value="1"> <span data-en="Yes" data-no="Ja">Yes</span><br>
+            <input type="radio" name="transfusion" value="2"> <span data-en="Several times" data-no="Flere ganger">Several times</span>
+        </div>
 
-   <div id="scale-container" class="scale-container">
-       <div class="score-scale">
-           <div id="score-marker" class="score-marker" style="left: 0;"></div>
-       </div>
-       <div class="score-labels">
-           <span class="score-label">0</span>
-           <span class="score-label">10</span>
-           <span class="score-label">20</span>
-           <span class="score-label">30</span>
-       </div>
-   </div>
+        <button id="submitBtn" type="submit" data-en="Calculate score" data-no="Beregn poengsum">Calculate score</button>
+    </form>
 
-   <div class="acknowledgment">
-       <p>The Intensity, Frequency, and Need for Blood Transfusion Score (IFT) was created by Sinan Dheyauldeen, M.D., PhD and Gregor Bachmann-Harildstad, M.D., PhD. The online version was created by Ole Jakob Jørgensen, M.D.</p>
-       <p>Last updated: September 2024</p>
-       <p>This tool is for informational purposes only and should not replace professional medical consultation.</p>
-       <p>For inquiries, contact: <a href="mailto:oljoer@ous-hf.no">oljoer@ous-hf.no</a></p>
-       <p>© 2024 Sinan Dheyauldeen, Gregor Bachmann-Harildstad, and Ole Jakob Jørgensen</p>
-   </div>
+    <div id="result" class="result"></div>
 
-   <script src="script.js"></script>
+    <!-- Score Scale -->
+    <div id="scale-container" class="scale-container">
+        <div class="score-scale">
+            <div id="score-marker" class="score-marker" style="left: 0;"></div>
+        </div>
+        <div class="score-labels">
+            <span class="score-label">0</span>
+            <span class="score-label">10</span>
+            <span class="score-label">20</span>
+            <span class="score-label">30</span>
+        </div>
+    </div>
+
+    <div class="acknowledgment">
+        <p>The Intensity, Frequency, and Need for Blood Transfusion Score (IFT) was created by Sinan Dheyauldeen, M.D., PhD and Gregor Bachmann-Harildstad, M.D., PhD. The online version was created by Ole Jakob Jørgensen, M.D.</p>
+        <p>Last updated: September 2024</p>
+        <p>This tool is for informational purposes only and should not replace professional medical consultation.</p>
+        <p>For inquiries, contact: <a href="mailto:oljoer@ous-hf.no">oljoer@ous-hf.no</a></p>
+        <p>© 2024 Sinan Dheyauldeen, Gregor Bachmann-Harildstad, and Ole Jakob Jørgensen</p>
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
