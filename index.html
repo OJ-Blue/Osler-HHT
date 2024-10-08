@@ -16,56 +16,23 @@
             line-height: 1.6;
         }
 
-        h1, .description, .acknowledgment {
+        h1 {
             color: #ffffff;
             background-color: #2c3e50;
             padding: 15px;
-            margin-left: -20px;
-            margin-right: -20px;
-            width: calc(100% + 40px);
+            margin-bottom: 5px;
             text-align: center;
-        }
-
-        h1 {
             font-size: 2.5em;
-            margin-bottom: 10px;
         }
 
         .description {
+            color: #ffffff;
+            background-color: #2c3e50;
             font-size: 1.2em;
+            text-align: center;
             line-height: 1.5;
+            padding: 10px;
             margin-bottom: 20px;
-        }
-
-        label {
-            font-weight: bold;
-            margin-top: 15px;
-            display: block;
-            color: #34495e;
-        }
-
-        .language-switch {
-            text-align: right;
-            margin-bottom: 20px;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-
-        .language-switch button {
-            background-color: #34495e;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin-left: 5px;
-            border-radius: 4px;
-            font-size: 1em;
-            transition: background-color 0.3s ease;
-        }
-
-        .language-switch button.active {
-            background-color: #1a242f;
         }
 
         form {
@@ -73,7 +40,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .option-group {
@@ -97,6 +64,7 @@
             font-size: 1.2em;
         }
 
+        /* Resultatvisningen med hvit bakgrunn */
         .result, #scale-container {
             background-color: #ffffff;
             padding: 20px;
@@ -112,6 +80,7 @@
             color: #333;
         }
 
+        /* Tekstfarging basert på poengsummen */
         .result-text.mild {
             color: #27ae60;
         }
@@ -128,6 +97,7 @@
             color: #c0392b;
         }
 
+        /* Skalaen */
         .score-scale {
             position: relative;
             height: 30px;
@@ -159,6 +129,7 @@
             font-size: 1em;
         }
 
+        /* Komprimert footer */
         .acknowledgment {
             font-size: 0.85em;
             color: #ffffff;
@@ -185,12 +156,6 @@
                 margin-top: 50px;
             }
 
-            .language-switch {
-                position: static;
-                text-align: center;
-                margin-bottom: 20px;
-            }
-
             .score-label {
                 font-size: 0.8em;
             }
@@ -210,12 +175,8 @@
         IFT måler alvorlighetsgraden av neseblødninger hos pasienter med Mb. Osler (Hereditær hemoragisk telangiektasi - HHT) de siste fire ukene. Resultatene hjelper legen med å veilede behandling og oppfølging.
     </div>
 
-    <div class="language-switch">
-        <button id="english" class="active">English</button>
-        <button id="norwegian">Norsk</button>
-    </div>
-
     <form id="epistaxisForm">
+        <!-- Spørsmål 1 -->
         <div class="option-group">
             <label id="q1" data-en="1. In the past 4 weeks, how often have you noticed spots of blood or small drips?" data-no="1. I løpet av de siste 4 ukene, hvor ofte har du merket blodflekker eller små dråper?">1. In the past 4 weeks, how often have you noticed spots of blood or small drips?</label>
             <input type="radio" name="intensity1" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -225,6 +186,7 @@
             <input type="radio" name="intensity1" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
         </div>
 
+        <!-- Spørsmål 2 -->
         <div class="option-group">
             <label id="q2" data-en="2. In the past 4 weeks, how often have you had moderate bleeding (steady blood flow)?" data-no="2. I løpet av de siste 4 ukene, hvor ofte har du hatt moderat blødning (jevn blodstrøm)?">2. In the past 4 weeks, how often have you had moderate bleeding (steady blood flow)?</label>
             <input type="radio" name="intensity2" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -234,6 +196,7 @@
             <input type="radio" name="intensity2" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
         </div>
 
+        <!-- Spørsmål 3 -->
         <div class="option-group">
             <label id="q3" data-en="3. In the past 4 weeks, how often have you had severe bleeding (significant blood loss)?" data-no="3. I løpet av de siste 4 ukene, hvor ofte har du hatt alvorlig blødning (betydelig blodtap)?">3. In the past 4 weeks, how often have you had severe bleeding (significant blood loss)?</label>
             <input type="radio" name="intensity3" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -243,6 +206,7 @@
             <input type="radio" name="intensity3" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
         </div>
 
+        <!-- Spørsmål 4 -->
         <div class="option-group">
             <label id="q4" data-en="4. In the past 4 weeks, how often have you had very severe bleeding (requiring medical attention)?" data-no="4. I løpet av de siste 4 ukene, hvor ofte har du hatt svært alvorlig blødning (som krevde medisinsk behandling)?">4. In the past 4 weeks, how often have you had very severe bleeding (requiring medical attention)?</label>
             <input type="radio" name="intensity4" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -252,6 +216,7 @@
             <input type="radio" name="intensity4" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
         </div>
 
+        <!-- Spørsmål 5 -->
         <div class="option-group">
             <label id="q5" data-en="5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?" data-no="5. I løpet av de siste 4 ukene, har du trengt en blodoverføring på grunn av neseblødninger?">5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?</label>
             <input type="radio" name="transfusion" value="0"> <span data-en="No" data-no="Nei">No</span><br>
@@ -262,8 +227,10 @@
         <button id="submitBtn" type="submit" data-en="Calculate score" data-no="Beregn poengsum">Calculate score</button>
     </form>
 
+    <!-- Resultatdiv med hvit bakgrunn -->
     <div id="result" class="result"></div>
 
+    <!-- Skala -->
     <div id="scale-container" class="scale-container">
         <div class="score-scale">
             <div id="score-marker" class="score-marker" style="left: 0;"></div>
@@ -276,6 +243,7 @@
         </div>
     </div>
 
+    <!-- Komprimert acknowledgment/footsjer -->
     <div class="acknowledgment">
         <p>The Intensity, Frequency, and Need for Blood Transfusion Score (IFT) was created by Sinan Dheyauldeen, M.D., PhD and Gregor Bachmann-Harildstad, M.D., PhD. The online version was created by Ole Jakob Jørgensen, M.D.</p>
         <p>Last updated: September 2024. This tool is for informational purposes only and should not replace professional medical consultation.</p>
