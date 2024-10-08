@@ -32,13 +32,13 @@
 
         h1 {
             font-size: 2.5em;
-            margin-bottom: 5px; /* Reduced space between heading and subheading */
+            margin-bottom: 0; /* Fjerner mellomrommet mellom overskriften og underteksten */
         }
 
         .description {
             font-size: 1.2em;
             line-height: 1.5;
-            margin-top: 0; /* Reduced margin to further minimize space */
+            margin-top: 5px;
             margin-bottom: 20px;
         }
 
@@ -107,7 +107,7 @@
             font-size: 1.2em;
         }
 
-        /* The result text and scale background should be consistent with form background */
+        /* Result and scale background consistent with form */
         .result,
         #scale-container {
             background-color: #ffffff;
@@ -126,19 +126,19 @@
 
         /* Colors for grading */
         .result-text.mild {
-            color: #27ae60; /* Green */
+            color: #27ae60;
         }
 
         .result-text.moderate {
-            color: #f39c12; /* Yellow/Orange */
+            color: #f39c12;
         }
 
         .result-text.severe {
-            color: #e74c3c; /* Red */
+            color: #e74c3c;
         }
 
         .result-text.intractable {
-            color: #c0392b; /* Dark Red */
+            color: #c0392b;
         }
 
         /* Full-width score scale */
