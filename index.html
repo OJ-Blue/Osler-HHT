@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +18,9 @@
         }
 
         /* Full-width blue shaded areas */
-        h1, .description, .acknowledgment {
+        h1,
+        .description,
+        .acknowledgment {
             color: #ffffff;
             background-color: #2c3e50;
             padding: 20px;
@@ -28,8 +31,8 @@
         }
 
         h1 {
-            font-size: 3em; /* Increased font size */
-            margin-bottom: 10px; /* Reduced space between heading and subheading */
+            font-size: 3em;
+            margin-bottom: 10px;
         }
 
         .description {
@@ -108,16 +111,33 @@
             margin-top: 20px;
             font-size: 1.8em;
             color: #333;
-            background-color: #ffffff; /* White background for better visibility */
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .result-text.mild {
+            color: #27ae60; /* Green */
+        }
+
+        .result-text.moderate {
+            color: #f39c12; /* Yellow/Orange */
+        }
+
+        .result-text.severe {
+            color: #e74c3c; /* Red */
+        }
+
+        .result-text.intractable {
+            color: #c0392b; /* Dark Red */
         }
 
         /* Initially hide the scale */
         #scale-container {
             display: none;
-            background-color: #ffffff; /* White background for the scale */
+            background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
