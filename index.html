@@ -32,7 +32,7 @@
 
         h1 {
             font-size: 2.5em;
-            margin-bottom: 0; /* Fjerner mellomrommet mellom overskriften og underteksten */
+            margin-bottom: 0;
         }
 
         .description {
@@ -77,7 +77,7 @@
             background-color: #2c3e50;
         }
 
-        /* The form box */
+        /* Form box */
         form {
             background-color: #ffffff;
             padding: 20px;
@@ -107,7 +107,7 @@
             font-size: 1.2em;
         }
 
-        /* Result and scale background consistent with form */
+        /* Result and scale background */
         .result,
         #scale-container {
             background-color: #ffffff;
@@ -126,22 +126,22 @@
 
         /* Colors for grading */
         .result-text.mild {
-            color: #27ae60;
+            color: #27ae60; /* Green for mild bleeding */
         }
 
         .result-text.moderate {
-            color: #f39c12;
+            color: #f39c12; /* Yellow for moderate bleeding */
         }
 
         .result-text.severe {
-            color: #e74c3c;
+            color: #e74c3c; /* Red for severe bleeding */
         }
 
         .result-text.intractable {
-            color: #c0392b;
+            color: #c0392b; /* Dark red for intractable bleeding */
         }
 
-        /* Full-width score scale */
+        /* Score scale */
         .score-scale {
             position: relative;
             height: 30px;
@@ -290,9 +290,9 @@
         <button id="submitBtn" type="submit" data-en="Calculate score" data-no="Beregn poengsum">Calculate score</button>
     </form>
 
+    <!-- Displaying the result with text and scale -->
     <div id="result" class="result"></div>
 
-    <!-- Score Scale -->
     <div id="scale-container" class="scale-container">
         <div class="score-scale">
             <div id="score-marker" class="score-marker" style="left: 0;"></div>
