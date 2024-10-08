@@ -15,7 +15,8 @@
            margin: auto;
            line-height: 1.6;
        }
-       /* Updated Heading Style */
+
+       /* Heading and Subheading stretch across full width */
        h1 {
            color: #ffffff;
            text-align: center;
@@ -23,30 +24,36 @@
            font-weight: bold;
            letter-spacing: 1px;
            padding: 20px;
-           background-color: #2c3e50; /* Darker background color for more contrast */
-           border-radius: 10px;
+           background-color: #2c3e50;
+           border-radius: 0;
            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+           margin-left: -20px;
+           margin-right: -20px;
+           margin-top: -20px;
+           width: calc(100% + 40px);
        }
+
        .description {
            color: #ffffff;
            font-size: 1.2em;
            text-align: center;
            line-height: 1.5;
            padding: 15px;
-           background-color: #34495e; /* Darker background color for more contrast */
-           border-radius: 8px;
+           background-color: #34495e;
            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
            margin-bottom: 20px;
-           max-width: 750px;
-           margin-left: auto;
-           margin-right: auto;
+           margin-left: -20px;
+           margin-right: -20px;
+           width: calc(100% + 40px);
        }
+
        label {
            font-weight: bold;
            margin-top: 15px;
            display: block;
            color: #34495e;
        }
+
        .language-switch {
            text-align: right;
            margin-bottom: 20px;
@@ -54,6 +61,7 @@
            top: 20px;
            right: 20px;
        }
+
        .language-switch button {
            background-color: #34495e;
            color: white;
@@ -65,12 +73,15 @@
            font-size: 1em;
            transition: background-color 0.3s ease;
        }
+
        .language-switch button.active {
            background-color: #1a242f;
        }
+
        .language-switch button:hover {
            background-color: #2c3e50;
        }
+
        form {
            background-color: #ffffff;
            padding: 20px;
@@ -78,12 +89,15 @@
            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
            margin-bottom: 30px;
        }
+
        .option-group {
            margin-bottom: 15px;
        }
+
        .option-group input {
            margin-right: 10px;
        }
+
        button[type="submit"] {
            background-color: #3498db;
            color: white;
@@ -96,12 +110,14 @@
            border-radius: 4px;
            font-size: 1.2em;
        }
+
        .result {
            text-align: center;
            margin-top: 20px;
            font-size: 1.8em;
            color: #333;
        }
+
        .result-text {
            margin-top: 10px;
            padding: 10px 15px;
@@ -112,23 +128,29 @@
            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
            letter-spacing: -0.5px;
        }
+
        .result-text.mild {
            color: #27ae60;
        }
+
        .result-text.moderate {
            color: #f39c12;
        }
+
        .result-text.severe {
            color: #e74c3c;
        }
+
        .result-text.intractable {
            color: #c0392b;
        }
+
        .scale-container {
            margin-top: 30px;
            text-align: center;
            display: none;
        }
+
        .score-scale {
            position: relative;
            height: 30px;
@@ -136,6 +158,7 @@
            border-radius: 6px;
            margin-bottom: 15px;
        }
+
        .score-marker {
            position: absolute;
            top: -20px;
@@ -145,30 +168,43 @@
            border-right: 10px solid transparent;
            border-top: 20px solid #34495e;
        }
+
        .score-labels {
            display: flex;
            justify-content: space-between;
            position: relative;
            top: -10px;
        }
+
        .score-label {
            font-weight: bold;
            color: #333;
            font-size: 1em;
        }
+
        .acknowledgment {
            text-align: center;
            font-size: 0.9em;
            color: #ffffff;
-           background-color: #34495e; /* Darker background color for more contrast */
+           background-color: #34495e;
            padding: 15px;
-           border-radius: 8px;
+           margin-left: -20px;
+           margin-right: -20px;
+           width: calc(100% + 40px);
            margin-top: 40px;
            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
        }
+
        .acknowledgment p {
            margin: 5px 0;
        }
+
+       /* Email link style */
+       .acknowledgment a {
+           color: #ffffff;
+           text-decoration: underline;
+       }
+
        @media (max-width: 600px) {
            body {
                padding: 10px;
@@ -196,11 +232,13 @@
    <div class="description" id="description" data-en="IFT measures the severity of nosebleeds in patients with hereditary hemorrhagic telangiectasia (Mb. Osler) over the past four weeks. The results help guide your physician's treatment and follow-up." data-no="IFT måler alvorlighetsgraden av neseblødninger hos pasienter med Mb. Osler (Hereditær hemoragisk telangiektasi - HHT) de siste fire ukene. Resultatene hjelper legen med å veilede behandling og oppfølging.">
        IFT måler alvorlighetsgraden av neseblødninger hos pasienter med Mb. Osler (Hereditær hemoragisk telangiektasi - HHT) de siste fire ukene. Resultatene hjelper legen med å veilede behandling og oppfølging.
    </div>
+
    <!-- Language Switch -->
    <div class="language-switch">
        <button id="english" class="active">English</button>
        <button id="norwegian">Norsk</button>
    </div>
+
    <form id="epistaxisForm">
        <!-- Intensity Questions -->
        <div class="option-group">
@@ -211,6 +249,7 @@
            <input type="radio" name="intensity1" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
            <input type="radio" name="intensity1" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
+
        <div class="option-group">
            <label id="q2" data-en="2. In the past 4 weeks, how often have you had moderate bleeding (steady blood flow)?" data-no="2. I løpet av de siste 4 ukene, hvor ofte har du hatt moderat blødning (jevn blodstrøm)?">2. In the past 4 weeks, how often have you had moderate bleeding (steady blood flow)?</label>
            <input type="radio" name="intensity2" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -219,6 +258,7 @@
            <input type="radio" name="intensity2" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
            <input type="radio" name="intensity2" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
+
        <div class="option-group">
            <label id="q3" data-en="3. In the past 4 weeks, how often have you had severe bleeding (significant blood loss)?" data-no="3. I løpet av de siste 4 ukene, hvor ofte har du hatt alvorlig blødning (betydelig blodtap)?">3. In the past 4 weeks, how often have you had severe bleeding (significant blood loss)?</label>
            <input type="radio" name="intensity3" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -227,6 +267,7 @@
            <input type="radio" name="intensity3" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
            <input type="radio" name="intensity3" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
+
        <div class="option-group">
            <label id="q4" data-en="4. In the past 4 weeks, how often have you had very severe bleeding (requiring medical attention)?" data-no="4. I løpet av de siste 4 ukene, hvor ofte har du hatt svært alvorlig blødning (som krevde medisinsk behandling)?">4. In the past 4 weeks, how often have you had very severe bleeding (requiring medical attention)?</label>
            <input type="radio" name="intensity4" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
@@ -235,12 +276,14 @@
            <input type="radio" name="intensity4" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
            <input type="radio" name="intensity4" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
        </div>
+
        <div class="option-group">
            <label id="q5" data-en="5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?" data-no="5. I løpet av de siste 4 ukene, har du trengt en blodoverføring på grunn av neseblødninger?">5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?</label>
            <input type="radio" name="transfusion" value="0"> <span data-en="No" data-no="Nei">No</span><br>
            <input type="radio" name="transfusion" value="1"> <span data-en="Once" data-no="En gang">Once</span><br>
            <input type="radio" name="transfusion" value="2"> <span data-en="More than once" data-no="Mer enn en gang">More than once</span>
        </div>
+
        <!-- Updated button text -->
        <button id="submitBtn" type="submit" data-en="Calculate score" data-no="Beregn poengsum">Calculate score</button>
    </form>
