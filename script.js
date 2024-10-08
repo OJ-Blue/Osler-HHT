@@ -1,55 +1,52 @@
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent form submission
+    event.preventDefault();
 
     // Collect values from each intensity question (multiply intensity by frequency)
-    const intensity1 = 1 * parseInt(document.querySelector('input[name="intensity1"]:checked')?.value || 0);
-    const intensity2 = 2 * parseInt(document.querySelector('input[name="intensity2"]:checked')?.value || 0);
-    const intensity3 = 3 * parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0);
-    const intensity4 = 4 * parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0);
-
-    // Collect the transfusion score (question 5)
+    const intensity1 = parseInt(document.querySelector('input[name="intensity1"]:checked')?.value || 0);
+    const intensity2 = parseInt(document.querySelector('input[name="intensity2"]:checked')?.value || 0);
+    const intensity3 = parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0);
+    const intensity4 = parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0);
     const transfusion = parseInt(document.querySelector('input[name="transfusion"]:checked')?.value || 0);
 
-    // Put all intensity scores into an array
-    const intensityScores = [intensity1, intensity2, intensity3, intensity4];
+    // Sort intensities and take the two most severe
+    const intensities = [intensity1, intensity2, intensity3, intensity4];
+    const topTwoIntensities = intensities.sort((a, b) => b - a).slice(0, 2);
+    const score = topTwoIntensities.reduce((acc, curr) => acc + curr, 0) + transfusion;
 
-    // Sort the intensities by severity and select the two most severe (highest values)
-    const twoMostSevere = intensityScores.sort((a, b) => b - a).slice(0, 2);
-
-    // Calculate the total score by summing the two most severe intensities and the transfusion score
-    const totalScore = twoMostSevere.reduce((acc, val) => acc + val, 0) + transfusion;
-
-    // Determine the bleeding classification based on the total score
+    // Determine the classification based on the score
     let classification = '';
-    let colorClass = ''; // Add a variable to store the color class
-    if (totalScore === 0) {
+    let resultClass = '';
+
+    if (score === 0) {
         classification = lang === 'en' ? 'No bleeding' : 'Ingen blødning';
-        colorClass = 'mild'; // Green for no bleeding
-    } else if (totalScore >= 1 && totalScore <= 5) {
+        resultClass = 'mild';
+    } else if (score >= 1 && score <= 5) {
         classification = lang === 'en' ? 'Mild bleeding' : 'Mild blødning';
-        colorClass = 'mild'; // Green for mild
-    } else if (totalScore >= 6 && totalScore <= 10) {
+        resultClass = 'mild';
+    } else if (score >= 6 && score <= 10) {
         classification = lang === 'en' ? 'Moderate bleeding' : 'Moderat blødning';
-        colorClass = 'moderate'; // Yellow/Orange for moderate
-    } else if (totalScore >= 11 && totalScore <= 15) {
+        resultClass = 'moderate';
+    } else if (score >= 11 && score <= 15) {
         classification = lang === 'en' ? 'Severe bleeding' : 'Alvorlig blødning';
-        colorClass = 'severe'; // Red for severe
-    } else if (totalScore >= 16) {
+        resultClass = 'severe';
+    } else {
         classification = lang === 'en' ? 'Intractable bleeding' : 'Ukontrollerbar blødning';
-        colorClass = 'intractable'; // Dark red for intractable
+        resultClass = 'intractable';
     }
 
-    // Display the result with the appropriate color class
+    // Display the result with color coding
     const resultElement = document.getElementById('result');
-    resultElement.innerHTML = `<div class="result-text ${colorClass}">${classification}</div><div>${lang === 'en' ? 'Your score' : 'Din poengsum'}: ${totalScore}/30</div>`;
+    resultElement.innerHTML = `<div class="result-text ${resultClass}">${classification}</div><div>${lang === 'en' ? 'Your score' : 'Din poengsum'}: ${score}/30</div>`;
+    resultElement.style.display = 'block';
 
     // Show the scale
-    document.getElementById('scale-container').style.display = 'block';
+    const scaleContainer = document.getElementById('scale-container');
+    scaleContainer.style.display = 'block';
 
     // Update the score marker on the scale
     const scoreMarker = document.getElementById('score-marker');
-    const percentage = (totalScore / 30) * 100;
-    scoreMarker.style.left = `calc(${percentage}% - 10px)`; // Adjust for arrow width
+    const percentage = (score / 30) * 100;
+    scoreMarker.style.left = `calc(${percentage}% - 10px)`;
 });
 
 // Language toggle functionality
@@ -74,11 +71,9 @@ function updateLanguage(language) {
     const description = document.getElementById('description');
     description.textContent = description.getAttribute(`data-${language}`);
 
-    // Update button text
     const submitButton = document.getElementById('submitBtn');
     submitButton.textContent = submitButton.getAttribute(`data-${language}`);
 
-    // Update labels and spans
     const elementsToUpdate = document.querySelectorAll('[data-en]');
     elementsToUpdate.forEach(element => {
         element.textContent = element.getAttribute(`data-${language}`);
