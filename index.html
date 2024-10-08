@@ -38,7 +38,7 @@
         .description {
             font-size: 1.2em;
             line-height: 1.5;
-            margin-top: 5px;
+            margin-top: 0; /* Reduced margin to further minimize space */
             margin-bottom: 20px;
         }
 
@@ -115,12 +115,7 @@
             border-radius: 8px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
             margin-top: 10px;
-        }
-
-        /* Hidden by default */
-        .result,
-        #scale-container {
-            display: none;
+            display: none; /* Hidden by default */
         }
 
         .result {
@@ -131,19 +126,19 @@
 
         /* Colors for grading */
         .result-text.mild {
-            color: #27ae60;
+            color: #27ae60; /* Green */
         }
 
         .result-text.moderate {
-            color: #f39c12;
+            color: #f39c12; /* Yellow/Orange */
         }
 
         .result-text.severe {
-            color: #e74c3c;
+            color: #e74c3c; /* Red */
         }
 
         .result-text.intractable {
-            color: #c0392b;
+            color: #c0392b; /* Dark Red */
         }
 
         /* Full-width score scale */
