@@ -13,7 +13,7 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     const score3 = 3 * freq3;  // Intensitet 3
     const score4 = 4 * freq4;  // Intensitet 4
 
-    // Prioriter intensitetene 3 og 4, uansett frekvens
+    // Prioriter alltid intensitetene 3 og 4 hvis de er valgt (frekvens > 0)
     let scoresToConsider = [];
     if (freq4 > 0) {
         scoresToConsider.push(score4);  // Ta alltid med intensitet 4 hvis valgt
@@ -32,12 +32,12 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
         }
     }
 
-    // Hvis det bare er én intensitet valgt, bruk den alene
+    // Hvis bare én intensitet er valgt, bruk den alene
     let totalScore = 0;
     if (scoresToConsider.length === 1) {
         totalScore = scoresToConsider[0];
     } else if (scoresToConsider.length > 1) {
-        // Hvis det er to eller flere, velg de to høyeste (det vil alltid være de høyeste intensitetene 3 og 4 hvis valgt)
+        // Hvis det er to eller flere, velg de to høyeste intensitetene
         const twoHighestScores = scoresToConsider.sort((a, b) => b - a).slice(0, 2);
         totalScore = twoHighestScores.reduce((acc, val) => acc + val, 0);
     }
