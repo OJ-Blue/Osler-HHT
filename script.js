@@ -1,30 +1,37 @@
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // Samle inn intensitetsverdier fra spørsmål 1-4
+    // Samle intensitetsverdier fra spørsmål 1-4
     const intensity1 = parseInt(document.querySelector('input[name="intensity1"]:checked')?.value || 0);
     const intensity2 = parseInt(document.querySelector('input[name="intensity2"]:checked')?.value || 0);
     const intensity3 = parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0);
     const intensity4 = parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0);
 
+    // Samle frekvensverdier fra spørsmål 1-4
+    const frequency1 = parseInt(document.querySelector('input[name="intensity1"]:checked')?.value || 0);
+    const frequency2 = parseInt(document.querySelector('input[name="intensity2"]:checked')?.value || 0);
+    const frequency3 = parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0);
+    const frequency4 = parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0);
+
     // Blodtransfusjon (spørsmål 5)
     const transfusion = parseInt(document.querySelector('input[name="transfusion"]:checked')?.value || 0);
 
-    // Intensitetsprioritering: Velg de to høyeste intensitetene, uavhengig av frekvens
+    // Velg alltid de to høyeste intensitetene, men ganges med sin respektive frekvens
     const intensities = [
-        { value: intensity1, priority: 1 },
-        { value: intensity2, priority: 2 },
-        { value: intensity3, priority: 3 },
-        { value: intensity4, priority: 4 }
+        { value: intensity1 * frequency1, priority: 1 },
+        { value: intensity2 * frequency2, priority: 2 },
+        { value: intensity3 * frequency3, priority: 3 },
+        { value: intensity4 * frequency4, priority: 4 }
     ];
 
-    // Sorter og velg de to høyeste intensitetene
-    const sortedIntensities = intensities.sort((a, b) => b.priority - a.priority).filter(int => int.value > 0).slice(0, 2);
+    const sortedIntensities = intensities
+        .filter(int => int.value > 0)
+        .sort((a, b) => b.priority - a.priority)
+        .slice(0, 2);
 
-    // Hvis bare én intensitet er valgt, brukes den alene.
     const totalScore = sortedIntensities.reduce((acc, int) => acc + int.value, 0) + transfusion;
 
-    // Bestem klassifisering basert på total poengsum
+    // Bestem klassifisering basert på poengsum
     let classification = '';
     let colorClass = '';
     if (totalScore === 0) {
@@ -63,7 +70,7 @@ langButtons.forEach(button => {
         lang = button.id === 'norwegian' ? 'no' : 'en';  // Bytt språk basert på knapp
         updateLanguage(lang);
 
-        // Fremhev aktiv knapp med lyseblå farge
+        // Fremhev valgt knapp med mørkere blåfarge
         langButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
     });
