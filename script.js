@@ -1,23 +1,29 @@
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
     event.preventDefault();  // Forhindre forminnsending
 
-    // Hent verdiene fra spørsmål 1-4 (intensitet * frekvens)
-    const intensity1 = 1 * parseInt(document.querySelector('input[name="intensity1"]:checked')?.value || 0);
-    const intensity2 = 2 * parseInt(document.querySelector('input[name="intensity2"]:checked')?.value || 0);
-    const intensity3 = 3 * parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0);
-    const intensity4 = 4 * parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0);
-    
-    // Hent poeng fra spørsmål 5
+    // Hent frekvenspoengene fra spørsmål 1-4
+    const freq1 = parseInt(document.querySelector('input[name="intensity1"]:checked')?.value || 0);
+    const freq2 = parseInt(document.querySelector('input[name="intensity2"]:checked')?.value || 0);
+    const freq3 = parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0);
+    const freq4 = parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0);
+
+    // Hver intensitet multipliseres med frekvensen:
+    const score1 = 1 * freq1;
+    const score2 = 2 * freq2;
+    const score3 = 3 * freq3;
+    const score4 = 4 * freq4;
+
+    // Samle poengene i en array
+    const scores = [score1, score2, score3, score4];
+
+    // Sorter poengene og velg de to høyeste
+    const twoHighestScores = scores.sort((a, b) => b - a).slice(0, 2);
+
+    // Hent poeng for spørsmål 5 (transfusjon)
     const transfusion = parseInt(document.querySelector('input[name="transfusion"]:checked')?.value || 0);
 
-    // Samle intensitetsverdiene i en liste
-    const intensityScores = [intensity1, intensity2, intensity3, intensity4];
-
-    // Sorter intensitetene etter alvorlighetsgrad, og velg de to mest alvorlige
-    const twoMostSevere = intensityScores.sort((a, b) => b - a).slice(0, 2);
-
-    // Beregn totalpoeng: summen av de to mest alvorlige intensitetene + transfusjonspoeng
-    const totalScore = twoMostSevere.reduce((acc, val) => acc + val, 0) + transfusion;
+    // Total poengsum er summen av de to høyeste intensitetene pluss transfusjonspoengene
+    const totalScore = twoHighestScores.reduce((acc, val) => acc + val, 0) + transfusion;
 
     // Bestem epistaxis-graderingen basert på poengsummen
     let classification = '';
