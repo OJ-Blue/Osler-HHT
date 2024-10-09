@@ -56,7 +56,7 @@ langButtons.forEach(button => {
         lang = button.id === 'norwegian' ? 'no' : 'en';  // Bytt språk basert på knapp
         updateLanguage(lang);
 
-        // Fremhev aktiv knapp
+        // Fremhev aktiv knapp med lyseblå farge
         langButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
     });
