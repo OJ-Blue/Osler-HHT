@@ -8,7 +8,7 @@
        body {
            font-family: 'Arial', sans-serif;
            background-color: #2c3e50;  /* Mørkeblå bakgrunn */
-           color: #333;
+           color: #ecf0f1;  /* Hvit tekst */
            padding: 20px;
            max-width: 800px;
            margin: auto;
@@ -17,73 +17,39 @@
 
        /* Heading Style */
        h1 {
-           color: #ecf0f1;
+           color: #ffffff;
            text-align: center;
            font-size: 2.5em;
            font-weight: bold;
            letter-spacing: 1px;
            padding: 20px;
-           background-color: #34495e;  /* Mørkeblå heading bakgrunn */
-           border-radius: 10px;
-           box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+           background-color: transparent;  /* Ingen separat bakgrunn for heading */
+           margin-bottom: 0;
        }
 
        .description {
-           color: #ecf0f1;
+           color: #ffffff;
            font-size: 1.2em;
            text-align: center;
            line-height: 1.5;
-           padding: 15px;
-           background-color: #34495e;
-           border-radius: 8px;
-           box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+           margin-top: 10px;
            margin-bottom: 20px;
-           max-width: 750px;
-           margin-left: auto;
-           margin-right: auto;
+       }
+
+       /* Hvit bakgrunn for spørsmål, poengsum og skala */
+       .form-container {
+           background-color: #ffffff;
+           color: #333;
+           padding: 20px;
+           border-radius: 8px;
+           box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
        }
 
        label {
            font-weight: bold;
            margin-top: 15px;
            display: block;
-           color: #ecf0f1;  /* Hvit tekst */
-       }
-
-       .language-switch {
-           text-align: right;
-           margin-bottom: 20px;
-           position: absolute;
-           top: 20px;
-           right: 20px;
-       }
-
-       .language-switch button {
-           background-color: #34495e;
-           color: white;
-           border: none;
-           padding: 10px 20px;
-           cursor: pointer;
-           margin-left: 5px;
-           border-radius: 4px;
-           font-size: 1em;
-           transition: background-color 0.3s ease;
-       }
-
-       .language-switch button.active {
-           background-color: #1a242f;
-       }
-
-       .language-switch button:hover {
-           background-color: #2c3e50;
-       }
-
-       form {
-           background-color: #ffffff;
-           padding: 20px;
-           border-radius: 8px;
-           box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-           margin-bottom: 30px;
+           color: #34495e;  /* Mørk tekst for spørsmålene */
        }
 
        .option-group {
@@ -174,25 +140,23 @@
 
        .score-label {
            font-weight: bold;
-           color: #ecf0f1;
+           color: #333;
            font-size: 1em;
        }
 
        .acknowledgment {
            text-align: center;
            font-size: 0.9em;
-           color: #ecf0f1;
-           background-color: #34495e;
-           padding: 15px;
-           border-radius: 8px;
+           color: #ffffff;
+           background-color: transparent;  /* Ingen separat bakgrunn for acknowledgments */
            margin-top: 40px;
-           box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
        }
 
        .acknowledgment p {
            margin: 5px 0;
        }
 
+       /* Responsive styling */
        @media (max-width: 600px) {
            body {
                padding: 10px;
@@ -226,69 +190,66 @@
        IFT måler alvorlighetsgraden av neseblødninger hos pasienter med Mb. Osler (Hereditær hemoragisk telangiektasi - HHT) de siste fire ukene. Resultatene hjelper legen med å veilede behandling og oppfølging.
    </div>
 
-   <div class="language-switch">
-       <button id="english" class="active">English</button>
-       <button id="norwegian">Norsk</button>
-   </div>
+   <div class="form-container">
+       <form id="epistaxisForm">
+           <div class="option-group">
+               <label id="q1" data-en="1. In the past 4 weeks, how often have you noticed spots of blood or small drips?" data-no="1. I løpet av de siste 4 ukene, hvor ofte har du merket blodflekker eller små dråper?">1. In the past 4 weeks, how often have you noticed spots of blood or small drips?</label>
+               <input type="radio" name="intensity1" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
+               <input type="radio" name="intensity1" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
+               <input type="radio" name="intensity1" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
+               <input type="radio" name="intensity1" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
+               <input type="radio" name="intensity1" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
+           </div>
 
-   <form id="epistaxisForm">
-       <div class="option-group">
-           <label id="q1" data-en="1. In the past 4 weeks, how often have you noticed spots of blood or small drips?" data-no="1. I løpet av de siste 4 ukene, hvor ofte har du merket blodflekker eller små dråper?">1. In the past 4 weeks, how often have you noticed spots of blood or small drips?</label>
-           <input type="radio" name="intensity1" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity1" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity1" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity1" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity1" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
+           <div class="option-group">
+               <label id="q2" data-en="2. In the past 4 weeks, how often have you had a blood-soaked handkerchief?" data-no="2. I løpet av de siste 4 ukene, hvor ofte har du hatt et gjennomtrukket lommetørkle?">2. In the past 4 weeks, how often have you had a blood-soaked handkerchief?</label>
+               <input type="radio" name="intensity2" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
+               <input type="radio" name="intensity2" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
+               <input type="radio" name="intensity2" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
+               <input type="radio" name="intensity2" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
+               <input type="radio" name="intensity2" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
+           </div>
 
-       <div class="option-group">
-           <label id="q2" data-en="2. In the past 4 weeks, how often have you had a blood-soaked handkerchief?" data-no="2. I løpet av de siste 4 ukene, hvor ofte har du hatt et gjennomtrukket lommetørkle?">2. In the past 4 weeks, how often have you had a blood-soaked handkerchief?</label>
-           <input type="radio" name="intensity2" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity2" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity2" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity2" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity2" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
+           <div class="option-group">
+               <label id="q3" data-en="3. In the past 4 weeks, how often have you had a blood-soaked towel?" data-no="3. I løpet av de siste 4 ukene, hvor ofte har du hatt et gjennomtrukket håndkle?">3. In the past 4 weeks, how often have you had a blood-soaked towel?</label>
+               <input type="radio" name="intensity3" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
+               <input type="radio" name="intensity3" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
+               <input type="radio" name="intensity3" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
+               <input type="radio" name="intensity3" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
+               <input type="radio" name="intensity3" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
+           </div>
 
-       <div class="option-group">
-           <label id="q3" data-en="3. In the past 4 weeks, how often have you had a blood-soaked towel?" data-no="3. I løpet av de siste 4 ukene, hvor ofte har du hatt et gjennomtrukket håndkle?">3. In the past 4 weeks, how often have you had a blood-soaked towel?</label>
-           <input type="radio" name="intensity3" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity3" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity3" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity3" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity3" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
+           <div class="option-group">
+               <label id="q4" data-en="4. In the past 4 weeks, how often have you had bleeding that fills so much as a bowl (1/2 liter) of blood?" data-no="4. I løpet av de siste 4 ukene, hvor ofte har du hatt blødning som fyller så mye som en bolle (1/2 liter) blod?">4. In the past 4 weeks, how often have you had bleeding that fills so much as a bowl (1/2 liter) of blood?</label>
+               <input type="radio" name="intensity4" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
+               <input type="radio" name="intensity4" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
+               <input type="radio" name="intensity4" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
+               <input type="radio" name="intensity4" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
+               <input type="radio" name="intensity4" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
+           </div>
 
-       <div class="option-group">
-           <label id="q4" data-en="4. In the past 4 weeks, how often have you had bleeding that fills so much as a bowl (1/2 liter) of blood?" data-no="4. I løpet av de siste 4 ukene, hvor ofte har du hatt blødning som fyller så mye som en bolle (1/2 liter) blod?">4. In the past 4 weeks, how often have you had bleeding that fills so much as a bowl (1/2 liter) of blood?</label>
-           <input type="radio" name="intensity4" value="0"> <span data-en="None" data-no="Ingen">None</span><br>
-           <input type="radio" name="intensity4" value="1"> <span data-en="1-5 times" data-no="1-5 ganger">1-5 times</span><br>
-           <input type="radio" name="intensity4" value="2"> <span data-en="6-10 times" data-no="6-10 ganger">6-10 times</span><br>
-           <input type="radio" name="intensity4" value="3"> <span data-en="11-27 times" data-no="11-27 ganger">11-27 times</span><br>
-           <input type="radio" name="intensity4" value="4"> <span data-en="Daily or more" data-no="Daglig eller mer">Daily or more</span>
-       </div>
+           <div class="option-group">
+               <label id="q5" data-en="5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?" data-no="5. I løpet av de siste 4 ukene, har du trengt en blodoverføring på grunn av neseblødninger?">5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?</label>
+               <input type="radio" name="transfusion" value="0"> <span data-en="No" data-no="Nei">No</span><br>
+               <input type="radio" name="transfusion" value="1"> <span data-en="Yes" data-no="Ja">Yes</span><br>
+               <input type="radio" name="transfusion" value="2"> <span data-en="Several times" data-no="Flere ganger">Several times</span>
+           </div>
 
-       <div class="option-group">
-           <label id="q5" data-en="5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?" data-no="5. I løpet av de siste 4 ukene, har du trengt en blodoverføring på grunn av neseblødninger?">5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?</label>
-           <input type="radio" name="transfusion" value="0"> <span data-en="No" data-no="Nei">No</span><br>
-           <input type="radio" name="transfusion" value="1"> <span data-en="Yes" data-no="Ja">Yes</span><br>
-           <input type="radio" name="transfusion" value="2"> <span data-en="Several times" data-no="Flere ganger">Several times</span>
-       </div>
+           <button id="submitBtn" type="submit" data-en="Calculate score" data-no="Beregn poengsum">Calculate score</button>
+       </form>
 
-       <button id="submitBtn" type="submit" data-en="Calculate score" data-no="Beregn poengsum">Calculate score</button>
-   </form>
+       <div id="result" class="result"></div>
 
-   <div id="result" class="result"></div>
-
-   <div id="scale-container" class="scale-container">
-       <div class="score-scale">
-           <div id="score-marker" class="score-marker" style="left: 0;"></div>
-       </div>
-       <div class="score-labels">
-           <span class="score-label">0</span>
-           <span class="score-label">10</span>
-           <span class="score-label">20</span>
-           <span class="score-label">30</span>
+       <div id="scale-container" class="scale-container">
+           <div class="score-scale">
+               <div id="score-marker" class="score-marker" style="left: 0;"></div>
+           </div>
+           <div class="score-labels">
+               <span class="score-label">0</span>
+               <span class="score-label">10</span>
+               <span class="score-label">20</span>
+               <span class="score-label">30</span>
+           </div>
        </div>
    </div>
 
