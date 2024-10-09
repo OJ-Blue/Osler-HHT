@@ -4,15 +4,20 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Epistaxis Grading (IFT)</title>
+   
+   <!-- Legg til favicon -->
+   <link rel="icon" href="favicon.ico" type="image/x-icon">
+   
    <style>
        body {
            font-family: 'Arial', sans-serif;
-           background-color: #2c3e50;  /* Mørkeblå bakgrunn */
-           color: #ecf0f1;  /* Hvit tekst */
+           background-color: #2c3e50;
+           color: #ecf0f1;
            padding: 20px;
            max-width: 800px;
            margin: auto;
            line-height: 1.6;
+           position: relative;
        }
 
        h1 {
@@ -22,7 +27,6 @@
            font-weight: bold;
            letter-spacing: 1px;
            padding: 20px;
-           background-color: transparent;  /* Ingen separat bakgrunn for heading */
            margin-bottom: 0;
        }
 
@@ -142,23 +146,32 @@
            font-size: 1em;
        }
 
+       /* Språkvelger-styling */
        .language-switch {
-           text-align: right;
-           margin-bottom: 20px;
+           position: absolute;
+           top: 20px;
+           right: 20px;
        }
 
        .language-switch button {
            background-color: #3498db;
            color: white;
-           padding: 10px 20px;
            border: none;
-           border-radius: 4px;
+           padding: 10px 20px;
            cursor: pointer;
            margin-left: 5px;
+           border-radius: 4px;
+           font-size: 1em;
        }
 
        .language-switch button.active {
            background-color: #1a242f;
+           font-weight: bold;
+           color: #add8e6;  /* Lyseblått for valgt språk */
+       }
+
+       .language-switch button:hover {
+           background-color: #2980b9;  /* Farge når du holder musen over */
        }
 
        .acknowledgment {
