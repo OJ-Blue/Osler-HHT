@@ -7,23 +7,33 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     const freq3 = parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0);
     const freq4 = parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0);
 
-    // Poengene beregnes ved å multiplisere intensitetene med frekvensene
+    // Beregn poengene for intensitet 1-4 ved å multiplisere intensitet med frekvens
     const score1 = 1 * freq1;  // Intensitet 1
     const score2 = 2 * freq2;  // Intensitet 2
     const score3 = 3 * freq3;  // Intensitet 3
     const score4 = 4 * freq4;  // Intensitet 4
 
-    // Velg de to høyeste intensitetene (alltid de to største verdiene, uavhengig av frekvensene)
-    const scoresToConsider = [score3, score4];  // Kun intensitet 3 og 4 vurderes
+    // Samle alle intensitetspoengene i en liste
+    let scoresToConsider = [score1, score2, score3, score4];
 
-    // Finn de to største poengene
-    const twoHighestScores = scoresToConsider.sort((a, b) => b - a);
+    // Filtrer ut poeng med verdien 0 (intensiteter som ikke er valgt)
+    scoresToConsider = scoresToConsider.filter(score => score > 0);
+
+    // Hvis det kun er én intensitet valgt, bruk denne alene
+    let totalScore = 0;
+    if (scoresToConsider.length === 1) {
+        totalScore = scoresToConsider[0];
+    } else if (scoresToConsider.length > 1) {
+        // Sorter poengene og velg de to høyeste intensitetene
+        const twoHighestScores = scoresToConsider.sort((a, b) => b - a).slice(0, 2);
+        totalScore = twoHighestScores.reduce((acc, val) => acc + val, 0);
+    }
 
     // Hent poeng for spørsmål 5 (transfusjon)
     const transfusion = parseInt(document.querySelector('input[name="transfusion"]:checked')?.value || 0);
 
-    // Total poengsum er summen av intensitet 3 og 4, pluss transfusjonspoengene
-    const totalScore = twoHighestScores.reduce((acc, val) => acc + val, 0) + transfusion;
+    // Legg transfusjonspoengene til totalsummen
+    totalScore += transfusion;
 
     // Bestem epistaxis-graderingen basert på poengsummen
     let classification = '';
