@@ -7,22 +7,22 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     const freq3 = parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0);
     const freq4 = parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0);
 
-    // Hver intensitet multipliseres med frekvensen:
-    const score1 = 1 * freq1;
-    const score2 = 2 * freq2;
-    const score3 = 3 * freq3;
-    const score4 = 4 * freq4;
+    // Poengene beregnes ved å multiplisere intensitetene med frekvensene
+    const score1 = 1 * freq1;  // Intensitet 1
+    const score2 = 2 * freq2;  // Intensitet 2
+    const score3 = 3 * freq3;  // Intensitet 3
+    const score4 = 4 * freq4;  // Intensitet 4
 
-    // Samle poengene i en array
-    const scores = [score1, score2, score3, score4];
+    // Velg de to høyeste intensitetene (alltid de to største verdiene, uavhengig av frekvensene)
+    const scoresToConsider = [score3, score4];  // Kun intensitet 3 og 4 vurderes
 
-    // Sorter poengene og velg de to høyeste
-    const twoHighestScores = scores.sort((a, b) => b - a).slice(0, 2);
+    // Finn de to største poengene
+    const twoHighestScores = scoresToConsider.sort((a, b) => b - a);
 
     // Hent poeng for spørsmål 5 (transfusjon)
     const transfusion = parseInt(document.querySelector('input[name="transfusion"]:checked')?.value || 0);
 
-    // Total poengsum er summen av de to høyeste intensitetene pluss transfusjonspoengene
+    // Total poengsum er summen av intensitet 3 og 4, pluss transfusjonspoengene
     const totalScore = twoHighestScores.reduce((acc, val) => acc + val, 0) + transfusion;
 
     // Bestem epistaxis-graderingen basert på poengsummen
