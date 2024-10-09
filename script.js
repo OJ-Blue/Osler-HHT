@@ -10,12 +10,19 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     // Blodtransfusjon (spørsmål 5)
     const transfusion = parseInt(document.querySelector('input[name="transfusion"]:checked')?.value || 0);
 
-    // Velg de to høyeste intensitetsverdiene, og legg til blodtransfusjon
-    const intensities = [intensity1, intensity2, intensity3, intensity4];
-    const twoHighestIntensities = intensities.sort((a, b) => b - a).slice(0, 2);
+    // Intensitetsprioritering: Velg de to høyeste intensitetene, og legg til blodtransfusjon
+    const intensities = [
+        { value: intensity1, priority: 1 },
+        { value: intensity2, priority: 2 },
+        { value: intensity3, priority: 3 },
+        { value: intensity4, priority: 4 }
+    ];
+
+    // Prioriter de høyeste intensitetene
+    const sortedIntensities = intensities.sort((a, b) => b.priority - a.priority).filter(int => int.value > 0).slice(0, 2);
 
     // Beregn total poengsum
-    const totalScore = twoHighestIntensities.reduce((acc, val) => acc + val, 0) + transfusion;
+    const totalScore = sortedIntensities.reduce((acc, int) => acc + int.value, 0) + transfusion;
 
     // Bestem klassifisering basert på total poengsum
     let classification = '';
