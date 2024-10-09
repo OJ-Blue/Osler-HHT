@@ -35,12 +35,37 @@
             margin-bottom: 20px;
         }
 
-        form, .result, #scale-container {
+        .language-switch {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .language-switch button {
+            background-color: #34495e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-left: 5px;
+            border-radius: 4px;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .language-switch button.active {
+            background-color: #1a242f;
+        }
+
+        .language-switch button:hover {
+            background-color: #2c3e50;
+        }
+
+        form {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            margin-bottom: 0px; /* For å sikre sammenhengende bakgrunn */
         }
 
         .option-group {
@@ -64,11 +89,20 @@
             font-size: 1.2em;
         }
 
+        /* Resultatvisningen med hvit bakgrunn */
+        .result, #scale-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 0px 0px 8px 8px; /* Forlenger den hvite bakgrunnen som en del av skjemaet */
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 0; /* Fjerner margin for å koble alt sammen */
+            display: none;
+        }
+
         .result {
             text-align: center;
             font-size: 1.8em;
             color: #333;
-            display: none; /* Hide until score is calculated */
         }
 
         /* Tekstfarging basert på poengsummen */
@@ -164,6 +198,12 @@
 
     <div class="description" id="description" data-en="IFT measures the severity of nosebleeds in patients with hereditary hemorrhagic telangiectasia (Mb. Osler) over the past four weeks. The results help guide your physician's treatment and follow-up." data-no="IFT måler alvorlighetsgraden av neseblødninger hos pasienter med Mb. Osler (Hereditær hemoragisk telangiektasi - HHT) de siste fire ukene. Resultatene hjelper legen med å veilede behandling og oppfølging.">
         IFT måler alvorlighetsgraden av neseblødninger hos pasienter med Mb. Osler (Hereditær hemoragisk telangiektasi - HHT) de siste fire ukene. Resultatene hjelper legen med å veilede behandling og oppfølging.
+    </div>
+
+    <!-- Språkomkobling -->
+    <div class="language-switch">
+        <button id="english" class="active">English</button>
+        <button id="norwegian">Norsk</button>
     </div>
 
     <form id="epistaxisForm">
