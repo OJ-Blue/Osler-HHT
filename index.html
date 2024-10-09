@@ -89,12 +89,11 @@
             font-size: 1.2em;
         }
 
-        /* Resultat og skala med kontinuerlig hvit bakgrunn */
+        /* Fjernet ekstra hvit bakgrunn rundt resultatet */
         .result, #scale-container {
-            background-color: #ffffff;
             padding: 20px;
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 0;
+            margin-top: 0;
             display: none;
         }
 
@@ -258,7 +257,7 @@
             <button id="submitBtn" type="submit" data-en="Calculate score" data-no="Beregn poengsum">Calculate score</button>
         </form>
 
-        <!-- Resultatdiv med hvit bakgrunn som er sammenhengende med spørreskjemaet -->
+        <!-- Resultatdiv med kontinuerlig hvit bakgrunn -->
         <div id="result" class="result"></div>
 
         <!-- Skala -->
