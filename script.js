@@ -13,18 +13,31 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     const score3 = 3 * freq3;  // Intensitet 3
     const score4 = 4 * freq4;  // Intensitet 4
 
-    // Samle alle intensitetspoengene i en liste
-    let scoresToConsider = [score1, score2, score3, score4];
+    // Prioriter intensitetene 3 og 4, uansett frekvens
+    let scoresToConsider = [];
+    if (freq4 > 0) {
+        scoresToConsider.push(score4);  // Ta alltid med intensitet 4 hvis valgt
+    }
+    if (freq3 > 0) {
+        scoresToConsider.push(score3);  // Ta alltid med intensitet 3 hvis valgt
+    }
 
-    // Filtrer ut poeng med verdien 0 (intensiteter som ikke er valgt)
-    scoresToConsider = scoresToConsider.filter(score => score > 0);
+    // Hvis intensitet 3 og 4 ikke er valgt, ta med intensitet 1 og 2 hvis valgt
+    if (scoresToConsider.length < 2) {
+        if (freq2 > 0) {
+            scoresToConsider.push(score2);  // Ta med intensitet 2 hvis valgt
+        }
+        if (freq1 > 0) {
+            scoresToConsider.push(score1);  // Ta med intensitet 1 hvis valgt
+        }
+    }
 
-    // Hvis det kun er én intensitet valgt, bruk denne alene
+    // Hvis det bare er én intensitet valgt, bruk den alene
     let totalScore = 0;
     if (scoresToConsider.length === 1) {
         totalScore = scoresToConsider[0];
     } else if (scoresToConsider.length > 1) {
-        // Sorter poengene og velg de to høyeste intensitetene
+        // Hvis det er to eller flere, velg de to høyeste (det vil alltid være de høyeste intensitetene 3 og 4 hvis valgt)
         const twoHighestScores = scoresToConsider.sort((a, b) => b - a).slice(0, 2);
         totalScore = twoHighestScores.reduce((acc, val) => acc + val, 0);
     }
