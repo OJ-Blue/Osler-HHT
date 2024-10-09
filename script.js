@@ -10,7 +10,7 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     // Blodtransfusjon (spørsmål 5)
     const transfusion = parseInt(document.querySelector('input[name="transfusion"]:checked')?.value || 0);
 
-    // Velg de to høyeste intensitetsverdiene
+    // Velg de to høyeste intensitetsverdiene, og legg til blodtransfusjon
     const intensities = [intensity1, intensity2, intensity3, intensity4];
     const twoHighestIntensities = intensities.sort((a, b) => b - a).slice(0, 2);
 
