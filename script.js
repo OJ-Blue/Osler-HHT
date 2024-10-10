@@ -10,7 +10,7 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     // Collect transfusion points from question 5 (0-2 points)
     const transfusion = parseInt(document.querySelector('input[name="transfusion"]:checked')?.value || 0);
 
-    // Create an array of intensity scores
+    // Create an array of intensity scores, where intensityX * frequency is the score
     const intensityScores = [
         { score: intensity1, intensity: 1 },
         { score: intensity2, intensity: 2 },
@@ -27,37 +27,41 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
     // Use only the two most severe intensities for calculation
     const topTwoIntensities = sortedIntensities.slice(0, 2);
 
-    // If only one intensity is answered, use just that one
+    // Calculate the total score using the two highest intensity scores and adding the transfusion score
     const totalScore = topTwoIntensities.reduce((acc, item) => acc + item.score, 0) + transfusion;
 
     // Determine the bleeding classification based on the total score
     let classification = '';
-    let colorClass = '';
+    let colorClass = '';  // Add a variable to store the color class for styling the result text
+
     if (totalScore === 0) {
         classification = lang === 'en' ? 'No bleeding' : 'Ingen blødning';
-        colorClass = 'mild';
+        colorClass = 'mild';  // Green for no bleeding
     } else if (totalScore >= 1 && totalScore <= 5) {
         classification = lang === 'en' ? 'Mild bleeding' : 'Mild blødning';
-        colorClass = 'mild';
+        colorClass = 'mild';  // Green for mild
     } else if (totalScore >= 6 && totalScore <= 10) {
         classification = lang === 'en' ? 'Moderate bleeding' : 'Moderat blødning';
-        colorClass = 'moderate';
+        colorClass = 'moderate';  // Yellow/Orange for moderate
     } else if (totalScore >= 11 && totalScore <= 15) {
         classification = lang === 'en' ? 'Severe bleeding' : 'Alvorlig blødning';
-        colorClass = 'severe';
+        colorClass = 'severe';  // Red for severe
     } else if (totalScore >= 16) {
         classification = lang === 'en' ? 'Intractable bleeding' : 'Ukontrollerbar blødning';
-        colorClass = 'intractable';
+        colorClass = 'intractable';  // Dark red for intractable
     }
 
-    // Display the result and scale
-    document.getElementById('result').innerHTML = `<div class="result-text ${colorClass}">${classification}</div><div>${lang === 'en' ? 'Your score' : 'Din poengsum'}: ${totalScore}/30</div>`;
+    // Display the result with the appropriate color class
+    const resultElement = document.getElementById('result');
+    resultElement.innerHTML = `<div class="result-text ${colorClass}">${classification}</div><div>${lang === 'en' ? 'Your score' : 'Din poengsum'}: ${totalScore}/30</div>`;
+
+    // Show the scale container (which was hidden initially)
     document.getElementById('scale-container').style.display = 'block';
 
-    // Update the scale marker
+    // Update the score marker on the scale to reflect the position based on the score
     const scoreMarker = document.getElementById('score-marker');
     const percentage = (totalScore / 30) * 100;
-    scoreMarker.style.left = `calc(${percentage}% - 10px)`;
+    scoreMarker.style.left = `calc(${percentage}% - 10px)`;  // Adjust the marker to reflect the score on the scale
 });
 
 // Language switching functionality
