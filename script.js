@@ -18,10 +18,16 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
         { score: intensity4, intensity: 4 }
     ];
 
-    // Sort the intensities by severity (highest first) and take the top 2 most severe intensities
-    const topTwoIntensities = intensityScores.sort((a, b) => b.intensity - a.intensity).slice(0, 2);
+    // Filter out intensities with score 0 (None) to keep only answered intensities
+    const filteredIntensities = intensityScores.filter(item => item.score > 0);
 
-    // Calculate total score from the top two intensities
+    // Sort the remaining intensities by severity (intensity value, not score)
+    const sortedIntensities = filteredIntensities.sort((a, b) => b.intensity - a.intensity);
+
+    // Use only the two most severe intensities for calculation
+    const topTwoIntensities = sortedIntensities.slice(0, 2);
+
+    // If only one intensity is answered, use just that one
     const totalScore = topTwoIntensities.reduce((acc, item) => acc + item.score, 0) + transfusion;
 
     // Determine the bleeding classification based on the total score
