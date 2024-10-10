@@ -1,45 +1,30 @@
 document.getElementById('epistaxisForm').addEventListener('submit', function(event) {
-    event.preventDefault();  // Forhindre standard innsending av skjemaet
+    event.preventDefault();  // Prevent default form submission
 
-    // Hente intensiteter fra spørsmål 1-4
-    const intensity1 = parseInt(document.querySelector('input[name="intensity1"]:checked')?.value || 0);
-    const intensity2 = parseInt(document.querySelector('input[name="intensity2"]:checked')?.value || 0);
-    const intensity3 = parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0);
-    const intensity4 = parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0);
+    // Collect intensity and frequency values from questions 1-4
+    const intensity1 = 1 * parseInt(document.querySelector('input[name="intensity1"]:checked')?.value || 0);
+    const intensity2 = 2 * parseInt(document.querySelector('input[name="intensity2"]:checked')?.value || 0);
+    const intensity3 = 3 * parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0);
+    const intensity4 = 4 * parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0);
 
-    // Hente frekvenspoeng fra spørsmål 1-4 (frekvensene er verdiene fra radio-knappene)
-    const frequency1 = parseInt(document.querySelector('input[name="intensity1"]:checked')?.value || 0);
-    const frequency2 = parseInt(document.querySelector('input[name="intensity2"]:checked')?.value || 0);
-    const frequency3 = parseInt(document.querySelector('input[name="intensity3"]:checked')?.value || 0);
-    const frequency4 = parseInt(document.querySelector('input[name="intensity4"]:checked')?.value || 0);
-
-    // Hente poeng for blodtransfusjon fra spørsmål 5
+    // Collect transfusion points from question 5 (0-2 points)
     const transfusion = parseInt(document.querySelector('input[name="transfusion"]:checked')?.value || 0);
 
-    // Beregn totalpoeng for hver intensitet ved å gange intensitet med frekvens
-    const score1 = intensity1 * frequency1;
-    const score2 = intensity2 * frequency2;
-    const score3 = intensity3 * frequency3;
-    const score4 = intensity4 * frequency4;
-
-    // Lag en array av intensitetspoengene og deres tilhørende intensiteter (1-4)
+    // Create an array of intensity scores
     const intensityScores = [
-        { score: score1, intensity: 1 },
-        { score: score2, intensity: 2 },
-        { score: score3, intensity: 3 },
-        { score: score4, intensity: 4 }
+        { score: intensity1, intensity: 1 },
+        { score: intensity2, intensity: 2 },
+        { score: intensity3, intensity: 3 },
+        { score: intensity4, intensity: 4 }
     ];
 
-    // Sorter arrayen etter intensitet (ikke poengsum) for å finne de to høyeste intensitetene
-    const sortedIntensities = intensityScores.sort((a, b) => b.intensity - a.intensity);
+    // Sort the intensities by severity (highest first) and take the top 2 most severe intensities
+    const topTwoIntensities = intensityScores.sort((a, b) => b.intensity - a.intensity).slice(0, 2);
 
-    // Velg de to høyeste intensitetene som har en score større enn 0
-    const topTwoIntensities = sortedIntensities.filter(item => item.score > 0).slice(0, 2);
-
-    // Beregn totalpoeng fra de to høyeste intensitetene og legg til transfusjonspoengene
+    // Calculate total score from the top two intensities
     const totalScore = topTwoIntensities.reduce((acc, item) => acc + item.score, 0) + transfusion;
 
-    // Bestem klassifiseringen basert på poengsum
+    // Determine the bleeding classification based on the total score
     let classification = '';
     let colorClass = '';
     if (totalScore === 0) {
@@ -59,26 +44,26 @@ document.getElementById('epistaxisForm').addEventListener('submit', function(eve
         colorClass = 'intractable';
     }
 
-    // Vis resultatet og skalaen
+    // Display the result and scale
     document.getElementById('result').innerHTML = `<div class="result-text ${colorClass}">${classification}</div><div>${lang === 'en' ? 'Your score' : 'Din poengsum'}: ${totalScore}/30</div>`;
     document.getElementById('scale-container').style.display = 'block';
 
-    // Oppdater skalaindikatoren
+    // Update the scale marker
     const scoreMarker = document.getElementById('score-marker');
     const percentage = (totalScore / 30) * 100;
     scoreMarker.style.left = `calc(${percentage}% - 10px)`;
 });
 
-// Språkvekslings-funksjonalitet
+// Language switching functionality
 const langButtons = document.querySelectorAll('.language-switch button');
-let lang = 'en';  // Standard språk
+let lang = 'en';  // Default language
 
 langButtons.forEach(button => {
     button.addEventListener('click', () => {
-        lang = button.id === 'norwegian' ? 'no' : 'en';  // Bytt språk basert på knapp
+        lang = button.id === 'norwegian' ? 'no' : 'en';  // Switch language based on button clicked
         updateLanguage(lang);
 
-        // Fremhev valgt knapp med mørkere blåfarge
+        // Highlight selected button with darker blue
         langButtons.forEach(btn => btn.classList.remove('active'));
         button.classList.add('active');
     });
@@ -91,11 +76,11 @@ function updateLanguage(language) {
     const description = document.getElementById('description');
     description.textContent = description.getAttribute(`data-${language}`);
 
-    // Oppdater knappetekst
+    // Update button text
     const submitButton = document.getElementById('submitBtn');
     submitButton.textContent = submitButton.getAttribute(`data-${language}`);
 
-    // Oppdater spørsmål og alternativer
+    // Update questions and answers
     const elementsToUpdate = document.querySelectorAll('[data-en]');
     elementsToUpdate.forEach(element => {
         element.textContent = element.getAttribute(`data-${language}`);
