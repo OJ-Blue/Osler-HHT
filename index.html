@@ -206,7 +206,7 @@
   <div class="wrap">
     <header>
       <h1 data-i18n="title">Epistaxis Grading (IFT)</h1>
-      <p class="sub" data-i18n="subtitle">IFT measures the severity of nosebleeds in HHT over the past four weeks. Results can help guide treatment and follow-up.</p>
+      <p class="sub" data-i18n="subtitle">IFT measures the severity of nosebleeds in HHT (Mb. Osler) over the past four weeks. Results can help guide treatment and follow-up.</p>
     </header>
 
     <div class="toolbar" aria-label="controls">
@@ -225,8 +225,8 @@
     </div>
 
     <main class="card" role="region" aria-labelledby="form-title">
-      <h2 id="form-title" class="section-title" data-i18n="formTitle">Past 4 weeks</h2>
-      <div class="help" data-i18n="hint">Answer each item. The score uses the two most severe intensities plus transfusion.</div>
+      <h2 id="form-title" class="section-title" data-i18n="formTitle">During the last 4 weeks</h2>
+      <div class="help" data-i18n="hint">Answer each item. The score uses the two most frequent bleeding intensities plus transfusion.</div>
 
       <form id="ift-form" novalidate>
         <template id="q-template">
@@ -239,11 +239,11 @@
         <div id="questions"></div>
 
         <fieldset class="q">
-          <legend data-i18n="q5">5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?</legend>
+          <legend data-i18n="q5">During the last 4 weeks, how many times did you get a blood transfusion?</legend>
           <div class="options">
-            <label class="radio"><input type="radio" name="transfusion" value="0"> <span data-i18n="no">No</span></label>
-            <label class="radio"><input type="radio" name="transfusion" value="1"> <span data-i18n="yes">Yes</span></label>
-            <label class="radio"><input type="radio" name="transfusion" value="2"> <span data-i18n="moreThanOnce">More than once</span></label>
+            <label class="radio"><input type="radio" name="transfusion" value="0"> <span data-i18n="tNone">None</span></label>
+            <label class="radio"><input type="radio" name="transfusion" value="1"> <span data-i18n="tOnce">Once</span></label>
+            <label class="radio"><input type="radio" name="transfusion" value="2"> <span data-i18n="tMoreThanOnce">More than once</span></label>
           </div>
         </fieldset>
 
@@ -285,21 +285,22 @@
 
   <script>
     // ---------- i18n strings ----------
+    // English question wording matches the original article Table 1.
     const I18N = {
       en: {
         title: 'Epistaxis Grading (IFT)',
         subtitle: 'IFT measures the severity of nosebleeds in HHT (Mb. Osler) over the past four weeks. Results can help guide treatment and follow-up.',
-        hint: 'Answer each item. The score uses the two most severe intensities plus transfusion.',
-        formTitle: 'Past 4 weeks',
+        hint: 'Answer each item. The score uses the two most frequent bleeding intensities plus transfusion.',
+        formTitle: 'During the last 4 weeks',
         q: [
-          '1. In the past 4 weeks, how often have you noticed spots of blood or small drips?',
-          '2. In the past 4 weeks, how often have you had a blood-soaked handkerchief?',
-          '3. In the past 4 weeks, how often have you had a blood-soaked towel?',
-          '4. In the past 4 weeks, how often have you had bleeding that fills as much as a bowl (½ liter)?'
+          '1. During the last 4 weeks, how many times you got spot(s) of blood from the nose or dripped a few drops of blood from the nose?',
+          '2. During the last 4 weeks, how many times you got a blood-soaked handkerchief?',
+          '3. During the last 4 weeks, how many times you got a blood-soaked towel?',
+          '4. During the last 4 weeks, how many times you got bleeding that fills so much as a bowl (1/2 litre) of blood?'
         ],
-        freq: ['None','1–5 times','6–10 times','11–27 times','Daily or more'],
-        q5: '5. In the past 4 weeks, have you needed a blood transfusion because of nosebleeds?',
-        yes: 'Yes', no: 'No', moreThanOnce:'More than once',
+        freq: ['None','1-5 times','6-10 times','11 to 27 times','Daily or more'],
+        q5: 'During the last 4 weeks, how many times did you get a blood transfusion?',
+        tNone: 'None', tOnce: 'Once', tMoreThanOnce: 'More than once',
         calc:'Calculate score', reset:'Reset',
         details:'Show details',
         classes:['No bleeding','Mild bleeding','Moderate bleeding','Severe bleeding','Intractable bleeding'],
@@ -307,20 +308,21 @@
         err:'Please answer at least one of the first four questions.',
         footerNote:'Translations are provided for accessibility. The IFT has not yet been formally validated in all available languages. If discrepancies arise, the English version is authoritative.'
       },
+
       no: {
         title: 'Epistaxis-gradering (IFT)',
-        subtitle: 'IFT måler alvorlighetsgrad av neseblødning ved HHT de siste fire ukene. Resultatene kan veilede behandling og oppfølging.',
-        hint: 'Svar på hvert punkt. Skåren bruker de to mest alvorlige intensiteter pluss transfusjon.',
-        formTitle: 'Siste 4 uker',
+        subtitle: 'IFT måler alvorlighetsgrad av neseblødning ved HHT (Mb. Osler) de siste fire ukene. Resultatene kan veilede behandling og oppfølging.',
+        hint: 'Svar på hvert punkt. Skåren bruker de to hyppigst forekommende blødningsintensitetene pluss transfusjon.',
+        formTitle: 'De siste 4 ukene',
         q: [
-          '1. I løpet av de siste 4 ukene, hvor ofte har du merket blodflekker eller små dråper?',
-          '2. I løpet av de siste 4 ukene, hvor ofte har du hatt et gjennomtrukket lommetørkle?',
-          '3. I løpet av de siste 4 ukene, hvor ofte har du hatt et gjennomtrukket håndkle?',
-          '4. I løpet av de siste 4 ukene, hvor ofte har du hatt blødning som fyller så mye som en bolle (½ liter)?'
+          '1. I løpet av de siste 4 ukene, hvor mange ganger fikk du blodflekker fra nesen eller dryppet noen få dråper blod fra nesen?',
+          '2. I løpet av de siste 4 ukene, hvor mange ganger fikk du et gjennomtrukket lommetørkle?',
+          '3. I løpet av de siste 4 ukene, hvor mange ganger fikk du et gjennomtrukket håndkle?',
+          '4. I løpet av de siste 4 ukene, hvor mange ganger fikk du en blødning som fyller så mye som en bolle (1/2 liter) med blod?'
         ],
-        freq: ['Ingen','1–5 ganger','6–10 ganger','11–27 ganger','Daglig eller mer'],
-        q5: '5. I løpet av de siste 4 ukene, har du trengt blodoverføring på grunn av neseblødning?',
-        yes:'Ja', no:'Nei', moreThanOnce:'Flere ganger',
+        freq: ['Ingen','1–5 ganger','6–10 ganger','11 til 27 ganger','Daglig eller mer'],
+        q5: 'I løpet av de siste 4 ukene, hvor mange ganger fikk du blodoverføring?',
+        tNone:'Ingen', tOnce:'Én gang', tMoreThanOnce:'Flere ganger',
         calc:'Beregn skår', reset:'Nullstill',
         details:'Vis detaljer',
         classes:['Ingen blødning','Mild blødning','Moderat blødning','Alvorlig blødning','Ukontrollerbar blødning'],
@@ -328,20 +330,21 @@
         err:'Vennligst svar på minst ett av de fire første spørsmålene.',
         footerNote:'Oversettelser tilbys for tilgjengelighet. IFT er ikke formelt validert på alle tilgjengelige språk. Ved eventuelle avvik er den engelske versjonen autoritativ.'
       },
+
       'zh-CN': {
         title: '鼻出血分级（IFT）',
-        subtitle: 'IFT 用于评估过去四周内 HHT（遗传性出血性毛细血管扩张症）患者鼻出血的严重程度。结果可用于指导治疗和随访。',
-        hint: '请回答每一项。总分由最严重的两种出血强度加上是否需要输血计算得出。',
+        subtitle: 'IFT 评估 HHT（奥斯勒病）患者在过去四周内鼻出血的严重程度。结果可用于指导治疗与随访。',
+        hint: '请回答每一项。总分由“最常发生的两种出血强度”加上输血项组成。',
         formTitle: '过去 4 周',
         q: [
-          '1. 在过去 4 周内，您注意到血迹或少量滴血的频率是多少？',
-          '2. 在过去 4 周内，您有多少次手帕被血完全浸透？',
-          '3. 在过去 4 周内，您有多少次毛巾被血完全浸透？',
-          '4. 在过去 4 周内，您有多少次出血量达到可装满一个碗（约 0.5 升）？'
+          '1. 在过去 4 周内，您出现鼻腔血迹或滴出几滴血的次数是多少？',
+          '2. 在过去 4 周内，您的手帕被血完全浸透的次数是多少？',
+          '3. 在过去 4 周内，您的毛巾被血完全浸透的次数是多少？',
+          '4. 在过去 4 周内，出血量大到可装满一只碗（约 0.5 升）的次数是多少？'
         ],
-        freq: ['无','1–5 次','6–10 次','11–27 次','每天或更频繁'],
-        q5: '5. 在过去 4 周内，您是否因鼻出血而需要输血？',
-        yes:'是', no:'否', moreThanOnce:'多于一次',
+        freq: ['无','1–5 次','6–10 次','11 至 27 次','每天或更多'],
+        q5: '在过去 4 周内，您接受输血的次数是多少？',
+        tNone:'无', tOnce:'一次', tMoreThanOnce:'多于一次',
         calc:'计算评分', reset:'重置',
         details:'显示详情',
         classes:['无出血','轻度出血','中度出血','重度出血','难治性出血'],
@@ -349,20 +352,21 @@
         err:'请至少回答前四个问题中的一个。',
         footerNote:'提供翻译以提高可访问性。IFT 尚未在所有可用语言中经过正式验证。如有差异，以英文版本为准。'
       },
+
       ja: {
         title: '鼻出血重症度評価（IFT）',
-        subtitle: 'IFT は、過去 4 週間における HHT の鼻出血の重症度を評価します。結果は治療および経過観察の参考となります。',
-        hint: '各項目に回答してください。スコアは最も重度な 2 つの出血強度と輸血の有無を加えて算出されます。',
+        subtitle: 'IFT は、過去 4 週間における HHT（オスラー病）の鼻出血の重症度を評価します。結果は治療とフォローアップの参考になります。',
+        hint: '各項目に回答してください。スコアは「最も頻度の高い 2 つの出血強度」と輸血項目から算出されます。',
         formTitle: '過去 4 週間',
         q: [
-          '1. 過去 4 週間で、血の斑点や少量の滴下に気づいた頻度はどのくらいですか？',
-          '2. 過去 4 週間で、ハンカチが血で完全に染み込んだことはどのくらいありましたか？',
-          '3. 過去 4 週間で、タオルが血で完全に染み込んだことはどのくらいありましたか？',
-          '4. 過去 4 週間で、容器（約 0.5 リットル）を満たすほどの出血はどのくらいありましたか？'
+          '1. 過去 4 週間で、鼻から血の斑点が出た、または数滴の出血があった回数は何回ですか？',
+          '2. 過去 4 週間で、ハンカチが血で完全に染み込んだ回数は何回ですか？',
+          '3. 過去 4 週間で、タオルが血で完全に染み込んだ回数は何回ですか？',
+          '4. 過去 4 週間で、容器（約 0.5 リットル）を満たすほどの出血があった回数は何回ですか？'
         ],
         freq: ['なし','1～5 回','6～10 回','11～27 回','毎日またはそれ以上'],
-        q5: '5. 過去 4 週間で、鼻出血のために輸血が必要でしたか？',
-        yes:'はい', no:'いいえ', moreThanOnce:'複数回',
+        q5: '過去 4 週間で、輸血を受けた回数は何回ですか？',
+        tNone:'なし', tOnce:'1 回', tMoreThanOnce:'複数回',
         calc:'スコアを計算', reset:'リセット',
         details:'詳細を表示',
         classes:['出血なし','軽度の出血','中等度の出血','重度の出血','難治性出血'],
@@ -370,20 +374,21 @@
         err:'最初の 4 問のうち少なくとも 1 問に回答してください。',
         footerNote:'翻訳はアクセシビリティ向上のために提供されています。IFT はすべての言語で正式に検証されているわけではありません。不一致がある場合は英語版が基準となります。'
       },
+
       es: {
         title: 'Clasificación de epistaxis (IFT)',
-        subtitle: 'IFT evalúa la gravedad de las hemorragias nasales en la HHT durante las últimas cuatro semanas. Los resultados pueden ayudar a orientar el tratamiento y el seguimiento.',
-        hint: 'Responda cada pregunta. La puntuación se basa en las dos intensidades más graves más la transfusión.',
-        formTitle: 'Últimas 4 semanas',
+        subtitle: 'IFT mide la gravedad de las hemorragias nasales en HHT (enfermedad de Osler) durante las últimas cuatro semanas. Los resultados pueden orientar el tratamiento y el seguimiento.',
+        hint: 'Responda cada ítem. La puntuación utiliza las dos intensidades de sangrado más frecuentes más la transfusión.',
+        formTitle: 'Durante las últimas 4 semanas',
         q: [
-          '1. En las últimas 4 semanas, ¿con qué frecuencia ha notado manchas de sangre o pequeños goteos?',
-          '2. En las últimas 4 semanas, ¿con qué frecuencia un pañuelo estuvo completamente empapado de sangre?',
-          '3. En las últimas 4 semanas, ¿con qué frecuencia una toalla estuvo completamente empapada de sangre?',
-          '4. En las últimas 4 semanas, ¿con qué frecuencia el sangrado llenó un recipiente (aprox. 0,5 litros)?'
+          '1. Durante las últimas 4 semanas, ¿cuántas veces tuvo manchas de sangre en la nariz o goteó unas pocas gotas de sangre por la nariz?',
+          '2. Durante las últimas 4 semanas, ¿cuántas veces tuvo un pañuelo empapado de sangre?',
+          '3. Durante las últimas 4 semanas, ¿cuántas veces tuvo una toalla empapada de sangre?',
+          '4. Durante las últimas 4 semanas, ¿cuántas veces tuvo un sangrado que llenó tanto como un cuenco (0,5 litros) de sangre?'
         ],
-        freq: ['Ninguna','1–5 veces','6–10 veces','11–27 veces','A diario o más'],
-        q5: '5. En las últimas 4 semanas, ¿ha necesitado una transfusión de sangre debido a epistaxis?',
-        yes:'Sí', no:'No', moreThanOnce:'Más de una vez',
+        freq: ['Ninguna','1–5 veces','6–10 veces','11 a 27 veces','A diario o más'],
+        q5: 'Durante las últimas 4 semanas, ¿cuántas veces recibió una transfusión de sangre?',
+        tNone:'Ninguna', tOnce:'Una vez', tMoreThanOnce:'Más de una vez',
         calc:'Calcular puntuación', reset:'Restablecer',
         details:'Mostrar detalles',
         classes:['Sin sangrado','Sangrado leve','Sangrado moderado','Sangrado grave','Sangrado intratable'],
@@ -391,20 +396,21 @@
         err:'Responda al menos una de las primeras cuatro preguntas.',
         footerNote:'Las traducciones se proporcionan para mejorar la accesibilidad. El IFT no ha sido validado formalmente en todos los idiomas disponibles. En caso de discrepancias, la versión en inglés es la referencia.'
       },
+
       fr: {
         title: 'Classification des épistaxis (IFT)',
-        subtitle: 'L’IFT mesure la sévérité des saignements de nez dans la HHT au cours des quatre dernières semaines. Les résultats peuvent aider à guider le traitement et le suivi.',
-        hint: 'Veuillez répondre à chaque question. Le score repose sur les deux intensités les plus sévères plus la transfusion.',
-        formTitle: 'Quatre dernières semaines',
+        subtitle: 'L’IFT mesure la sévérité des saignements de nez dans la HHT (maladie d’Osler) au cours des quatre dernières semaines. Les résultats peuvent aider à guider le traitement et le suivi.',
+        hint: 'Veuillez répondre à chaque item. Le score utilise les deux intensités de saignement les plus fréquentes plus la transfusion.',
+        formTitle: 'Au cours des 4 dernières semaines',
         q: [
-          '1. Au cours des 4 dernières semaines, à quelle fréquence avez-vous remarqué des taches de sang ou de petites gouttes ?',
-          '2. Au cours des 4 dernières semaines, à quelle fréquence un mouchoir a-t-il été complètement imbibé de sang ?',
-          '3. Au cours des 4 dernières semaines, à quelle fréquence une serviette a-t-elle été complètement imbibée de sang ?',
-          '4. Au cours des 4 dernières semaines, à quelle fréquence le saignement a-t-il rempli un récipient (environ 0,5 litre) ?'
+          '1. Au cours des 4 dernières semaines, combien de fois avez-vous eu des taches de sang au niveau du nez ou quelques gouttes de sang ont-elles coulé du nez ?',
+          '2. Au cours des 4 dernières semaines, combien de fois avez-vous eu un mouchoir imbibé de sang ?',
+          '3. Au cours des 4 dernières semaines, combien de fois avez-vous eu une serviette imbibée de sang ?',
+          '4. Au cours des 4 dernières semaines, combien de fois avez-vous eu un saignement remplissant autant qu’un bol (0,5 litre) de sang ?'
         ],
-        freq: ['Aucune','1–5 fois','6–10 fois','11–27 fois','Tous les jours ou plus'],
-        q5: '5. Au cours des 4 dernières semaines, avez-vous eu besoin d’une transfusion sanguine en raison d’épistaxis ?',
-        yes:'Oui', no:'Non', moreThanOnce:'Plus d’une fois',
+        freq: ['Aucune','1–5 fois','6–10 fois','11 à 27 fois','Tous les jours ou plus'],
+        q5: 'Au cours des 4 dernières semaines, combien de fois avez-vous reçu une transfusion sanguine ?',
+        tNone:'Aucune', tOnce:'Une fois', tMoreThanOnce:'Plus d’une fois',
         calc:'Calculer le score', reset:'Réinitialiser',
         details:'Afficher les détails',
         classes:['Aucun saignement','Saignement léger','Saignement modéré','Saignement sévère','Saignement incontrôlable'],
@@ -412,20 +418,21 @@
         err:'Veuillez répondre à au moins une des quatre premières questions.',
         footerNote:'Les traductions sont fournies à des fins d’accessibilité. L’IFT n’a pas encore été validé formellement dans toutes les langues disponibles. En cas de divergence, la version anglaise fait autorité.'
       },
+
       it: {
         title: 'Classificazione dell’epistassi (IFT)',
-        subtitle: 'L’IFT misura la gravità dell’epistassi nella HHT nelle ultime quattro settimane. I risultati possono aiutare a orientare il trattamento e il follow-up.',
-        hint: 'Rispondere a ogni domanda. Il punteggio si basa sulle due intensità più gravi più la trasfusione.',
-        formTitle: 'Ultime 4 settimane',
+        subtitle: 'L’IFT misura la gravità dell’epistassi nella HHT (malattia di Osler) nelle ultime quattro settimane. I risultati possono guidare trattamento e follow-up.',
+        hint: 'Rispondere a ogni voce. Il punteggio utilizza le due intensità di sanguinamento più frequenti più la trasfusione.',
+        formTitle: 'Durante le ultime 4 settimane',
         q: [
-          '1. Nelle ultime 4 settimane, con quale frequenza ha notato macchie di sangue o piccoli gocciolamenti?',
-          '2. Nelle ultime 4 settimane, con quale frequenza un fazzoletto è stato completamente impregnato di sangue?',
-          '3. Nelle ultime 4 settimane, con quale frequenza un asciugamano è stato completamente impregnato di sangue?',
-          '4. Nelle ultime 4 settimane, con quale frequenza il sanguinamento ha riempito un recipiente (circa 0,5 litri)?'
+          '1. Durante le ultime 4 settimane, quante volte ha avuto macchie di sangue dal naso o sono gocciolate alcune gocce di sangue dal naso?',
+          '2. Durante le ultime 4 settimane, quante volte ha avuto un fazzoletto intriso di sangue?',
+          '3. Durante le ultime 4 settimane, quante volte ha avuto un asciugamano intriso di sangue?',
+          '4. Durante le ultime 4 settimane, quante volte ha avuto un sanguinamento che riempiva quanto una ciotola (0,5 litri) di sangue?'
         ],
-        freq: ['Nessuna','1–5 volte','6–10 volte','11–27 volte','Ogni giorno o più'],
-        q5: '5. Nelle ultime 4 settimane, ha avuto bisogno di una trasfusione di sangue a causa dell’epistassi?',
-        yes:'Sì', no:'No', moreThanOnce:'Più di una volta',
+        freq: ['Nessuna','1–5 volte','6–10 volte','11 a 27 volte','Ogni giorno o più'],
+        q5: 'Durante le ultime 4 settimane, quante volte ha ricevuto una trasfusione di sangue?',
+        tNone:'Nessuna', tOnce:'Una volta', tMoreThanOnce:'Più di una volta',
         calc:'Calcola punteggio', reset:'Reimposta',
         details:'Mostra dettagli',
         classes:['Nessun sanguinamento','Sanguinamento lieve','Sanguinamento moderato','Sanguinamento grave','Sanguinamento intrattabile'],
@@ -450,6 +457,7 @@
         const opts = node.querySelector('.options');
         const qname = `intensity${idx+1}`;
         legend.textContent = label;
+
         FREQ_VALUES.forEach((val,i)=>{
           const id = `${qname}-${val}`;
           const wrap = document.createElement('label');
@@ -457,6 +465,7 @@
           wrap.innerHTML = `<input type="radio" name="${qname}" id="${id}" value="${val}"> <span>${I18N[current].freq[i]}</span>`;
           opts.appendChild(wrap);
         });
+
         questionsRoot.appendChild(node);
       });
     }
@@ -476,17 +485,9 @@
       document.documentElement.lang = lang;
 
       // Simple keys
-      for (const key of ['title','subtitle','hint','formTitle','q5','calc','reset','details']){
+      for (const key of ['title','subtitle','hint','formTitle','q5','calc','reset','details','tNone','tOnce','tMoreThanOnce']){
         const nodes = document.querySelectorAll(`[data-i18n="${key}"]`);
         nodes.forEach(n=>{ n.textContent = I18N[lang][key]; });
-      }
-
-      // Transfusion options
-      const tOpts = document.querySelectorAll('label.radio input[name="transfusion"]');
-      if (tOpts.length === 3){
-        tOpts[0].nextElementSibling.textContent = I18N[lang].no;
-        tOpts[1].nextElementSibling.textContent = I18N[lang].yes;
-        tOpts[2].nextElementSibling.textContent = I18N[lang].moreThanOnce;
       }
 
       // Footer disclaimer (activated)
@@ -529,14 +530,25 @@
         const freq = rv==null || rv==='' ? null : Number(rv);
         return { weight:w, freq, score: freq===null ? 0 : w*freq };
       });
+
       const tRaw = frm.transfusion?.value;
       const transfusion = tRaw==null || tRaw==='' ? 0 : Number(tRaw);
+
       const answeredAny = answers.some(a=>a.freq!==null);
       if(!answeredAny){ return { error: I18N[lang].err }; }
-      const topTwo = answers.filter(a=>a.freq>0).sort((a,b)=>b.weight-a.weight).slice(0,2);
+
+      // Key change: use TWO MOST FREQUENT bleeding intensities.
+      // - consider only intensities with freq > 0 (i.e., actual bleeding)
+      // - sort by freq desc, tie-break by intensity (weight) desc
+      const topTwo = answers
+        .filter(a => a.freq !== null && a.freq > 0)
+        .sort((a,b) => (b.freq - a.freq) || (b.weight - a.weight))
+        .slice(0,2);
+
       const base = topTwo.reduce((sum,a)=>sum + a.score, 0);
       const total = base + transfusion;
       const max = INTENSITY_WEIGHTS.slice(-2).reduce((s,w)=>s+w*4,0) + MAX_TRANSFUSION; // 30
+
       return { total, max, breakdown:{answers, topTwo, transfusion} };
     }
 
@@ -554,28 +566,36 @@
       const errBox = document.getElementById('form-errors');
       if(res.error){ errBox.textContent = res.error; return; }
       errBox.textContent = '';
+
       const idx = classify(res.total);
       const labels = I18N[lang].classes;
       const classNames = ['mild','mild','moderate','severe','intractable'];
+
       classBadge.className = `badge ${classNames[idx]}`;
       classBadge.textContent = labels[idx];
+
       scoreText.textContent = (I18N[lang].scoreText)(res.total, res.max);
       scoreline.hidden = false;
+
       const pct = (res.total / res.max) * 100;
-      marker.style.left = `${pct}%`; // precise; centered via translateX(-50%)
+      marker.style.left = `${pct}%`;
       scale.hidden = false;
 
       const list = document.createElement('ul');
       list.style.margin = '8px 0 0';
       list.style.paddingLeft = '18px';
+
       res.breakdown.topTwo.forEach(t=>{
         const li = document.createElement('li');
+        // Use the question text corresponding to intensity (1..4)
         li.textContent = `${I18N[lang].q[t.weight-1].replace(/^\d+\.\s?/,'')} → ${t.weight} × ${t.freq} = ${t.score}`;
         list.appendChild(li);
       });
+
       const liT = document.createElement('li');
       liT.textContent = `${I18N[lang].q5.replace(/^\d+\.\s?/,'')} → +${res.breakdown.transfusion}`;
       list.appendChild(liT);
+
       explain.innerHTML='';
       explain.appendChild(list);
       details.hidden = false;
@@ -590,6 +610,7 @@
       for (const [k,v] of data.entries()) obj[k]=v;
       localStorage.setItem('ift-data', JSON.stringify({ lang, obj }));
     }
+
     function restoreFromStorage(){
       const raw = localStorage.getItem('ift-data');
       if(!raw) return;
@@ -597,6 +618,7 @@
         const parsed = JSON.parse(raw);
         const obj = parsed?.obj;
         if(!obj || Object.keys(obj).length === 0) return;
+
         for(const [k,v] of Object.entries(obj)){
           const input = formEl.querySelector(`[name="${k}"][value="${v}"]`);
           if(input) input.checked = true;
@@ -637,7 +659,6 @@
       }
     } catch (e) { /* ignore storage errors */ }
 
-    // Apply initial language (English on first-ever visit; otherwise last selected)
     setLang(lang);
   </script>
 </body>
