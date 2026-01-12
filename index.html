@@ -14,11 +14,6 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-JVL8QX2N93');
-
-    // Safe event helper (prevents errors if GA is blocked)
-    function gaEvent(name, params){
-      try { gtag('event', name, params || {}); } catch(e) {}
-    }
   </script>
 
   <style>
@@ -36,66 +31,175 @@
     }
 
     html,body{height:100%}
-    body{margin:0; font-family: Arial, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans"; background: var(--bg); color:#ecf0f1; line-height:1.6; display:flex; align-items:flex-start; justify-content:center; padding:20px;}
+    body{
+      margin:0;
+      font-family: Arial, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans";
+      background: var(--bg);
+      color:#ecf0f1;
+      line-height:1.6;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:20px;
+    }
 
     .wrap{ width: min(980px, 100%); }
     header{ text-align:center; margin-bottom:16px; }
     header h1{ margin:0; font-size:2.5rem; letter-spacing:.3px; }
     .sub{ color:#dbe2ea; margin-top:6px; font-size:1.1rem; }
 
-    /* Toolbar: LEFT-aligned language buttons */
-    .toolbar{ display:flex; justify-content:flex-start; gap:8px; flex-wrap:wrap; align-items:center; margin:16px 0; }
-    .lang{ display:inline-flex; gap:6px; }
-    .lang button{ appearance:none; border:none; background:#34495e; color:#fff; padding:8px 12px; border-radius:6px; cursor:pointer; font-weight:600; }
-    .lang button:hover{ background:#2980b9; }
-    .lang button[aria-pressed="true"]{ background:#1a5276; font-weight:700; }
+    /* Toolbar */
+    .toolbar{
+      display:flex;
+      justify-content:flex-start;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin:16px 0;
+    }
+    .lang{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+    }
+    .lang label{
+      font-weight:700;
+      color:#dbe2ea;
+    }
+    .lang select{
+      appearance:none;
+      border:none;
+      background:#34495e;
+      color:#fff;
+      padding:8px 12px;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .lang select:hover{ background:#2980b9; }
+    .lang select:focus{
+      outline:2px solid rgba(255,255,255,.35);
+      outline-offset:2px;
+    }
 
-    .card{ background:var(--card); color:var(--text); border-radius:14px; box-shadow: 0 12px 30px rgba(0,0,0,.25); padding:20px; }
+    .card{
+      background:var(--card);
+      color:var(--text);
+      border-radius:14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+      padding:20px;
+    }
     .section-title{ font-weight:700; color:var(--text); margin:2px 0 12px; }
 
     /* Clean, high-contrast help inside the white card */
-    .help{ background:#eef2ff; border-left:4px solid #6366f1; color:#1f2937; padding:10px 12px; border-radius:8px; font-weight:600; margin-bottom:12px; }
+    .help{
+      background:#eef2ff;
+      border-left:4px solid #6366f1;
+      color:#1f2937;
+      padding:10px 12px;
+      border-radius:8px;
+      font-weight:600;
+      margin-bottom:12px;
+    }
 
     form{ display:grid; gap:16px; }
     fieldset{ border:none; margin:0; padding:0; background:#fff; border-radius:12px; }
     legend{ font-weight:700; margin-bottom:8px; color:#0f172a; }
 
     .options{ display:grid; gap:6px; margin-top:6px; }
-    .radio{ display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid #e5e7eb; border-radius:10px; }
+    .radio{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid #e5e7eb;
+      border-radius:10px;
+    }
     .radio:hover{ border-color:#cbd5e1; }
     input[type="radio"]{ width:18px; height:18px; accent-color: var(--brand); }
 
     .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
-    .btn{ appearance:none; border:none; background:var(--brand); color:#fff; font-weight:700; padding:12px 16px; border-radius:10px; cursor:pointer; }
+    .btn{
+      appearance:none;
+      border:none;
+      background:var(--brand);
+      color:#fff;
+      font-weight:700;
+      padding:12px 16px;
+      border-radius:10px;
+      cursor:pointer;
+    }
     .btn:hover{ background:var(--brand-700); }
     .btn.secondary{ background:#0f172a; color:#e5e7eb; border:1px solid #1f2937; }
 
     .result{ margin-top:14px; display:grid; gap:10px; }
     .result .scoreline{ font-size:1.15rem; }
-    .badge{ font-weight:800; padding:6px 10px; border-radius:999px; display:inline-block; }
+    .badge{
+      font-weight:800;
+      padding:6px 10px;
+      border-radius:999px;
+      display:inline-block;
+    }
     .mild{ color:var(--ok) }
     .moderate{ color:var(--warn) }
     .severe{ color:var(--bad) }
     .intractable{ color:var(--worse) }
 
     .scale{ margin-top:6px; }
-    .bar{ position:relative; height:14px; border-radius:8px; background: linear-gradient(90deg, var(--ok) 0%, var(--warn) 40%, var(--bad) 70%, var(--worse) 100%); }
-    .tick{ position:absolute; top:100%; transform:translateX(-50%); font-size:1.2rem; font-weight:700; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans"; color:#1f2937; margin-top:10px; }
+    .bar{
+      position:relative;
+      height:14px;
+      border-radius:8px;
+      background: linear-gradient(90deg, var(--ok) 0%, var(--warn) 40%, var(--bad) 70%, var(--worse) 100%);
+    }
+    .tick{
+      position:absolute;
+      top:100%;
+      transform:translateX(-50%);
+      font-size:1.2rem;
+      font-weight:700;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
+      color:#1f2937;
+      margin-top:10px;
+    }
     /* Arrow placed UNDER the bar, pointing UP */
-    .marker{ position:absolute; top:100%; margin-top:6px; width:0; height:0; border-left:8px solid transparent; border-right:8px solid transparent; border-bottom:14px solid #111827; transform:translateX(-50%); filter: drop-shadow(0 1px 3px rgba(0,0,0,.4)); }
+    .marker{
+      position:absolute;
+      top:100%;
+      margin-top:6px;
+      width:0;
+      height:0;
+      border-left:8px solid transparent;
+      border-right:8px solid transparent;
+      border-bottom:14px solid #111827;
+      transform:translateX(-50%);
+      filter: drop-shadow(0 1px 3px rgba(0,0,0,.4));
+    }
 
     .errors{ color:#b91c1c; font-weight:600; }
 
-    details{ background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:10px 12px; }
+    details{
+      background:#f8fafc;
+      border:1px solid #e2e8f0;
+      border-radius:10px;
+      padding:10px 12px;
+    }
     /* Extra space so the arrow head never overlaps details */
     .result details{ margin-top:40px; }
     details > summary { cursor:pointer; font-weight:700; }
 
     footer{ text-align:center; color:#cbd5e1; font-size:.9rem; margin-top:18px; }
     footer a{ color:#cbd5e1; }
+    #footer-note{ margin-top:10px; }
 
     @media (max-width:640px){ .radio{padding:10px} }
-    @media print{ body{ background:#fff; color:#111 } .wrap{ width:100% } .toolbar{ display:none } .card{ box-shadow:none; border:1px solid #e5e7eb } footer{ color:#111 } }
+    @media print{
+      body{ background:#fff; color:#111 }
+      .wrap{ width:100% }
+      .toolbar{ display:none }
+      .card{ box-shadow:none; border:1px solid #e5e7eb }
+      footer{ color:#111 }
+    }
   </style>
 </head>
 <body>
@@ -107,14 +211,21 @@
 
     <div class="toolbar" aria-label="controls">
       <div class="lang" role="group" aria-label="Language">
-        <button type="button" id="lang-en" aria-pressed="true">English</button>
-        <button type="button" id="lang-no" aria-pressed="false">Norsk</button>
+        <label for="lang-select">Language</label>
+        <select id="lang-select" aria-label="Language">
+          <option value="en">English</option>
+          <option value="no">Norsk</option>
+          <option value="zh-CN">中文（简体）</option>
+          <option value="ja">日本語</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+          <option value="it">Italiano</option>
+        </select>
       </div>
     </div>
 
     <main class="card" role="region" aria-labelledby="form-title">
       <h2 id="form-title" class="section-title" data-i18n="formTitle">Past 4 weeks</h2>
-      <!-- Help text INSIDE the white card with good contrast -->
       <div class="help" data-i18n="hint">Answer each item. The score uses the two most severe intensities plus transfusion.</div>
 
       <form id="ift-form" novalidate>
@@ -166,6 +277,7 @@
 
     <footer>
       <p>The Intensity, Frequency, and Need for Blood Transfusion Score (IFT) was created by Sinan Dheyauldeen (Al-Deen), M.D., PhD and Gregor Bachmann-Harildstad, M.D., PhD. The online version was created by Ole Jakob Jørgensen, M.D.</p>
+      <p id="footer-note"></p>
       <p>© 2024–2025</p>
       <p>This tool is for informational purposes only and should not replace professional medical consultation. Contact: <a href="mailto:oljoer@ous-hf.no">oljoer@ous-hf.no</a></p>
     </footer>
@@ -192,7 +304,8 @@
         details:'Show details',
         classes:['No bleeding','Mild bleeding','Moderate bleeding','Severe bleeding','Intractable bleeding'],
         scoreText:(s,max)=>`Your score: ${s}/${max}`,
-        err:'Please answer at least one of the first four questions.'
+        err:'Please answer at least one of the first four questions.',
+        footerNote:'Translations are provided for accessibility. The IFT has not yet been formally validated in all available languages. If discrepancies arise, the English version is authoritative.'
       },
       no: {
         title: 'Epistaxis-gradering (IFT)',
@@ -212,7 +325,113 @@
         details:'Vis detaljer',
         classes:['Ingen blødning','Mild blødning','Moderat blødning','Alvorlig blødning','Ukontrollerbar blødning'],
         scoreText:(s,max)=>`Din skår: ${s}/${max}`,
-        err:'Vennligst svar på minst ett av de fire første spørsmålene.'
+        err:'Vennligst svar på minst ett av de fire første spørsmålene.',
+        footerNote:'Oversettelser tilbys for tilgjengelighet. IFT er ikke formelt validert på alle tilgjengelige språk. Ved eventuelle avvik er den engelske versjonen autoritativ.'
+      },
+      'zh-CN': {
+        title: '鼻出血分级（IFT）',
+        subtitle: 'IFT 用于评估过去四周内 HHT（遗传性出血性毛细血管扩张症）患者鼻出血的严重程度。结果可用于指导治疗和随访。',
+        hint: '请回答每一项。总分由最严重的两种出血强度加上是否需要输血计算得出。',
+        formTitle: '过去 4 周',
+        q: [
+          '1. 在过去 4 周内，您注意到血迹或少量滴血的频率是多少？',
+          '2. 在过去 4 周内，您有多少次手帕被血完全浸透？',
+          '3. 在过去 4 周内，您有多少次毛巾被血完全浸透？',
+          '4. 在过去 4 周内，您有多少次出血量达到可装满一个碗（约 0.5 升）？'
+        ],
+        freq: ['无','1–5 次','6–10 次','11–27 次','每天或更频繁'],
+        q5: '5. 在过去 4 周内，您是否因鼻出血而需要输血？',
+        yes:'是', no:'否', moreThanOnce:'多于一次',
+        calc:'计算评分', reset:'重置',
+        details:'显示详情',
+        classes:['无出血','轻度出血','中度出血','重度出血','难治性出血'],
+        scoreText:(s,max)=>`您的评分：${s}/${max}`,
+        err:'请至少回答前四个问题中的一个。',
+        footerNote:'提供翻译以提高可访问性。IFT 尚未在所有可用语言中经过正式验证。如有差异，以英文版本为准。'
+      },
+      ja: {
+        title: '鼻出血重症度評価（IFT）',
+        subtitle: 'IFT は、過去 4 週間における HHT の鼻出血の重症度を評価します。結果は治療および経過観察の参考となります。',
+        hint: '各項目に回答してください。スコアは最も重度な 2 つの出血強度と輸血の有無を加えて算出されます。',
+        formTitle: '過去 4 週間',
+        q: [
+          '1. 過去 4 週間で、血の斑点や少量の滴下に気づいた頻度はどのくらいですか？',
+          '2. 過去 4 週間で、ハンカチが血で完全に染み込んだことはどのくらいありましたか？',
+          '3. 過去 4 週間で、タオルが血で完全に染み込んだことはどのくらいありましたか？',
+          '4. 過去 4 週間で、容器（約 0.5 リットル）を満たすほどの出血はどのくらいありましたか？'
+        ],
+        freq: ['なし','1～5 回','6～10 回','11～27 回','毎日またはそれ以上'],
+        q5: '5. 過去 4 週間で、鼻出血のために輸血が必要でしたか？',
+        yes:'はい', no:'いいえ', moreThanOnce:'複数回',
+        calc:'スコアを計算', reset:'リセット',
+        details:'詳細を表示',
+        classes:['出血なし','軽度の出血','中等度の出血','重度の出血','難治性出血'],
+        scoreText:(s,max)=>`あなたのスコア：${s}/${max}`,
+        err:'最初の 4 問のうち少なくとも 1 問に回答してください。',
+        footerNote:'翻訳はアクセシビリティ向上のために提供されています。IFT はすべての言語で正式に検証されているわけではありません。不一致がある場合は英語版が基準となります。'
+      },
+      es: {
+        title: 'Clasificación de epistaxis (IFT)',
+        subtitle: 'IFT evalúa la gravedad de las hemorragias nasales en la HHT durante las últimas cuatro semanas. Los resultados pueden ayudar a orientar el tratamiento y el seguimiento.',
+        hint: 'Responda cada pregunta. La puntuación se basa en las dos intensidades más graves más la transfusión.',
+        formTitle: 'Últimas 4 semanas',
+        q: [
+          '1. En las últimas 4 semanas, ¿con qué frecuencia ha notado manchas de sangre o pequeños goteos?',
+          '2. En las últimas 4 semanas, ¿con qué frecuencia un pañuelo estuvo completamente empapado de sangre?',
+          '3. En las últimas 4 semanas, ¿con qué frecuencia una toalla estuvo completamente empapada de sangre?',
+          '4. En las últimas 4 semanas, ¿con qué frecuencia el sangrado llenó un recipiente (aprox. 0,5 litros)?'
+        ],
+        freq: ['Ninguna','1–5 veces','6–10 veces','11–27 veces','A diario o más'],
+        q5: '5. En las últimas 4 semanas, ¿ha necesitado una transfusión de sangre debido a epistaxis?',
+        yes:'Sí', no:'No', moreThanOnce:'Más de una vez',
+        calc:'Calcular puntuación', reset:'Restablecer',
+        details:'Mostrar detalles',
+        classes:['Sin sangrado','Sangrado leve','Sangrado moderado','Sangrado grave','Sangrado intratable'],
+        scoreText:(s,max)=>`Su puntuación: ${s}/${max}`,
+        err:'Responda al menos una de las primeras cuatro preguntas.',
+        footerNote:'Las traducciones se proporcionan para mejorar la accesibilidad. El IFT no ha sido validado formalmente en todos los idiomas disponibles. En caso de discrepancias, la versión en inglés es la referencia.'
+      },
+      fr: {
+        title: 'Classification des épistaxis (IFT)',
+        subtitle: 'L’IFT mesure la sévérité des saignements de nez dans la HHT au cours des quatre dernières semaines. Les résultats peuvent aider à guider le traitement et le suivi.',
+        hint: 'Veuillez répondre à chaque question. Le score repose sur les deux intensités les plus sévères plus la transfusion.',
+        formTitle: 'Quatre dernières semaines',
+        q: [
+          '1. Au cours des 4 dernières semaines, à quelle fréquence avez-vous remarqué des taches de sang ou de petites gouttes ?',
+          '2. Au cours des 4 dernières semaines, à quelle fréquence un mouchoir a-t-il été complètement imbibé de sang ?',
+          '3. Au cours des 4 dernières semaines, à quelle fréquence une serviette a-t-elle été complètement imbibée de sang ?',
+          '4. Au cours des 4 dernières semaines, à quelle fréquence le saignement a-t-il rempli un récipient (environ 0,5 litre) ?'
+        ],
+        freq: ['Aucune','1–5 fois','6–10 fois','11–27 fois','Tous les jours ou plus'],
+        q5: '5. Au cours des 4 dernières semaines, avez-vous eu besoin d’une transfusion sanguine en raison d’épistaxis ?',
+        yes:'Oui', no:'Non', moreThanOnce:'Plus d’une fois',
+        calc:'Calculer le score', reset:'Réinitialiser',
+        details:'Afficher les détails',
+        classes:['Aucun saignement','Saignement léger','Saignement modéré','Saignement sévère','Saignement incontrôlable'],
+        scoreText:(s,max)=>`Votre score : ${s}/${max}`,
+        err:'Veuillez répondre à au moins une des quatre premières questions.',
+        footerNote:'Les traductions sont fournies à des fins d’accessibilité. L’IFT n’a pas encore été validé formellement dans toutes les langues disponibles. En cas de divergence, la version anglaise fait autorité.'
+      },
+      it: {
+        title: 'Classificazione dell’epistassi (IFT)',
+        subtitle: 'L’IFT misura la gravità dell’epistassi nella HHT nelle ultime quattro settimane. I risultati possono aiutare a orientare il trattamento e il follow-up.',
+        hint: 'Rispondere a ogni domanda. Il punteggio si basa sulle due intensità più gravi più la trasfusione.',
+        formTitle: 'Ultime 4 settimane',
+        q: [
+          '1. Nelle ultime 4 settimane, con quale frequenza ha notato macchie di sangue o piccoli gocciolamenti?',
+          '2. Nelle ultime 4 settimane, con quale frequenza un fazzoletto è stato completamente impregnato di sangue?',
+          '3. Nelle ultime 4 settimane, con quale frequenza un asciugamano è stato completamente impregnato di sangue?',
+          '4. Nelle ultime 4 settimane, con quale frequenza il sanguinamento ha riempito un recipiente (circa 0,5 litri)?'
+        ],
+        freq: ['Nessuna','1–5 volte','6–10 volte','11–27 volte','Ogni giorno o più'],
+        q5: '5. Nelle ultime 4 settimane, ha avuto bisogno di una trasfusione di sangue a causa dell’epistassi?',
+        yes:'Sì', no:'No', moreThanOnce:'Più di una volta',
+        calc:'Calcola punteggio', reset:'Reimposta',
+        details:'Mostra dettagli',
+        classes:['Nessun sanguinamento','Sanguinamento lieve','Sanguinamento moderato','Sanguinamento grave','Sanguinamento intrattabile'],
+        scoreText:(s,max)=>`Il tuo punteggio: ${s}/${max}`,
+        err:'Rispondere ad almeno una delle prime quattro domande.',
+        footerNote:'Le traduzioni sono fornite per migliorare l’accessibilità. L’IFT non è stato formalmente validato in tutte le lingue disponibili. In caso di discrepanze, la versione inglese è quella di riferimento.'
       }
     };
 
@@ -243,27 +462,25 @@
     }
 
     // ---------- Language handling ----------
-    const langBtns = { en: document.getElementById('lang-en'), no: document.getElementById('lang-no') };
+    const langSelect = document.getElementById('lang-select');
 
-    // Treat 'no', 'nb', 'nn' as Norwegian
-    function detectLang(){
+    // Option B with "English on first-ever visit":
+    // - if no saved language exists, start with English
+    // - otherwise restore last selected language
+    let lang = (function(){
       const saved = localStorage.getItem('ift-lang');
-      if (saved === 'en' || saved === 'no') return saved;
-
-      const nav = (navigator.language || '').toLowerCase();
-      if (nav.startsWith('no') || nav.startsWith('nb') || nav.startsWith('nn')) return 'no';
-      return 'en';
-    }
-
-    let lang = detectLang();
+      return (saved && I18N[saved]) ? saved : 'en';
+    })();
 
     function applyLang(){
       document.documentElement.lang = lang;
+
       // Simple keys
       for (const key of ['title','subtitle','hint','formTitle','q5','calc','reset','details']){
         const nodes = document.querySelectorAll(`[data-i18n="${key}"]`);
         nodes.forEach(n=>{ n.textContent = I18N[lang][key]; });
       }
+
       // Transfusion options
       const tOpts = document.querySelectorAll('label.radio input[name="transfusion"]');
       if (tOpts.length === 3){
@@ -271,26 +488,31 @@
         tOpts[1].nextElementSibling.textContent = I18N[lang].yes;
         tOpts[2].nextElementSibling.textContent = I18N[lang].moreThanOnce;
       }
+
+      // Footer disclaimer (activated)
+      document.getElementById('footer-note').textContent = I18N[lang].footerNote;
+
       document.title = I18N[lang].title;
-      // Button states
-      langBtns.en.setAttribute('aria-pressed', String(lang==='en'));
-      langBtns.no.setAttribute('aria-pressed', String(lang==='no'));
     }
 
     function setLang(next){
+      if(!I18N[next]) next = 'en';
       lang = next;
-      localStorage.setItem('ift-lang', lang);
+
+      // Persist language for next visit
+      try { localStorage.setItem('ift-lang', lang); } catch (e) {}
+
+      langSelect.value = lang;
 
       buildQuestions(lang);
       applyLang();
       restoreFromStorage();
-
-      // Analytics
-      gaEvent('language_change', { language: next });
+      bindActions();
     }
 
-    langBtns.en.addEventListener('click',()=>setLang('en'));
-    langBtns.no.addEventListener('click',()=>setLang('no'));
+    langSelect.addEventListener('change', ()=>{
+      setLang(langSelect.value);
+    });
 
     // ---------- Scoring ----------
     function classify(score){
@@ -330,11 +552,7 @@
 
     function renderResult(res){
       const errBox = document.getElementById('form-errors');
-      if(res.error){
-        errBox.textContent = res.error;
-        gaEvent('validation_error', { type: 'no_q1_q4_answer' });
-        return;
-      }
+      if(res.error){ errBox.textContent = res.error; return; }
       errBox.textContent = '';
       const idx = classify(res.total);
       const labels = I18N[lang].classes;
@@ -363,13 +581,6 @@
       details.hidden = false;
 
       persistToStorage();
-
-      // Analytics: successful calculation
-      gaEvent('calculate_score', {
-        score: res.total,
-        max_score: res.max,
-        severity_class: labels[idx]
-      });
     }
 
     // ---------- Persistence ----------
@@ -381,7 +592,7 @@
     }
     function restoreFromStorage(){
       const raw = localStorage.getItem('ift-data');
-      if(!raw) return; // first visit: keep empty
+      if(!raw) return;
       try{
         const parsed = JSON.parse(raw);
         const obj = parsed?.obj;
@@ -393,23 +604,22 @@
       }catch{}
     }
 
-    // ---------- Reset handler (bind once) ----------
-    const resetBtn = document.getElementById('btn-reset');
-    resetBtn.addEventListener('click', ()=>{
-      if (typeof formEl.reset !== 'function') console.warn('form.reset unexpected');
-      formEl.reset();
-      localStorage.removeItem('ift-data');
-
-      buildQuestions(lang);
-      applyLang();
-
-      scoreline.hidden = true;
-      scale.hidden = true;
-      details.hidden = true;
-      document.getElementById('form-errors').textContent = '';
-
-      gaEvent('reset_form');
-    });
+    // ---------- Actions ----------
+    function bindActions(){
+      const resetBtn = document.getElementById('btn-reset');
+      if(resetBtn){
+        resetBtn.onclick = ()=>{
+          if (typeof formEl.reset !== 'function') console.warn('form.reset unexpected');
+          formEl.reset();
+          localStorage.removeItem('ift-data');
+          buildQuestions(lang);
+          applyLang();
+          bindActions();
+          scoreline.hidden = true; scale.hidden = true; details.hidden = true;
+          document.getElementById('form-errors').textContent = '';
+        };
+      }
+    }
 
     // ---------- Form submit wiring ----------
     formEl.addEventListener('submit', (e)=>{
@@ -427,10 +637,8 @@
       }
     } catch (e) { /* ignore storage errors */ }
 
-    // Initial build + language apply
-    buildQuestions(lang);
-    applyLang();
-    restoreFromStorage();
+    // Apply initial language (English on first-ever visit; otherwise last selected)
+    setLang(lang);
   </script>
 </body>
 </html>
