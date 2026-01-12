@@ -6,6 +6,21 @@
   <title>Epistaxis Grading (IFT)</title>
   <meta name="description" content="IFT epistaxis severity calculator for HHT over the past four weeks." />
   <link rel="icon" href="favicon.ico" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JVL8QX2N93"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-JVL8QX2N93');
+
+    // Safe event helper (prevents errors if GA is blocked)
+    function gaEvent(name, params){
+      try { gtag('event', name, params || {}); } catch(e) {}
+    }
+  </script>
+
   <style>
     :root{
       --bg:#2c3e50; /* page background */
@@ -87,7 +102,7 @@
   <div class="wrap">
     <header>
       <h1 data-i18n="title">Epistaxis Grading (IFT)</h1>
-      <p class="sub" data-i18n="subtitle">IFT measures the severity of nosebleeds in HHT over the past four weeks. Results can help guide treatment and follow‑up.</p>
+      <p class="sub" data-i18n="subtitle">IFT measures the severity of nosebleeds in HHT over the past four weeks. Results can help guide treatment and follow-up.</p>
     </header>
 
     <div class="toolbar" aria-label="controls">
@@ -150,7 +165,7 @@
     </main>
 
     <footer>
-      <p>The Intensity, Frequency, and Need for Blood Transfusion Score (IFT) was created by Sinan Dheyauldeen (Al‑Deen), M.D., PhD and Gregor Bachmann‑Harildstad, M.D., PhD. The online version was created by Ole Jakob Jørgensen, M.D.</p>
+      <p>The Intensity, Frequency, and Need for Blood Transfusion Score (IFT) was created by Sinan Dheyauldeen (Al-Deen), M.D., PhD and Gregor Bachmann-Harildstad, M.D., PhD. The online version was created by Ole Jakob Jørgensen, M.D.</p>
       <p>© 2024–2025</p>
       <p>This tool is for informational purposes only and should not replace professional medical consultation. Contact: <a href="mailto:oljoer@ous-hf.no">oljoer@ous-hf.no</a></p>
     </footer>
@@ -161,13 +176,13 @@
     const I18N = {
       en: {
         title: 'Epistaxis Grading (IFT)',
-        subtitle: 'IFT measures the severity of nosebleeds in HHT (Mb. Osler) over the past four weeks. Results can help guide treatment and follow‑up.',
+        subtitle: 'IFT measures the severity of nosebleeds in HHT (Mb. Osler) over the past four weeks. Results can help guide treatment and follow-up.',
         hint: 'Answer each item. The score uses the two most severe intensities plus transfusion.',
         formTitle: 'Past 4 weeks',
         q: [
           '1. In the past 4 weeks, how often have you noticed spots of blood or small drips?',
-          '2. In the past 4 weeks, how often have you had a blood‑soaked handkerchief?',
-          '3. In the past 4 weeks, how often have you had a blood‑soaked towel?',
+          '2. In the past 4 weeks, how often have you had a blood-soaked handkerchief?',
+          '3. In the past 4 weeks, how often have you had a blood-soaked towel?',
           '4. In the past 4 weeks, how often have you had bleeding that fills as much as a bowl (½ liter)?'
         ],
         freq: ['None','1–5 times','6–10 times','11–27 times','Daily or more'],
@@ -180,7 +195,7 @@
         err:'Please answer at least one of the first four questions.'
       },
       no: {
-        title: 'Epistaxis‑gradering (IFT)',
+        title: 'Epistaxis-gradering (IFT)',
         subtitle: 'IFT måler alvorlighetsgrad av neseblødning ved HHT de siste fire ukene. Resultatene kan veilede behandling og oppfølging.',
         hint: 'Svar på hvert punkt. Skåren bruker de to mest alvorlige intensiteter pluss transfusjon.',
         formTitle: 'Siste 4 uker',
@@ -220,7 +235,7 @@
           const id = `${qname}-${val}`;
           const wrap = document.createElement('label');
           wrap.className = 'radio';
-          wrap.innerHTML = `<input type=\"radio\" name=\"${qname}\" id=\"${id}\" value=\"${val}\"> <span>${I18N[current].freq[i]}</span>`;
+          wrap.innerHTML = `<input type="radio" name="${qname}" id="${id}" value="${val}"> <span>${I18N[current].freq[i]}</span>`;
           opts.appendChild(wrap);
         });
         questionsRoot.appendChild(node);
@@ -229,7 +244,18 @@
 
     // ---------- Language handling ----------
     const langBtns = { en: document.getElementById('lang-en'), no: document.getElementById('lang-no') };
-    let lang = localStorage.getItem('ift-lang') || (navigator.language?.startsWith('no')?'no':'en');
+
+    // Treat 'no', 'nb', 'nn' as Norwegian
+    function detectLang(){
+      const saved = localStorage.getItem('ift-lang');
+      if (saved === 'en' || saved === 'no') return saved;
+
+      const nav = (navigator.language || '').toLowerCase();
+      if (nav.startsWith('no') || nav.startsWith('nb') || nav.startsWith('nn')) return 'no';
+      return 'en';
+    }
+
+    let lang = detectLang();
 
     function applyLang(){
       document.documentElement.lang = lang;
@@ -252,11 +278,15 @@
     }
 
     function setLang(next){
-      lang = next; localStorage.setItem('ift-lang', lang);
+      lang = next;
+      localStorage.setItem('ift-lang', lang);
+
       buildQuestions(lang);
       applyLang();
       restoreFromStorage();
-      bindActions();
+
+      // Analytics
+      gaEvent('language_change', { language: next });
     }
 
     langBtns.en.addEventListener('click',()=>setLang('en'));
@@ -300,7 +330,11 @@
 
     function renderResult(res){
       const errBox = document.getElementById('form-errors');
-      if(res.error){ errBox.textContent = res.error; return; }
+      if(res.error){
+        errBox.textContent = res.error;
+        gaEvent('validation_error', { type: 'no_q1_q4_answer' });
+        return;
+      }
       errBox.textContent = '';
       const idx = classify(res.total);
       const labels = I18N[lang].classes;
@@ -329,6 +363,13 @@
       details.hidden = false;
 
       persistToStorage();
+
+      // Analytics: successful calculation
+      gaEvent('calculate_score', {
+        score: res.total,
+        max_score: res.max,
+        severity_class: labels[idx]
+      });
     }
 
     // ---------- Persistence ----------
@@ -342,7 +383,8 @@
       const raw = localStorage.getItem('ift-data');
       if(!raw) return; // first visit: keep empty
       try{
-        const { obj } = JSON.parse(raw);
+        const parsed = JSON.parse(raw);
+        const obj = parsed?.obj;
         if(!obj || Object.keys(obj).length === 0) return;
         for(const [k,v] of Object.entries(obj)){
           const input = formEl.querySelector(`[name="${k}"][value="${v}"]`);
@@ -351,22 +393,23 @@
       }catch{}
     }
 
-    // ---------- Actions ----------
-    function bindActions(){
-      const resetBtn = document.getElementById('btn-reset');
-      if(resetBtn){
-        resetBtn.onclick = ()=>{
-          if (typeof formEl.reset !== 'function') console.warn('form.reset unexpected');
-          formEl.reset();
-          localStorage.removeItem('ift-data');
-          buildQuestions(lang);
-          applyLang();
-          bindActions();
-          scoreline.hidden = true; scale.hidden = true; details.hidden = true;
-          document.getElementById('form-errors').textContent = '';
-        };
-      }
-    }
+    // ---------- Reset handler (bind once) ----------
+    const resetBtn = document.getElementById('btn-reset');
+    resetBtn.addEventListener('click', ()=>{
+      if (typeof formEl.reset !== 'function') console.warn('form.reset unexpected');
+      formEl.reset();
+      localStorage.removeItem('ift-data');
+
+      buildQuestions(lang);
+      applyLang();
+
+      scoreline.hidden = true;
+      scale.hidden = true;
+      details.hidden = true;
+      document.getElementById('form-errors').textContent = '';
+
+      gaEvent('reset_form');
+    });
 
     // ---------- Form submit wiring ----------
     formEl.addEventListener('submit', (e)=>{
@@ -384,7 +427,10 @@
       }
     } catch (e) { /* ignore storage errors */ }
 
-    setLang(lang); // builds, applies language, restores (only if any remain), binds
+    // Initial build + language apply
+    buildQuestions(lang);
+    applyLang();
+    restoreFromStorage();
   </script>
 </body>
 </html>
