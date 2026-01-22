@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -206,7 +207,7 @@
   <div class="wrap">
     <header>
       <h1 data-i18n="title">Epistaxis Grading (IFT)</h1>
-      <p class="sub" data-i18n="subtitle">IFT measures the severity of nosebleeds in HHT (Mb. Osler) over the past four weeks. Results can help guide treatment and follow-up.</p>
+      <p class="sub" data-i18n="subtitle">IFT measures the severity of nosebleeds in hereditary hemorrhagic telangiectasia (HHT) over the past four weeks. Results may help guide treatment and follow-up.</p>
     </header>
 
     <div class="toolbar" aria-label="controls">
@@ -225,8 +226,8 @@
     </div>
 
     <main class="card" role="region" aria-labelledby="form-title">
-      <h2 id="form-title" class="section-title" data-i18n="formTitle">During the last 4 weeks</h2>
-      <div class="help" data-i18n="hint">Answer each item. The score uses the two most frequent bleeding intensities plus transfusion.</div>
+      <h2 id="form-title" class="section-title" data-i18n="formTitle">Over the past 4 weeks</h2>
+      <div class="help" data-i18n="hint">Please answer each question. The score uses the two most frequent bleeding intensities, plus the transfusion item.</div>
 
       <form id="ift-form" novalidate>
         <template id="q-template">
@@ -239,7 +240,7 @@
         <div id="questions"></div>
 
         <fieldset class="q">
-          <legend data-i18n="q5">During the last 4 weeks, how many times did you get a blood transfusion?</legend>
+          <legend data-i18n="q5">Over the past 4 weeks, how many times did you receive a blood transfusion?</legend>
           <div class="options">
             <label class="radio"><input type="radio" name="transfusion" value="0"> <span data-i18n="tNone">None</span></label>
             <label class="radio"><input type="radio" name="transfusion" value="1"> <span data-i18n="tOnce">Once</span></label>
@@ -248,7 +249,7 @@
         </fieldset>
 
         <div class="actions">
-          <button class="btn" type="submit" data-i18n="calc">Calculate score</button>
+          <button class="btn" type="submit" data-i18n="calc">Calculate the score</button>
           <button class="btn secondary" type="button" id="btn-reset" data-i18n="reset">Reset</button>
         </div>
         <p id="form-errors" class="errors" role="alert" aria-live="polite"></p>
@@ -276,10 +277,10 @@
     </main>
 
     <footer>
-      <p>The Intensity, Frequency, and Need for Blood Transfusion Score (IFT) was created by Sinan Dheyauldeen (Al-Deen), M.D., PhD and Gregor Bachmann-Harildstad, M.D., PhD. The online version was created by Ole Jakob Jørgensen, M.D.</p>
+      <p>The Intensity, Frequency, and Need for Blood Transfusion Score (IFT) was developed by Sinan Dheyauldeen (Al-Deen), MD, PhD, and Gregor Bachmann-Harildstad, MD, PhD. This online calculator was implemented by Ole Jakob Jørgensen, MD.</p>
       <p id="footer-note"></p>
-      <p>© 2024–2025</p>
-      <p>This tool is for informational purposes only and should not replace professional medical consultation. Contact: <a href="mailto:oljoer@ous-hf.no">oljoer@ous-hf.no</a></p>
+      <p>© 2025–2026</p>
+      <p>This tool is for informational purposes only and does not replace professional medical advice. Contact: <a href="mailto:oljoer@ous-hf.no">oljoer@ous-hf.no</a></p>
     </footer>
   </div>
 
@@ -289,24 +290,24 @@
     const I18N = {
       en: {
         title: 'Epistaxis Grading (IFT)',
-        subtitle: 'IFT measures the severity of nosebleeds in HHT (Mb. Osler) over the past four weeks. Results can help guide treatment and follow-up.',
-        hint: 'Answer each item. The score uses the two most frequent bleeding intensities plus transfusion.',
-        formTitle: 'During the last 4 weeks',
+        subtitle: 'IFT measures the severity of nosebleeds in hereditary hemorrhagic telangiectasia (HHT) over the past four weeks. Results may help guide treatment and follow-up.',
+        hint: 'Please answer each question. The score uses the two most frequent bleeding intensities, plus the transfusion item.',
+        formTitle: 'Over the past 4 weeks',
         q: [
-          '1. During the last 4 weeks, how many times you got spot(s) of blood from the nose or dripped a few drops of blood from the nose?',
-          '2. During the last 4 weeks, how many times you got a blood-soaked handkerchief?',
-          '3. During the last 4 weeks, how many times you got a blood-soaked towel?',
-          '4. During the last 4 weeks, how many times you got bleeding that fills so much as a bowl (1/2 litre) of blood?'
+          '1. Over the past 4 weeks, how many times did you notice blood spotting from the nose or drip a few drops of blood from the nose?',
+          '2. Over the past 4 weeks, how many times did you have a blood-soaked handkerchief?',
+          '3. Over the past 4 weeks, how many times did you have a blood-soaked towel?',
+          '4. Over the past 4 weeks, how many times did you have bleeding that amounted to as much as a bowl (0.5 L) of blood?'
         ],
-        freq: ['None','1-5 times','6-10 times','11 to 27 times','Daily or more'],
-        q5: 'During the last 4 weeks, how many times did you get a blood transfusion?',
+        freq: ['None','1–5 times','6–10 times','11–27 times','Daily or more often'],
+        q5: 'Over the past 4 weeks, how many times did you receive a blood transfusion?',
         tNone: 'None', tOnce: 'Once', tMoreThanOnce: 'More than once',
-        calc:'Calculate score', reset:'Reset',
+        calc:'Calculate the score', reset:'Reset',
         details:'Show details',
         classes:['No bleeding','Mild bleeding','Moderate bleeding','Severe bleeding','Intractable bleeding'],
         scoreText:(s,max)=>`Your score: ${s}/${max}`,
         err:'Please answer at least one of the first four questions.',
-        footerNote:'Translations are provided for accessibility. The IFT has not yet been formally validated in all available languages. If discrepancies arise, the English version is authoritative.'
+        footerNote:'Translations are provided for accessibility. The IFT has not yet been formally validated in all available languages. If discrepancies arise, the English version prevails.'
       },
 
       no: {
@@ -663,3 +664,4 @@
   </script>
 </body>
 </html>
+```
