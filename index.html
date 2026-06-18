@@ -1,40 +1,68 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Epistaxis Grading (IFT)</title>
-  <meta name="description" content="IFT epistaxis severity calculator for HHT over the past four weeks." />
+  <meta id="meta-desc" name="description" content="IFT epistaxis severity calculator for HHT over the past four weeks." />
+  <meta name="theme-color" content="#2c3e50" />
   <link rel="icon" href="favicon.ico" />
+  <link rel="canonical" href="https://iftgradinghht.com/" />
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JVL8QX2N93"></script>
+  <!-- Open Graph / social preview -->
+  <meta property="og:title" content="Epistaxis Grading (IFT)" />
+  <meta property="og:description" content="IFT epistaxis severity calculator for hereditary hemorrhagic telangiectasia (HHT)." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://iftgradinghht.com/" />
+
+  <!-- Google tag (gtag.js) with Consent Mode v2 (GDPR) -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    // Default everything to denied until the visitor chooses.
+    gtag('consent', 'default', {
+      'ad_storage':'denied',
+      'ad_user_data':'denied',
+      'ad_personalization':'denied',
+      'analytics_storage':'denied'
+    });
+    // Restore a prior "granted" choice before config to avoid a denied->granted flicker.
+    try {
+      if (localStorage.getItem('ift-consent') === 'granted') {
+        gtag('consent','update',{ 'analytics_storage':'granted' });
+      }
+    } catch (e) {}
     gtag('js', new Date());
     gtag('config', 'G-JVL8QX2N93');
   </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JVL8QX2N93"></script>
 
   <style>
     :root{
-      --bg:#2c3e50; /* page background */
+      --bg:#2c3e50;            /* page background */
       --card:#ffffff;
-      --text:#111827; /* gray-900 */
-      --muted:#475569; /* slate-600 */
-      --brand:#2563eb; /* blue-600 */
+      --text:#111827;          /* gray-900 */
+      --muted:#475569;         /* slate-600 */
+      --brand:#2563eb;         /* blue-600 */
       --brand-700:#1d4ed8;
-      --ok:#16a34a; /* green-600 */
-      --warn:#f59e0b; /* amber-500 */
-      --bad:#ef4444; /* red-500 */
-      --worse:#b91c1c; /* red-700 */
+
+      /* Bar segment fills */
+      --ok:#16a34a;            /* green-600  (mild)        */
+      --warn:#f59e0b;          /* amber-500  (moderate)    */
+      --bad:#ef4444;           /* red-500    (severe)      */
+      --worse:#b91c1c;         /* red-700    (intractable) */
+
+      /* Accessible chip backgrounds + text (WCAG AA on white) */
+      --mild-bg:#dcfce7;   --mild-fg:#166534;
+      --mod-bg:#fef3c7;    --mod-fg:#92400e;
+      --sev-bg:#fee2e2;    --sev-fg:#b91c1c;
+      --intr-bg:#fecaca;   --intr-fg:#7f1d1d;
     }
 
     html,body{height:100%}
     body{
       margin:0;
-      font-family: Arial, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans";
+      font-family: Arial, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans";
       background: var(--bg);
       color:#ecf0f1;
       line-height:1.6;
@@ -49,6 +77,12 @@
     header h1{ margin:0; font-size:2.5rem; letter-spacing:.3px; }
     .sub{ color:#dbe2ea; margin-top:6px; font-size:1.1rem; }
 
+    .noscript{
+      background:#fee2e2; color:#7f1d1d;
+      padding:12px 14px; border-radius:10px; margin:0 0 16px;
+      font-weight:700;
+    }
+
     /* Toolbar */
     .toolbar{
       display:flex;
@@ -58,15 +92,8 @@
       align-items:center;
       margin:16px 0;
     }
-    .lang{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-    }
-    .lang label{
-      font-weight:700;
-      color:#dbe2ea;
-    }
+    .lang{ display:inline-flex; gap:10px; align-items:center; }
+    .lang label{ font-weight:700; color:#dbe2ea; }
     .lang select{
       appearance:none;
       border:none;
@@ -78,10 +105,7 @@
       font-weight:700;
     }
     .lang select:hover{ background:#2980b9; }
-    .lang select:focus{
-      outline:2px solid rgba(255,255,255,.35);
-      outline-offset:2px;
-    }
+    .lang select:focus-visible{ outline:2px solid rgba(255,255,255,.55); outline-offset:2px; }
 
     .card{
       background:var(--card);
@@ -92,7 +116,6 @@
     }
     .section-title{ font-weight:700; color:var(--text); margin:2px 0 12px; }
 
-    /* Clean, high-contrast help inside the white card */
     .help{
       background:#eef2ff;
       border-left:4px solid #6366f1;
@@ -115,11 +138,17 @@
       padding:10px 12px;
       border:1px solid #e5e7eb;
       border-radius:10px;
+      cursor:pointer;
+      transition:border-color .12s ease, background-color .12s ease;
     }
     .radio:hover{ border-color:#cbd5e1; }
+    .radio:has(input:checked){ border-color:var(--brand); background:#eff6ff; }
     input[type="radio"]{ width:18px; height:18px; accent-color: var(--brand); }
+    input[type="radio"]:focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
 
-    .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .progress{ font-size:.95rem; color:var(--muted); font-weight:700; }
+
+    .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; align-items:center; }
     .btn{
       appearance:none;
       border:none;
@@ -131,50 +160,56 @@
       cursor:pointer;
     }
     .btn:hover{ background:var(--brand-700); }
+    .btn:focus-visible{ outline:2px solid #0f172a; outline-offset:2px; }
     .btn.secondary{ background:#0f172a; color:#e5e7eb; border:1px solid #1f2937; }
+    .btn.small{ padding:8px 12px; font-size:.9rem; }
+    .btn.ghost{ background:#f1f5f9; color:#0f172a; border:1px solid #cbd5e1; }
+    .btn.ghost:hover{ background:#e2e8f0; }
 
     .result{ margin-top:14px; display:grid; gap:10px; }
-    .result .scoreline{ font-size:1.15rem; }
-    .badge{
-      font-weight:800;
-      padding:6px 10px;
-      border-radius:999px;
-      display:inline-block;
-    }
-    .mild{ color:var(--ok) }
-    .moderate{ color:var(--warn) }
-    .severe{ color:var(--bad) }
-    .intractable{ color:var(--worse) }
+    .result .scoreline{ font-size:1.15rem; display:flex; flex-wrap:wrap; align-items:center; gap:10px; }
+    .badge{ font-weight:800; padding:6px 12px; border-radius:999px; display:inline-block; }
+    .badge.mild{ background:var(--mild-bg); color:var(--mild-fg); }
+    .badge.moderate{ background:var(--mod-bg); color:var(--mod-fg); }
+    .badge.severe{ background:var(--sev-bg); color:var(--sev-fg); }
+    .badge.intractable{ background:var(--intr-bg); color:var(--intr-fg); }
 
+    .assessed{ color:var(--muted); font-size:.95rem; font-weight:600; }
+
+    /* Severity scale — segments match the clinical cut-offs on a 0-30 axis:
+       0-5 mild | 5-10 moderate | 10-15 severe | 15-30 intractable */
     .scale{ margin-top:6px; }
     .bar{
       position:relative;
       height:14px;
       border-radius:8px;
-      background: linear-gradient(90deg, var(--ok) 0%, var(--warn) 40%, var(--bad) 70%, var(--worse) 100%);
+      background: linear-gradient(90deg,
+        var(--ok)    0%,      var(--ok)    16.666%,
+        var(--warn)  16.666%, var(--warn)  33.333%,
+        var(--bad)   33.333%, var(--bad)   50%,
+        var(--worse) 50%,     var(--worse) 100%);
     }
     .tick{
       position:absolute;
       top:100%;
       transform:translateX(-50%);
-      font-size:1.2rem;
+      font-size:1.05rem;
       font-weight:700;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans";
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans";
       color:#1f2937;
       margin-top:10px;
     }
-    /* Arrow placed UNDER the bar, pointing UP */
     .marker{
       position:absolute;
       top:100%;
       margin-top:6px;
-      width:0;
-      height:0;
+      width:0; height:0;
       border-left:8px solid transparent;
       border-right:8px solid transparent;
       border-bottom:14px solid #111827;
       transform:translateX(-50%);
       filter: drop-shadow(0 1px 3px rgba(0,0,0,.4));
+      transition:left .25s ease;
     }
 
     .errors{ color:#b91c1c; font-weight:600; }
@@ -185,19 +220,31 @@
       border-radius:10px;
       padding:10px 12px;
     }
-    /* Extra space so the arrow head never overlaps details */
     .result details{ margin-top:40px; }
-    details > summary { cursor:pointer; font-weight:700; }
+    details > summary{ cursor:pointer; font-weight:700; }
+    .thresholds{ margin:10px 0 0; padding-left:18px; color:var(--muted); font-size:.95rem; }
 
     footer{ text-align:center; color:#cbd5e1; font-size:.9rem; margin-top:18px; }
     footer a{ color:#cbd5e1; }
     #footer-note{ margin-top:10px; }
 
-    @media (max-width:640px){ .radio{padding:10px} }
+    /* Consent banner */
+    .consent{
+      position:fixed; left:0; right:0; bottom:0;
+      background:#0f172a; color:#e5e7eb;
+      display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:center;
+      padding:12px 16px; box-shadow:0 -6px 20px rgba(0,0,0,.35);
+      z-index:50; font-size:.95rem;
+    }
+    .consent .consent-text{ max-width:680px; }
+    .consent .consent-actions{ display:flex; gap:8px; }
+
+    @media (max-width:640px){ .radio{padding:10px} header h1{font-size:2rem} }
+    @media (prefers-reduced-motion: reduce){ .marker{transition:none} }
     @media print{
       body{ background:#fff; color:#111 }
       .wrap{ width:100% }
-      .toolbar{ display:none }
+      .toolbar, .actions, .result-actions, .consent{ display:none !important }
       .card{ box-shadow:none; border:1px solid #e5e7eb }
       footer{ color:#111 }
     }
@@ -210,10 +257,14 @@
       <p class="sub" data-i18n="subtitle">IFT measures the severity of nosebleeds in hereditary hemorrhagic telangiectasia (HHT) over the past four weeks. Results may help guide treatment and follow-up.</p>
     </header>
 
+    <noscript>
+      <div class="noscript">This calculator requires JavaScript to be enabled.</div>
+    </noscript>
+
     <div class="toolbar" aria-label="controls">
       <div class="lang" role="group" aria-label="Language">
-        <label for="lang-select">Language</label>
-        <select id="lang-select" aria-label="Language">
+        <label for="lang-select" data-i18n="langLabel">Language</label>
+        <select id="lang-select">
           <option value="en">English</option>
           <option value="no">Norsk</option>
           <option value="zh-CN">中文（简体）</option>
@@ -227,9 +278,9 @@
 
     <main class="card" role="region" aria-labelledby="form-title">
       <h2 id="form-title" class="section-title" data-i18n="formTitle">Over the past 4 weeks</h2>
-      <div class="help" data-i18n="hint">Please answer each question. The score uses the two most frequent bleeding intensities, plus the transfusion item.</div>
+      <div class="help" id="form-hint" data-i18n="hint">Please answer each question. The score uses the two most frequent bleeding intensities, plus the transfusion item.</div>
 
-      <form id="ift-form" novalidate>
+      <form id="ift-form" novalidate aria-describedby="form-hint">
         <template id="q-template">
           <fieldset class="q">
             <legend></legend>
@@ -251,27 +302,35 @@
         <div class="actions">
           <button class="btn" type="submit" data-i18n="calc">Calculate the score</button>
           <button class="btn secondary" type="button" id="btn-reset" data-i18n="reset">Reset</button>
+          <span class="progress" id="progress" aria-live="polite"></span>
         </div>
         <p id="form-errors" class="errors" role="alert" aria-live="polite"></p>
       </form>
 
       <section class="result" aria-live="polite" aria-atomic="true">
-        <div class="scoreline" id="scoreline" hidden>
+        <div class="scoreline" id="scoreline" hidden tabindex="-1">
           <span class="badge" id="classBadge"></span>
           <span id="scoreText"></span>
         </div>
+        <div class="assessed" id="assessedAt" hidden></div>
         <div class="scale" id="scale" hidden>
           <div class="bar" id="bar">
             <div class="marker" id="marker" style="left:0%"></div>
             <span class="tick" style="left:0%">0</span>
-            <span class="tick" style="left:33.3%">10</span>
-            <span class="tick" style="left:66.6%">20</span>
+            <span class="tick" style="left:16.666%">5</span>
+            <span class="tick" style="left:33.333%">10</span>
+            <span class="tick" style="left:50%">15</span>
             <span class="tick" style="left:100%">30</span>
           </div>
+        </div>
+        <div class="result-actions actions" id="result-actions" hidden>
+          <button class="btn ghost small" type="button" id="btn-copy" data-i18n="copy">Copy summary</button>
+          <button class="btn ghost small" type="button" id="btn-print" data-i18n="print">Print</button>
         </div>
         <details id="details" hidden>
           <summary data-i18n="details">Show details</summary>
           <div id="explain"></div>
+          <ul class="thresholds" id="thresholds"></ul>
         </details>
       </section>
     </main>
@@ -281,14 +340,25 @@
       <p id="footer-note"></p>
       <p>© 2025–2026</p>
       <p>This tool is for informational purposes only and does not replace professional medical advice. Contact: <a href="mailto:oljoer@ous-hf.no">oljoer@ous-hf.no</a></p>
+      <p><a href="#" id="cookie-settings" data-i18n="consentManage">Cookie settings</a></p>
     </footer>
+  </div>
+
+  <div id="consent" class="consent" role="dialog" aria-live="polite" aria-label="Cookie consent" hidden>
+    <span class="consent-text" data-i18n="consentText"></span>
+    <span class="consent-actions">
+      <button class="btn small" type="button" id="consent-accept" data-i18n="consentAccept">Accept</button>
+      <button class="btn ghost small" type="button" id="consent-reject" data-i18n="consentReject">Decline</button>
+    </span>
   </div>
 
   <script>
     // ---------- i18n strings ----------
-    // English question wording matches the original article Table 1.
     const I18N = {
       en: {
+        langLabel:'Language',
+        consentText:'This site uses optional analytics cookies to understand how it is used.',
+        consentAccept:'Accept', consentReject:'Decline', consentManage:'Cookie settings',
         title: 'Epistaxis Grading (IFT)',
         subtitle: 'IFT measures the severity of nosebleeds in hereditary hemorrhagic telangiectasia (HHT) over the past four weeks. Results may help guide treatment and follow-up.',
         hint: 'Please answer each question. The score uses the two most frequent bleeding intensities, plus the transfusion item.',
@@ -304,13 +374,18 @@
         tNone: 'None', tOnce: 'Once', tMoreThanOnce: 'More than once',
         calc:'Calculate the score', reset:'Reset',
         details:'Show details',
+        copy:'Copy summary', copied:'Copied', print:'Print', assessedOn:'Assessed',
         classes:['No bleeding','Mild bleeding','Moderate bleeding','Severe bleeding','Intractable bleeding'],
         scoreText:(s,max)=>`Your score: ${s}/${max}`,
+        progress:(n,total)=>`${n}/${total} answered`,
         err:'Please answer at least one of the first four questions.',
         footerNote:'Translations are provided for accessibility. The IFT has not yet been formally validated in all available languages. If discrepancies arise, the English version prevails.'
       },
 
       no: {
+        langLabel:'Språk',
+        consentText:'Dette nettstedet bruker valgfrie analyseinformasjonskapsler for å forstå hvordan det brukes.',
+        consentAccept:'Godta', consentReject:'Avslå', consentManage:'Informasjonskapsler',
         title: 'Epistaxis-gradering (IFT)',
         subtitle: 'IFT måler alvorlighetsgrad av neseblødning ved HHT (Mb. Osler) de siste fire ukene. Resultatene kan veilede behandling og oppfølging.',
         hint: 'Svar på hvert punkt. Skåren bruker de to hyppigst forekommende blødningsintensitetene pluss transfusjon.',
@@ -319,20 +394,25 @@
           '1. I løpet av de siste 4 ukene, hvor mange ganger fikk du blodflekker fra nesen eller dryppet noen få dråper blod fra nesen?',
           '2. I løpet av de siste 4 ukene, hvor mange ganger fikk du et gjennomtrukket lommetørkle?',
           '3. I løpet av de siste 4 ukene, hvor mange ganger fikk du et gjennomtrukket håndkle?',
-          '4. I løpet av de siste 4 ukene, hvor mange ganger fikk du en blødning som fyller så mye som en bolle (1/2 liter) med blod?'
+          '4. I løpet av de siste 4 ukene, hvor mange ganger fikk du en blødning som tilsvarte så mye som en bolle (0,5 liter) blod?'
         ],
-        freq: ['Ingen','1–5 ganger','6–10 ganger','11 til 27 ganger','Daglig eller mer'],
+        freq: ['Ingen','1–5 ganger','6–10 ganger','11–27 ganger','Daglig eller mer'],
         q5: 'I løpet av de siste 4 ukene, hvor mange ganger fikk du blodoverføring?',
         tNone:'Ingen', tOnce:'Én gang', tMoreThanOnce:'Flere ganger',
         calc:'Beregn skår', reset:'Nullstill',
         details:'Vis detaljer',
+        copy:'Kopier sammendrag', copied:'Kopiert', print:'Skriv ut', assessedOn:'Vurdert',
         classes:['Ingen blødning','Mild blødning','Moderat blødning','Alvorlig blødning','Ukontrollerbar blødning'],
         scoreText:(s,max)=>`Din skår: ${s}/${max}`,
+        progress:(n,total)=>`${n}/${total} besvart`,
         err:'Vennligst svar på minst ett av de fire første spørsmålene.',
         footerNote:'Oversettelser tilbys for tilgjengelighet. IFT er ikke formelt validert på alle tilgjengelige språk. Ved eventuelle avvik er den engelske versjonen autoritativ.'
       },
 
       'zh-CN': {
+        langLabel:'语言',
+        consentText:'本网站使用可选的分析 Cookie，以了解其使用情况。',
+        consentAccept:'接受', consentReject:'拒绝', consentManage:'Cookie 设置',
         title: '鼻出血分级（IFT）',
         subtitle: 'IFT 评估 HHT（奥斯勒病）患者在过去四周内鼻出血的严重程度。结果可用于指导治疗与随访。',
         hint: '请回答每一项。总分由“最常发生的两种出血强度”加上输血项组成。',
@@ -348,13 +428,18 @@
         tNone:'无', tOnce:'一次', tMoreThanOnce:'多于一次',
         calc:'计算评分', reset:'重置',
         details:'显示详情',
+        copy:'复制摘要', copied:'已复制', print:'打印', assessedOn:'评估日期',
         classes:['无出血','轻度出血','中度出血','重度出血','难治性出血'],
         scoreText:(s,max)=>`您的评分：${s}/${max}`,
+        progress:(n,total)=>`已回答 ${n}/${total}`,
         err:'请至少回答前四个问题中的一个。',
         footerNote:'提供翻译以提高可访问性。IFT 尚未在所有可用语言中经过正式验证。如有差异，以英文版本为准。'
       },
 
       ja: {
+        langLabel:'言語',
+        consentText:'本サイトは利用状況を把握するため、任意の分析 Cookie を使用します。',
+        consentAccept:'同意する', consentReject:'拒否する', consentManage:'Cookie 設定',
         title: '鼻出血重症度評価（IFT）',
         subtitle: 'IFT は、過去 4 週間における HHT（オスラー病）の鼻出血の重症度を評価します。結果は治療とフォローアップの参考になります。',
         hint: '各項目に回答してください。スコアは「最も頻度の高い 2 つの出血強度」と輸血項目から算出されます。',
@@ -370,13 +455,18 @@
         tNone:'なし', tOnce:'1 回', tMoreThanOnce:'複数回',
         calc:'スコアを計算', reset:'リセット',
         details:'詳細を表示',
+        copy:'概要をコピー', copied:'コピーしました', print:'印刷', assessedOn:'評価日',
         classes:['出血なし','軽度の出血','中等度の出血','重度の出血','難治性出血'],
         scoreText:(s,max)=>`あなたのスコア：${s}/${max}`,
+        progress:(n,total)=>`${total} 問中 ${n} 問回答`,
         err:'最初の 4 問のうち少なくとも 1 問に回答してください。',
         footerNote:'翻訳はアクセシビリティ向上のために提供されています。IFT はすべての言語で正式に検証されているわけではありません。不一致がある場合は英語版が基準となります。'
       },
 
       es: {
+        langLabel:'Idioma',
+        consentText:'Este sitio usa cookies de analítica opcionales para entender cómo se utiliza.',
+        consentAccept:'Aceptar', consentReject:'Rechazar', consentManage:'Configuración de cookies',
         title: 'Clasificación de epistaxis (IFT)',
         subtitle: 'IFT mide la gravedad de las hemorragias nasales en HHT (enfermedad de Osler) durante las últimas cuatro semanas. Los resultados pueden orientar el tratamiento y el seguimiento.',
         hint: 'Responda cada ítem. La puntuación utiliza las dos intensidades de sangrado más frecuentes más la transfusión.',
@@ -392,13 +482,18 @@
         tNone:'Ninguna', tOnce:'Una vez', tMoreThanOnce:'Más de una vez',
         calc:'Calcular puntuación', reset:'Restablecer',
         details:'Mostrar detalles',
+        copy:'Copiar resumen', copied:'Copiado', print:'Imprimir', assessedOn:'Evaluado',
         classes:['Sin sangrado','Sangrado leve','Sangrado moderado','Sangrado grave','Sangrado intratable'],
         scoreText:(s,max)=>`Su puntuación: ${s}/${max}`,
+        progress:(n,total)=>`${n}/${total} respondidas`,
         err:'Responda al menos una de las primeras cuatro preguntas.',
         footerNote:'Las traducciones se proporcionan para mejorar la accesibilidad. El IFT no ha sido validado formalmente en todos los idiomas disponibles. En caso de discrepancias, la versión en inglés es la referencia.'
       },
 
       fr: {
+        langLabel:'Langue',
+        consentText:'Ce site utilise des cookies de mesure d’audience facultatifs pour comprendre son utilisation.',
+        consentAccept:'Accepter', consentReject:'Refuser', consentManage:'Paramètres des cookies',
         title: 'Classification des épistaxis (IFT)',
         subtitle: 'L’IFT mesure la sévérité des saignements de nez dans la HHT (maladie d’Osler) au cours des quatre dernières semaines. Les résultats peuvent aider à guider le traitement et le suivi.',
         hint: 'Veuillez répondre à chaque item. Le score utilise les deux intensités de saignement les plus fréquentes plus la transfusion.',
@@ -414,13 +509,18 @@
         tNone:'Aucune', tOnce:'Une fois', tMoreThanOnce:'Plus d’une fois',
         calc:'Calculer le score', reset:'Réinitialiser',
         details:'Afficher les détails',
+        copy:'Copier le résumé', copied:'Copié', print:'Imprimer', assessedOn:'Évalué',
         classes:['Aucun saignement','Saignement léger','Saignement modéré','Saignement sévère','Saignement incontrôlable'],
         scoreText:(s,max)=>`Votre score : ${s}/${max}`,
+        progress:(n,total)=>`${n}/${total} répondues`,
         err:'Veuillez répondre à au moins une des quatre premières questions.',
         footerNote:'Les traductions sont fournies à des fins d’accessibilité. L’IFT n’a pas encore été validé formellement dans toutes les langues disponibles. En cas de divergence, la version anglaise fait autorité.'
       },
 
       it: {
+        langLabel:'Lingua',
+        consentText:'Questo sito usa cookie di analisi facoltativi per capire come viene utilizzato.',
+        consentAccept:'Accetta', consentReject:'Rifiuta', consentManage:'Impostazioni cookie',
         title: 'Classificazione dell’epistassi (IFT)',
         subtitle: 'L’IFT misura la gravità dell’epistassi nella HHT (malattia di Osler) nelle ultime quattro settimane. I risultati possono guidare trattamento e follow-up.',
         hint: 'Rispondere a ogni voce. Il punteggio utilizza le due intensità di sanguinamento più frequenti più la trasfusione.',
@@ -436,20 +536,33 @@
         tNone:'Nessuna', tOnce:'Una volta', tMoreThanOnce:'Più di una volta',
         calc:'Calcola punteggio', reset:'Reimposta',
         details:'Mostra dettagli',
+        copy:'Copia riepilogo', copied:'Copiato', print:'Stampa', assessedOn:'Valutato',
         classes:['Nessun sanguinamento','Sanguinamento lieve','Sanguinamento moderato','Sanguinamento grave','Sanguinamento intrattabile'],
         scoreText:(s,max)=>`Il tuo punteggio: ${s}/${max}`,
+        progress:(n,total)=>`${n}/${total} risposte`,
         err:'Rispondere ad almeno una delle prime quattro domande.',
         footerNote:'Le traduzioni sono fornite per migliorare l’accessibilità. L’IFT non è stato formalmente validato in tutte le lingue disponibili. In caso di discrepanze, la versione inglese è quella di riferimento.'
       }
     };
 
-    // ---------- Build questions ----------
+    // ---------- Safe storage helpers ----------
+    const store = {
+      get(k){ try { return localStorage.getItem(k); } catch { return null; } },
+      set(k,v){ try { localStorage.setItem(k,v); } catch {} },
+      del(k){ try { localStorage.removeItem(k); } catch {} }
+    };
+
+    // ---------- Constants ----------
     const questionsRoot = document.getElementById('questions');
     const qtpl = document.getElementById('q-template');
     const INTENSITY_WEIGHTS = [1,2,3,4];
     const FREQ_VALUES = [0,1,2,3,4]; // none..daily
     const MAX_TRANSFUSION = 2;
+    const SCORE_MAX = INTENSITY_WEIGHTS.slice(-2).reduce((s,w)=>s+w*4,0) + MAX_TRANSFUSION; // 30
 
+    let lastResult = null;
+
+    // ---------- Build questions ----------
     function buildQuestions(current='en'){
       questionsRoot.innerHTML = '';
       I18N[current].q.forEach((label, idx)=>{
@@ -458,7 +571,6 @@
         const opts = node.querySelector('.options');
         const qname = `intensity${idx+1}`;
         legend.textContent = label;
-
         FREQ_VALUES.forEach((val,i)=>{
           const id = `${qname}-${val}`;
           const wrap = document.createElement('label');
@@ -466,7 +578,6 @@
           wrap.innerHTML = `<input type="radio" name="${qname}" id="${id}" value="${val}"> <span>${I18N[current].freq[i]}</span>`;
           opts.appendChild(wrap);
         });
-
         questionsRoot.appendChild(node);
       });
     }
@@ -474,60 +585,50 @@
     // ---------- Language handling ----------
     const langSelect = document.getElementById('lang-select');
 
-    // Option B with "English on first-ever visit":
-    // - if no saved language exists, start with English
-    // - otherwise restore last selected language
     let lang = (function(){
-      const saved = localStorage.getItem('ift-lang');
+      const saved = store.get('ift-lang');
       return (saved && I18N[saved]) ? saved : 'en';
     })();
 
     function applyLang(){
       document.documentElement.lang = lang;
-
-      // Simple keys
-      for (const key of ['title','subtitle','hint','formTitle','q5','calc','reset','details','tNone','tOnce','tMoreThanOnce']){
-        const nodes = document.querySelectorAll(`[data-i18n="${key}"]`);
-        nodes.forEach(n=>{ n.textContent = I18N[lang][key]; });
+      for (const key of ['langLabel','title','subtitle','hint','formTitle','q5','calc','reset','details','copy','print','consentText','consentAccept','consentReject','consentManage','tNone','tOnce','tMoreThanOnce']){
+        document.querySelectorAll(`[data-i18n="${key}"]`).forEach(n=>{ n.textContent = I18N[lang][key]; });
       }
-
-      // Footer disclaimer (activated)
       document.getElementById('footer-note').textContent = I18N[lang].footerNote;
-
+      const md = document.getElementById('meta-desc');
+      if (md) md.setAttribute('content', I18N[lang].subtitle);
       document.title = I18N[lang].title;
+      updateProgress();
     }
 
     function setLang(next){
       if(!I18N[next]) next = 'en';
       lang = next;
-
-      // Persist language for next visit
-      try { localStorage.setItem('ift-lang', lang); } catch (e) {}
-
+      store.set('ift-lang', lang);
       langSelect.value = lang;
-
       buildQuestions(lang);
       applyLang();
       restoreFromStorage();
       bindActions();
+      updateProgress();
+      if (lastResult && !lastResult.error) renderResult(lastResult);
     }
 
-    langSelect.addEventListener('change', ()=>{
-      setLang(langSelect.value);
-    });
+    langSelect.addEventListener('change', ()=> setLang(langSelect.value));
 
-    // ---------- Scoring ----------
+    // ---------- Scoring (UNCHANGED logic) ----------
     function classify(score){
-      if(score===0) return 0; // No bleeding
-      if(score>=1 && score<=5) return 1;
-      if(score>=6 && score<=10) return 2;
-      if(score>=11 && score<=15) return 3;
-      return 4; // >=16
+      if(score===0) return 0;                 // No bleeding
+      if(score>=1 && score<=5) return 1;       // Mild
+      if(score>=6 && score<=10) return 2;      // Moderate
+      if(score>=11 && score<=15) return 3;     // Severe
+      return 4;                                // Intractable (>=16)
     }
 
     function computeScore(frm){
       const answers = INTENSITY_WEIGHTS.map((w,i)=>{
-        const rv = frm[`intensity${i+1}`]?.value; // '0'..'4' or undefined
+        const rv = frm[`intensity${i+1}`]?.value;
         const freq = rv==null || rv==='' ? null : Number(rv);
         return { weight:w, freq, score: freq===null ? 0 : w*freq };
       });
@@ -538,9 +639,7 @@
       const answeredAny = answers.some(a=>a.freq!==null);
       if(!answeredAny){ return { error: I18N[lang].err }; }
 
-      // Key change: use TWO MOST FREQUENT bleeding intensities.
-      // - consider only intensities with freq > 0 (i.e., actual bleeding)
-      // - sort by freq desc, tie-break by intensity (weight) desc
+      // Two most frequent bleeding intensities (freq > 0), tie-break by weight desc.
       const topTwo = answers
         .filter(a => a.freq !== null && a.freq > 0)
         .sort((a,b) => (b.freq - a.freq) || (b.weight - a.weight))
@@ -548,9 +647,8 @@
 
       const base = topTwo.reduce((sum,a)=>sum + a.score, 0);
       const total = base + transfusion;
-      const max = INTENSITY_WEIGHTS.slice(-2).reduce((s,w)=>s+w*4,0) + MAX_TRANSFUSION; // 30
 
-      return { total, max, breakdown:{answers, topTwo, transfusion} };
+      return { total, max: SCORE_MAX, breakdown:{answers, topTwo, transfusion} };
     }
 
     // ---------- Render result ----------
@@ -558,10 +656,18 @@
     const scoreline = document.getElementById('scoreline');
     const classBadge = document.getElementById('classBadge');
     const scoreText = document.getElementById('scoreText');
+    const assessedAt = document.getElementById('assessedAt');
     const marker = document.getElementById('marker');
+    const bar = document.getElementById('bar');
     const scale = document.getElementById('scale');
+    const resultActions = document.getElementById('result-actions');
     const details = document.getElementById('details');
     const explain = document.getElementById('explain');
+    const thresholds = document.getElementById('thresholds');
+
+    function fmtDate(d){
+      try { return new Date(d).toLocaleDateString(lang); } catch { return new Date(d).toLocaleDateString(); }
+    }
 
     function renderResult(res){
       const errBox = document.getElementById('form-errors');
@@ -578,53 +684,102 @@
       scoreText.textContent = (I18N[lang].scoreText)(res.total, res.max);
       scoreline.hidden = false;
 
+      if (res.assessedAt){
+        const sep = (lang === 'fr') ? ' :' : ':';
+        assessedAt.textContent = `${I18N[lang].assessedOn}${sep} ${fmtDate(res.assessedAt)}`;
+        assessedAt.hidden = false;
+      }
+
       const pct = (res.total / res.max) * 100;
       marker.style.left = `${pct}%`;
+      bar.setAttribute('role','img');
+      bar.setAttribute('aria-label', (I18N[lang].scoreText)(res.total, res.max) + ' — ' + labels[idx]);
       scale.hidden = false;
+      resultActions.hidden = false;
 
       const list = document.createElement('ul');
       list.style.margin = '8px 0 0';
       list.style.paddingLeft = '18px';
-
       res.breakdown.topTwo.forEach(t=>{
         const li = document.createElement('li');
-        // Use the question text corresponding to intensity (1..4)
         li.textContent = `${I18N[lang].q[t.weight-1].replace(/^\d+\.\s?/,'')} → ${t.weight} × ${t.freq} = ${t.score}`;
         list.appendChild(li);
       });
-
       const liT = document.createElement('li');
       liT.textContent = `${I18N[lang].q5.replace(/^\d+\.\s?/,'')} → +${res.breakdown.transfusion}`;
       list.appendChild(liT);
-
       explain.innerHTML='';
       explain.appendChild(list);
-      details.hidden = false;
 
+      thresholds.innerHTML = '';
+      [['1–5',1],['6–10',2],['11–15',3],['≥16',4]].forEach(([range,ci])=>{
+        const li = document.createElement('li');
+        li.textContent = `${range}: ${labels[ci]}`;
+        thresholds.appendChild(li);
+      });
+
+      details.hidden = false;
       persistToStorage();
     }
+
+    // ---------- Result summary ----------
+    function buildSummary(res){
+      const idx = classify(res.total);
+      const label = I18N[lang].classes[idx];
+      const dateStr = res.assessedAt ? ` · ${I18N[lang].assessedOn} ${fmtDate(res.assessedAt)}` : '';
+      return `IFT ${res.total}/${res.max} — ${label}${dateStr}`;
+    }
+
+    async function copySummary(){
+      if(!lastResult || lastResult.error) return;
+      const text = buildSummary(lastResult);
+      const btn = document.getElementById('btn-copy');
+      const original = I18N[lang].copy;
+      try{
+        if (navigator.clipboard && navigator.clipboard.writeText){
+          await navigator.clipboard.writeText(text);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+          document.body.appendChild(ta); ta.select();
+          document.execCommand('copy'); ta.remove();
+        }
+        btn.textContent = I18N[lang].copied;
+        setTimeout(()=>{ btn.textContent = original; }, 1600);
+      }catch{ btn.textContent = original; }
+    }
+
+    // ---------- Progress counter ----------
+    function updateProgress(){
+      const el = document.getElementById('progress');
+      if(!el) return;
+      let answered = 0;
+      for(let i=1;i<=4;i++){ if(formEl[`intensity${i}`]?.value) answered++; }
+      el.textContent = (I18N[lang].progress)(answered, 4);
+    }
+    formEl.addEventListener('change', updateProgress);
 
     // ---------- Persistence ----------
     function persistToStorage(){
       const data = new FormData(formEl);
       const obj = {};
       for (const [k,v] of data.entries()) obj[k]=v;
-      localStorage.setItem('ift-data', JSON.stringify({ lang, obj }));
+      store.set('ift-data', JSON.stringify({ lang, obj }));
     }
 
     function restoreFromStorage(){
-      const raw = localStorage.getItem('ift-data');
+      const raw = store.get('ift-data');
       if(!raw) return;
       try{
         const parsed = JSON.parse(raw);
         const obj = parsed?.obj;
         if(!obj || Object.keys(obj).length === 0) return;
-
         for(const [k,v] of Object.entries(obj)){
           const input = formEl.querySelector(`[name="${k}"][value="${v}"]`);
           if(input) input.checked = true;
         }
       }catch{}
+      updateProgress();
     }
 
     // ---------- Actions ----------
@@ -632,33 +787,59 @@
       const resetBtn = document.getElementById('btn-reset');
       if(resetBtn){
         resetBtn.onclick = ()=>{
-          if (typeof formEl.reset !== 'function') console.warn('form.reset unexpected');
           formEl.reset();
-          localStorage.removeItem('ift-data');
+          store.del('ift-data');
+          lastResult = null;
           buildQuestions(lang);
           applyLang();
           bindActions();
-          scoreline.hidden = true; scale.hidden = true; details.hidden = true;
+          scoreline.hidden = true; assessedAt.hidden = true; scale.hidden = true;
+          resultActions.hidden = true; details.hidden = true;
           document.getElementById('form-errors').textContent = '';
+          updateProgress();
         };
       }
+      const copyBtn = document.getElementById('btn-copy');
+      if(copyBtn) copyBtn.onclick = copySummary;
+      const printBtn = document.getElementById('btn-print');
+      if(printBtn) printBtn.onclick = ()=> window.print();
     }
 
-    // ---------- Form submit wiring ----------
+    // ---------- Consent (GDPR) ----------
+    const CONSENT_KEY = 'ift-consent';
+    const consentEl = document.getElementById('consent');
+    function showConsent(){ consentEl.hidden = false; }
+    function hideConsent(){ consentEl.hidden = true; }
+    function setConsent(granted){
+      store.set(CONSENT_KEY, granted ? 'granted' : 'denied');
+      try { gtag('consent','update',{ 'analytics_storage': granted ? 'granted' : 'denied' }); } catch (e) {}
+      hideConsent();
+    }
+    document.getElementById('consent-accept').onclick = ()=> setConsent(true);
+    document.getElementById('consent-reject').onclick = ()=> setConsent(false);
+    document.getElementById('cookie-settings').onclick = (e)=>{ e.preventDefault(); showConsent(); };
+    (function(){
+      const c = store.get(CONSENT_KEY);
+      if (c !== 'granted' && c !== 'denied') showConsent();
+    })();
+
+    // ---------- Form submit ----------
     formEl.addEventListener('submit', (e)=>{
       e.preventDefault();
       const res = computeScore(formEl);
+      if(!res.error) res.assessedAt = new Date().toISOString();
+      lastResult = res;
       renderResult(res);
+      if(!res.error) scoreline.focus({ preventScroll:false });
     });
 
     // ---------- Init ----------
-    // First-visit-per-session: ensure the form starts BLANK once per browser session
     try {
       if (!sessionStorage.getItem('ift-session-init')) {
-        localStorage.removeItem('ift-data'); // clear old answers so nothing is prefilled
+        store.del('ift-data');
         sessionStorage.setItem('ift-session-init', '1');
       }
-    } catch (e) { /* ignore storage errors */ }
+    } catch (e) {}
 
     setLang(lang);
   </script>
