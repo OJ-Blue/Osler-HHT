@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Epistaxis Grading (IFT)</title>
   <meta id="meta-desc" name="description" content="IFT epistaxis severity calculator for HHT over the past four weeks." />
-  <meta name="theme-color" content="#2c3e50" />
+  <meta name="theme-color" content="#0f3b46" />
   <link rel="icon" href="favicon.ico" />
   <link rel="canonical" href="https://iftgradinghht.com/" />
 
@@ -43,212 +43,327 @@
 
   <style>
     :root{
-      --bg:#2c3e50;            /* page background */
+      /* Design tokens */
+      --ink:#10262e;           /* deep petrol ink — headings, body on light */
+      --ink-2:#41626d;         /* muted petrol — secondary text */
+      --paper:#eef3f4;         /* page background */
       --card:#ffffff;
-      --text:#111827;          /* gray-900 */
-      --muted:#475569;         /* slate-600 */
-      --brand:#2563eb;         /* blue-600 */
-      --brand-700:#1d4ed8;
+      --line:#d9e4e7;          /* hairline borders */
+      --brand:#0e7490;         /* clinical teal — interactive */
+      --brand-strong:#155e75;  /* hover / emphasis */
+      --brand-tint:#e9f5f8;    /* selected option background */
+      --band:#0f3b46;          /* masthead */
+      --band-2:#123340;
 
-      /* Bar segment fills */
-      --ok:#16a34a;            /* green-600  (mild)        */
-      --warn:#f59e0b;          /* amber-500  (moderate)    */
-      --bad:#ef4444;           /* red-500    (severe)      */
-      --worse:#b91c1c;         /* red-700    (intractable) */
+      /* Severity spectrum (bar fills) */
+      --ok:#2e9e5b;            /* mild        */
+      --warn:#e8a13c;          /* moderate    */
+      --bad:#e05252;           /* severe      */
+      --worse:#a12626;         /* intractable */
 
       /* Accessible chip backgrounds + text (WCAG AA on white) */
-      --mild-bg:#dcfce7;   --mild-fg:#166534;
-      --mod-bg:#fef3c7;    --mod-fg:#92400e;
-      --sev-bg:#fee2e2;    --sev-fg:#b91c1c;
-      --intr-bg:#fecaca;   --intr-fg:#7f1d1d;
+      --mild-bg:#ddf3e4;   --mild-fg:#14532d;
+      --mod-bg:#fdeed3;    --mod-fg:#8a4a09;
+      --sev-bg:#fde3e3;    --sev-fg:#a11d1d;
+      --intr-bg:#f6cfcf;   --intr-fg:#6f1414;
+
+      --radius:14px;
+      --shadow:0 14px 40px rgba(15,59,70,.14);
     }
 
-    html,body{height:100%}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
-      font-family: Arial, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans";
-      background: var(--bg);
-      color:#ecf0f1;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+      background: var(--paper);
+      color:var(--ink);
       line-height:1.6;
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-      padding:20px;
+      -webkit-font-smoothing:antialiased;
     }
 
-    .wrap{ width: min(980px, 100%); }
-    header{ text-align:center; margin-bottom:16px; }
-    header h1{ margin:0; font-size:2.5rem; letter-spacing:.3px; }
-    .sub{ color:#dbe2ea; margin-top:6px; font-size:1.1rem; }
+    /* Severity spectrum ribbon — the motif of the site, echoed in the scale below */
+    .ribbon{
+      height:5px;
+      background:linear-gradient(90deg,
+        var(--ok) 0 16.666%, var(--warn) 16.666% 33.333%,
+        var(--bad) 33.333% 50%, var(--worse) 50% 100%);
+    }
+
+    /* Masthead */
+    .masthead{
+      background:
+        radial-gradient(1100px 340px at 15% -60%, rgba(14,116,144,.45), transparent 60%),
+        linear-gradient(180deg, var(--band), var(--band-2));
+      color:#f0f7f9;
+      padding:40px 20px 96px;
+    }
+    .masthead-inner{ width:min(920px,100%); margin:0 auto; }
+    .masthead h1{
+      margin:0;
+      font-size:clamp(1.9rem, 4.5vw, 2.7rem);
+      font-weight:800;
+      letter-spacing:-.02em;
+      line-height:1.15;
+    }
+    .sub{
+      color:#c3d8dd;
+      margin:12px 0 0;
+      font-size:1.05rem;
+      max-width:62ch;
+    }
+
+    .wrap{
+      width:min(920px, calc(100% - 40px));
+      margin:-56px auto 0;   /* card overlaps the masthead */
+    }
 
     .noscript{
-      background:#fee2e2; color:#7f1d1d;
+      background:#fde3e3; color:#6f1414;
       padding:12px 14px; border-radius:10px; margin:0 0 16px;
       font-weight:700;
     }
 
-    /* Toolbar */
+    /* Toolbar (language) */
     .toolbar{
       display:flex;
-      justify-content:flex-start;
+      justify-content:flex-end;
       gap:8px;
       flex-wrap:wrap;
       align-items:center;
-      margin:16px 0;
+      margin:0 0 18px;
     }
     .lang{ display:inline-flex; gap:10px; align-items:center; }
-    .lang label{ font-weight:700; color:#dbe2ea; }
+    .lang label{ font-weight:700; color:#dbe9ec; font-size:.95rem; }
     .lang select{
       appearance:none;
-      border:none;
-      background:#34495e;
+      border:1px solid rgba(255,255,255,.35);
+      background-color:rgba(255,255,255,.08);
       color:#fff;
-      padding:8px 12px;
-      border-radius:6px;
+      padding:8px 34px 8px 12px;
+      border-radius:9px;
       cursor:pointer;
       font-weight:700;
+      font-size:.95rem;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat;
+      background-position:right 12px center;
     }
-    .lang select:hover{ background:#2980b9; }
-    .lang select:focus-visible{ outline:2px solid rgba(255,255,255,.55); outline-offset:2px; }
+    .lang select:hover{ background-color:rgba(255,255,255,.16); }
+    .lang select:focus-visible{ outline:2px solid #fff; outline-offset:2px; }
+    .lang option{ color:#10262e; background:#fff; }
 
     .card{
       background:var(--card);
-      color:var(--text);
-      border-radius:14px;
-      box-shadow: 0 12px 30px rgba(0,0,0,.25);
-      padding:20px;
+      color:var(--ink);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      border:1px solid var(--line);
+      padding:clamp(18px, 3.5vw, 32px);
     }
-    .section-title{ font-weight:700; color:var(--text); margin:2px 0 12px; }
+    .section-title{
+      font-weight:800;
+      color:var(--ink);
+      margin:0 0 12px;
+      font-size:1.25rem;
+      letter-spacing:-.01em;
+    }
 
     .help{
-      background:#eef2ff;
-      border-left:4px solid #6366f1;
-      color:#1f2937;
-      padding:10px 12px;
-      border-radius:8px;
+      background:#f4f9fa;
+      border:1px solid var(--line);
+      border-left:4px solid var(--brand);
+      color:var(--ink-2);
+      padding:10px 14px;
+      border-radius:10px;
       font-weight:600;
-      margin-bottom:12px;
+      font-size:.97rem;
+      margin-bottom:18px;
     }
 
-    form{ display:grid; gap:16px; }
-    fieldset{ border:none; margin:0; padding:0; background:#fff; border-radius:12px; }
-    legend{ font-weight:700; margin-bottom:8px; color:#0f172a; }
+    form{ display:grid; gap:8px; }
+    fieldset{ border:none; margin:0; padding:16px 0; border-top:1px solid var(--line); }
+    fieldset:first-of-type{ border-top:none; padding-top:4px; }
+    legend{
+      font-weight:700;
+      padding:0 0 10px;
+      color:var(--ink);
+      line-height:1.45;
+    }
 
-    .options{ display:grid; gap:6px; margin-top:6px; }
+    .options{ display:grid; gap:6px; }
     .radio{
       display:flex;
       align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border:1px solid #e5e7eb;
+      gap:11px;
+      padding:11px 13px;
+      border:1px solid var(--line);
       border-radius:10px;
       cursor:pointer;
-      transition:border-color .12s ease, background-color .12s ease;
+      background:#fff;
+      transition:border-color .12s ease, background-color .12s ease, box-shadow .12s ease;
     }
-    .radio:hover{ border-color:#cbd5e1; }
-    .radio:has(input:checked){ border-color:var(--brand); background:#eff6ff; }
-    input[type="radio"]{ width:18px; height:18px; accent-color: var(--brand); }
+    .radio:hover{ border-color:#aec7cd; background:#fafdfd; }
+    .radio:has(input:checked){
+      border-color:var(--brand);
+      background:var(--brand-tint);
+      box-shadow:inset 0 0 0 1px var(--brand);
+    }
+    input[type="radio"]{ width:18px; height:18px; accent-color: var(--brand); flex:none; margin:0; }
     input[type="radio"]:focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
 
-    .progress{ font-size:.95rem; color:var(--muted); font-weight:700; }
+    .progress{ font-size:.95rem; color:var(--ink-2); font-weight:700; margin-left:auto; }
 
-    .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; align-items:center; }
+    .actions{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin-top:10px; padding-top:18px; border-top:1px solid var(--line);
+    }
     .btn{
       appearance:none;
       border:none;
       background:var(--brand);
       color:#fff;
       font-weight:700;
-      padding:12px 16px;
+      font-size:1rem;
+      padding:12px 20px;
       border-radius:10px;
       cursor:pointer;
+      transition:background-color .12s ease;
     }
-    .btn:hover{ background:var(--brand-700); }
-    .btn:focus-visible{ outline:2px solid #0f172a; outline-offset:2px; }
-    .btn.secondary{ background:#0f172a; color:#e5e7eb; border:1px solid #1f2937; }
-    .btn.small{ padding:8px 12px; font-size:.9rem; }
-    .btn.ghost{ background:#f1f5f9; color:#0f172a; border:1px solid #cbd5e1; }
-    .btn.ghost:hover{ background:#e2e8f0; }
+    .btn:hover{ background:var(--brand-strong); }
+    .btn:focus-visible{ outline:2px solid var(--ink); outline-offset:2px; }
+    .btn.secondary{ background:#fff; color:var(--ink); border:1px solid var(--line); }
+    .btn.secondary:hover{ background:#f2f7f8; }
+    .btn.small{ padding:8px 14px; font-size:.9rem; }
+    .btn.ghost{ background:#f2f7f8; color:var(--ink); border:1px solid var(--line); }
+    .btn.ghost:hover{ background:#e6eff1; }
 
-    .result{ margin-top:14px; display:grid; gap:10px; }
-    .result .scoreline{ font-size:1.15rem; display:flex; flex-wrap:wrap; align-items:center; gap:10px; }
-    .badge{ font-weight:800; padding:6px 12px; border-radius:999px; display:inline-block; }
+    .result{ margin-top:16px; display:grid; gap:12px; }
+    .result .scoreline{
+      font-size:1.15rem;
+      display:flex; flex-wrap:wrap; align-items:center; gap:12px;
+      background:#f7fafb;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:14px 16px;
+    }
+    .result .scoreline:focus{ outline:2px solid var(--brand); outline-offset:2px; }
+    #scoreText{ font-weight:700; }
+    .badge{ font-weight:800; padding:6px 14px; border-radius:999px; display:inline-block; font-size:.98rem; }
     .badge.mild{ background:var(--mild-bg); color:var(--mild-fg); }
     .badge.moderate{ background:var(--mod-bg); color:var(--mod-fg); }
     .badge.severe{ background:var(--sev-bg); color:var(--sev-fg); }
     .badge.intractable{ background:var(--intr-bg); color:var(--intr-fg); }
 
-    .assessed{ color:var(--muted); font-size:.95rem; font-weight:600; }
+    .assessed{ color:var(--ink-2); font-size:.95rem; font-weight:600; }
 
     /* Severity scale — segments match the clinical cut-offs on a 0-30 axis:
        0-5 mild | 5-10 moderate | 10-15 severe | 15-30 intractable */
-    .scale{ margin-top:6px; }
+    .scale{ margin-top:4px; padding:6px 2px 42px; }
+    .zones{
+      display:flex;
+      margin-bottom:8px;
+      font-size:.74rem;
+      font-weight:700;
+      color:var(--ink-2);
+      text-align:center;
+      line-height:1.25;
+    }
+    .zones span{ padding:0 3px; }
+    .zones .z1, .zones .z2, .zones .z3{ flex:0 0 16.666%; }
+    .zones .z4{ flex:0 0 50%; }
     .bar{
       position:relative;
-      height:14px;
-      border-radius:8px;
+      height:16px;
+      border-radius:9px;
       background: linear-gradient(90deg,
         var(--ok)    0%,      var(--ok)    16.666%,
         var(--warn)  16.666%, var(--warn)  33.333%,
         var(--bad)   33.333%, var(--bad)   50%,
         var(--worse) 50%,     var(--worse) 100%);
+      box-shadow:inset 0 1px 2px rgba(0,0,0,.18);
     }
     .tick{
       position:absolute;
       top:100%;
       transform:translateX(-50%);
-      font-size:1.05rem;
+      font-size:1rem;
       font-weight:700;
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans";
-      color:#1f2937;
-      margin-top:10px;
+      font-variant-numeric:tabular-nums;
+      color:var(--ink-2);
+      margin-top:12px;
     }
     .marker{
       position:absolute;
       top:100%;
-      margin-top:6px;
+      margin-top:5px;
       width:0; height:0;
       border-left:8px solid transparent;
       border-right:8px solid transparent;
-      border-bottom:14px solid #111827;
+      border-bottom:13px solid var(--ink);
       transform:translateX(-50%);
-      filter: drop-shadow(0 1px 3px rgba(0,0,0,.4));
+      filter: drop-shadow(0 1px 3px rgba(0,0,0,.35));
       transition:left .25s ease;
     }
 
-    .errors{ color:#b91c1c; font-weight:600; }
+    .errors{ color:#a11d1d; font-weight:600; margin:6px 0 0; }
 
     details{
-      background:#f8fafc;
-      border:1px solid #e2e8f0;
-      border-radius:10px;
-      padding:10px 12px;
+      background:#f7fafb;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px 14px;
     }
-    .result details{ margin-top:40px; }
-    details > summary{ cursor:pointer; font-weight:700; }
-    .thresholds{ margin:10px 0 0; padding-left:18px; color:var(--muted); font-size:.95rem; }
+    details > summary{ cursor:pointer; font-weight:700; color:var(--ink); }
+    details > summary:focus-visible{ outline:2px solid var(--brand); outline-offset:2px; }
+    .thresholds{ margin:10px 0 0; padding-left:18px; color:var(--ink-2); font-size:.95rem; }
+    #explain ul{ color:var(--ink-2); font-size:.95rem; }
 
-    footer{ text-align:center; color:#cbd5e1; font-size:.9rem; margin-top:18px; }
-    footer a{ color:#cbd5e1; }
+    footer{
+      width:min(920px, calc(100% - 40px));
+      margin:26px auto 0;
+      padding:0 0 32px;
+      text-align:center;
+      color:var(--ink-2);
+      font-size:.9rem;
+    }
+    footer a{ color:var(--brand-strong); }
     #footer-note{ margin-top:10px; }
 
     /* Consent banner */
     .consent{
-      position:fixed; left:0; right:0; bottom:0;
-      background:#0f172a; color:#e5e7eb;
-      display:flex; gap:12px; flex-wrap:wrap; align-items:center; justify-content:center;
-      padding:12px 16px; box-shadow:0 -6px 20px rgba(0,0,0,.35);
+      position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
+      width:min(680px, calc(100% - 24px));
+      background:var(--band); color:#e9f2f4;
+      display:flex; gap:14px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      padding:14px 18px;
+      border-radius:14px;
+      box-shadow:0 10px 32px rgba(15,59,70,.4);
       z-index:50; font-size:.95rem;
     }
     .consent[hidden]{ display:none; }
-    .consent .consent-text{ max-width:680px; }
+    .consent .consent-text{ flex:1 1 320px; }
     .consent .consent-actions{ display:flex; gap:8px; }
+    .consent .btn.ghost{ background:transparent; color:#e9f2f4; border:1px solid rgba(255,255,255,.4); }
+    .consent .btn.ghost:hover{ background:rgba(255,255,255,.1); }
 
-    @media (max-width:640px){ .radio{padding:10px} header h1{font-size:2rem} }
-    @media (prefers-reduced-motion: reduce){ .marker{transition:none} }
+    @media (max-width:640px){
+      .masthead{ padding:28px 16px 88px; }
+      .wrap{ width:calc(100% - 24px); }
+      .zones{ display:none; }
+      .radio{ padding:10px 12px; }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .marker{ transition:none; }
+      .radio, .btn{ transition:none; }
+    }
     @media print{
       body{ background:#fff; color:#111 }
-      .wrap{ width:100% }
+      .ribbon{ display:none }
+      .masthead{ background:#fff; color:#111; padding:0 0 8px }
+      .masthead h1{ color:#111 }
+      .sub{ color:#333 }
+      .wrap{ width:100%; margin:0 }
       .toolbar, .actions, .result-actions, .consent{ display:none !important }
       .card{ box-shadow:none; border:1px solid #e5e7eb }
       footer{ color:#111 }
@@ -256,30 +371,33 @@
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
+  <div class="ribbon" aria-hidden="true"></div>
+
+  <div class="masthead">
+    <div class="masthead-inner">
+      <div class="toolbar" aria-label="controls">
+        <div class="lang" role="group" aria-label="Language">
+          <label for="lang-select" data-i18n="langLabel">Language</label>
+          <select id="lang-select">
+            <option value="en">English</option>
+            <option value="no">Norsk</option>
+            <option value="zh-CN">中文（简体）</option>
+            <option value="ja">日本語</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="it">Italiano</option>
+          </select>
+        </div>
+      </div>
       <h1 data-i18n="title">Epistaxis Grading (IFT)</h1>
       <p class="sub" data-i18n="subtitle">IFT measures the severity of nosebleeds in hereditary hemorrhagic telangiectasia (HHT) over the past four weeks. Results may help guide treatment and follow-up.</p>
-    </header>
+    </div>
+  </div>
 
+  <div class="wrap">
     <noscript>
       <div class="noscript">This calculator requires JavaScript to be enabled.</div>
     </noscript>
-
-    <div class="toolbar" aria-label="controls">
-      <div class="lang" role="group" aria-label="Language">
-        <label for="lang-select" data-i18n="langLabel">Language</label>
-        <select id="lang-select">
-          <option value="en">English</option>
-          <option value="no">Norsk</option>
-          <option value="zh-CN">中文（简体）</option>
-          <option value="ja">日本語</option>
-          <option value="es">Español</option>
-          <option value="fr">Français</option>
-          <option value="it">Italiano</option>
-        </select>
-      </div>
-    </div>
 
     <main class="card" role="region" aria-labelledby="form-title">
       <h2 id="form-title" class="section-title" data-i18n="formTitle">Over the past 4 weeks</h2>
@@ -319,6 +437,9 @@
         </div>
         <div class="assessed" id="assessedAt" hidden></div>
         <div class="scale" id="scale" hidden>
+          <div class="zones" aria-hidden="true">
+            <span class="z1" id="zone-1"></span><span class="z2" id="zone-2"></span><span class="z3" id="zone-3"></span><span class="z4" id="zone-4"></span>
+          </div>
           <div class="bar" id="bar">
             <div class="marker" id="marker" style="left:0%"></div>
             <span class="tick" style="left:0%">0</span>
@@ -339,15 +460,15 @@
         </details>
       </section>
     </main>
-
-    <footer>
-      <p>The Intensity, Frequency, and Blood Transfusion Score (IFT) was developed by Sinan Dheyauldeen (Al-Deen), MD, PhD, and Gregor Bachmann-Harildstad, MD, PhD. This online calculator was implemented by Ole Jakob Jørgensen, MD.</p>
-      <p id="footer-note"></p>
-      <p>© 2025–2026</p>
-      <p>This tool is for informational purposes only and does not replace professional medical advice. Contact: <a href="mailto:oljoer@ous-hf.no">oljoer@ous-hf.no</a></p>
-      <p><a href="#" id="cookie-settings" data-i18n="consentManage">Cookie settings</a></p>
-    </footer>
   </div>
+
+  <footer>
+    <p>The Intensity, Frequency, and Blood Transfusion Score (IFT) was developed by Sinan Dheyauldeen (Al-Deen), MD, PhD, and Gregor Bachmann-Harildstad, MD, PhD. This online calculator was implemented by Ole Jakob Jørgensen, MD.</p>
+    <p id="footer-note"></p>
+    <p>© 2025–2026</p>
+    <p>This tool is for informational purposes only and does not replace professional medical advice. Contact: <a href="mailto:oljoer@ous-hf.no">oljoer@ous-hf.no</a></p>
+    <p><a href="#" id="cookie-settings" data-i18n="consentManage">Cookie settings</a></p>
+  </footer>
 
   <div id="consent" class="consent" role="dialog" aria-live="polite" aria-label="Cookie consent" hidden>
     <span class="consent-text" data-i18n="consentText"></span>
@@ -601,6 +722,11 @@
         document.querySelectorAll(`[data-i18n="${key}"]`).forEach(n=>{ n.textContent = I18N[lang][key]; });
       }
       document.getElementById('footer-note').textContent = I18N[lang].footerNote;
+      // Zone labels above the severity bar
+      [['zone-1',1],['zone-2',2],['zone-3',3],['zone-4',4]].forEach(([id,ci])=>{
+        const el = document.getElementById(id);
+        if(el) el.textContent = I18N[lang].classes[ci];
+      });
       const md = document.getElementById('meta-desc');
       if (md) md.setAttribute('content', I18N[lang].subtitle);
       document.title = I18N[lang].title;
@@ -717,7 +843,7 @@
       explain.appendChild(list);
 
       thresholds.innerHTML = '';
-      [['1–5',1],['6–10',2],['11–15',3],['≥16',4]].forEach(([range,ci])=>{
+      [['0',0],['1–5',1],['6–10',2],['11–15',3],['≥16',4]].forEach(([range,ci])=>{
         const li = document.createElement('li');
         li.textContent = `${range}: ${labels[ci]}`;
         thresholds.appendChild(li);
